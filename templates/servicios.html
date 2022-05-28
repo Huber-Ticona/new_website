@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block encabezado %}
+
+<link rel="stylesheet" href="{{url_for('static', filename= 'css/servicios.css')}}">
+<title>Servicios</title>
+{% endblock %}
+
+{% block contenido %}
+<div class="container-sm">
+    <div class="servicio">
+        DIMENSIONADOS
+    </div>
+    <div class="servicio">
+        ARMADOS
+    </div>
+    <div class="servicio">
+        COTIZACIONES
+    </div>
+    <div class="servicio">
+        SIMULAR CORTES
+    </div>
+    
+</div>
+{% endblock%}

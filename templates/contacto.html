@@ -1,0 +1,98 @@
+{% extends "layout.html" %}
+
+{% block encabezado %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="{{url_for('static', filename= 'css/contacto.css')}}">
+<title>Contacto</title>
+{% endblock %}
+
+{% block contenido %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <div class = "contenedor-ubicacion" id="">
+                <img src="{{url_for('static', filename='docs/enco_frontal.jpg')}}" alt="">
+            </div>
+        </div>
+        <div class="col-sm">
+            <div class="form-container">
+                <p class="form-titulo">CONTACTATE CON NOSOTROS</p>
+                <form>
+                    <div class="form-group">
+                        <label for="inputState">Motivo de consulta</label>
+                        <select id="inputState" class="form-control">
+                          <option selected>Elegir...</option>
+                          <option>Consulta precio</option>
+                          <option>Consulta servicio</option>
+                          <option>Problemas Post Venta</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="inputAddress">Email</label>
+                      <input type="text" class="form-control" id="inputAddress" placeholder="example@gmail.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Mensaje</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                      </div>
+
+                    <div class="form-group">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="gridCheck">
+                        <label class="form-check-label" for="gridCheck">
+                          Recibir promociones via correo electronico
+                        </label>
+                      </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
+                  </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container" id="container-banner-contacto">
+    <div class="row">
+      <div class="col-sm">
+          <div class = "banner-contacto">
+            <div class="banner-contacto-icon">
+                <i class="fa-solid fa-location-pin"></i>
+            </div>
+            <p class="banner-contacto-titulo">NUESTRA LOCALIZACIÓN</p>
+            <p class="banner-contacto-cuerpo">AV SANTA MARIA CON RENATO ROCA, #2333 , Arica, Chile</p>
+          </div>
+        
+      </div>
+      <div class="col-sm">
+        <div class = "banner-contacto">
+            <div class="banner-contacto-icon">
+                <i class="fa-solid fa-message"></i>
+            </div>
+            <p class="banner-contacto-titulo">DETALLES CONTACTO</p>
+            <p class="banner-contacto-cuerpo">E-mail: gestion@madenco.cl</p>
+          </div>
+      </div>
+      <div class="col-sm">
+        
+        <div class = "banner-contacto">
+            <div class="banner-contacto-icon">
+                <i class="fa-solid fa-phone"></i>
+            </div>
+            <p class="banner-contacto-titulo">CONTACTANOS</p>
+            <p class="banner-contacto-cuerpo">Telefono: xxxxxxxx </p>
+          </div>
+
+      </div>
+      <div class="col-sm">
+        24/H SERVICIO AL CLIENTE
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

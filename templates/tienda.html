@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+
+{% block encabezado %}
+
+<link rel="stylesheet" href="{{url_for('static', filename= 'css/tienda.css')}}">
+<title>Tienda</title>
+{% endblock %}
+
+{% block contenido %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-2">
+            <p>CATEGORIAS</p>
+            <div class="contenedor-categorias">
+                
+
+                Tableros
+                <ul>
+                    <li>Melaminas</li>
+                    <li>Terciados</li>
+                    <li>Trupanes</li>
+                    <li>MSD</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-sm-10" id = "">
+            <p>PRODUCTOS</p>
+            <div class="contenedor-vista-productos" id="cont">
+
+                <div class="card" id="card-contenido">
+                    <img src="{{url_for('static', filename= 'docs/melamina-cerezo.jpg')}}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <a class="card-title" href="/producto">MELAMINA DE LA X</a>
+                      <p class="card-text">130000.</p>
+                      <a href="#" class="btn btn-primary">ADD</a>
+                    </div>
+                  </div>
+                  <div class="card" id="card-contenido">
+                    <img src="{{url_for('static', filename= 'docs/melamina-cerezo.jpg')}}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">MELAMINA DE LA X</h5>
+                      <p class="card-text">130000.</p>
+                      <a href="#" class="btn btn-primary">ADD</a>
+                    </div>
+                  </div>
+                  <div class="card" id="card-contenido">
+                    <img src="{{url_for('static', filename= 'docs/melamina-cerezo.jpg')}}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">MELAMINA DE LA X</h5>
+                      <p class="card-text">130000.</p>
+                      <a href="#" class="btn btn-primary">ADD</a>
+                    </div>
+                  </div>
+                  <div class="card" id="card-contenido">
+                    <img src="{{url_for('static', filename= 'docs/melamina-cerezo.jpg')}}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">MELAMINA DE LA X</h5>
+                      <p class="card-text">130000.</p>
+                      <a href="#" class="btn btn-primary">ADD</a>
+                    </div>
+                  </div>
+                  <div class="card" id="card-contenido">
+                    <img src="{{url_for('static', filename= 'docs/melamina-cerezo.jpg')}}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">MELAMINA DE LA X</h5>
+                      <p class="card-text">130000.</p>
+                      <a href="#" class="btn btn-primary">ADD</a>
+                    </div>
+                  </div>
+                  
+            </div>
+        </div>
+        {% if productos %}
+        <script>
+          let prod = JSON.stringify({{productos|safe}})
+          console.log(prod)
+        </script>
+        {% endif %}
+        
+    </div>
+</div>
+{% endblock%}

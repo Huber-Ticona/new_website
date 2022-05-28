@@ -1,0 +1,36 @@
+
+.form-container{
+    border: 1px solid yellow;
+}
+.form-container .form-titulo{
+    font-family: 'Tinos', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: rgb(65, 65, 65);
+
+
+}
+
+#container-banner-contacto{
+    border: 1px solid rgb(114, 114, 114);
+    margin-top: 50px;
+
+}
+.banner-contacto{
+
+}
+.banner-contacto .banner-contacto-icon{
+    text-align: center;
+    border : 2px solid  rgb(114, 114, 114);
+}
+.banner-contacto .banner-contacto-titulo{
+    font-family: 'Roboto', sans-serif;
+    color : rgb(65, 65, 65);
+    font-size: 18px;
+    
+}
+.banner-contacto .banner-contacto-cuerpo{
+    font-family: 'Roboto', sans-serif;
+    color : rgb(114, 114, 114);
+    font-size: 16px;
+}
