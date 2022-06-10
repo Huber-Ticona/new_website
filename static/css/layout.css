@@ -1,11 +1,28 @@
 
-  .banner_1{
-    border: 2px solid green;
-    text-align: center;
+.banner_1{
+  border: 2px solid green;
+  text-align: center;
+}
+.box-navbar-derecho{
+  border: 1px solid red;
+  width: 200px;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 10px;
+  float: right;
+
+}
+.item-navbar-derecho{
+  /*border: 1px solid blue;*/
+  display: inline;
+  text-align: center;
+}
+
+@media (max-width: 1199.98px) { 
+  .item-navbar-derecho{
+    border: 1px solid green;
   }
-
-
-
+ }
 
   .text-small {
     font-size: 0.9rem;

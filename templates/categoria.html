@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block encabezado %}
+
+<link rel="stylesheet" href="{{url_for('static', filename= 'css/categorias.css')}}">
+<title>Tienda</title>
+{% endblock %}
+
+{% block contenido %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <p>CATEGORIAS</p>
+            <div class="contenedor-categorias">
+                
+
+                Tableros
+                <ul>
+                    <li>Melaminas</li>
+                    <li>Terciados</li>
+                    <li>Trupanes</li>
+                    <li>MSD</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-10" id = "">
+            <p>PRODUCTOS</p>
+            <div class="contenedor-vista-productos" id="cont">
+            {% if productos %}
+            {% for item in productos %}
+
+                <div class="card" id="card-contenido">
+                  {% if item[3] != None %}
+                    <img src="{{url_for('productos_bp.imagen_producto' , nombre = item[3] )}}" class="card-img-top" alt="...">
+                  {% else %}
+                    <img src="{{url_for('productos_bp.imagen_producto' , nombre = 'no_disponible.png' )}}" class="card-img-top" alt="...">
+                  {% endif %}
+
+                    <div class="card-body">
+                      <a class="card-title"  id="card-titulo" href="/producto">{{item[0]}}</a>
+                      <p class="card-text" id="card-precio">{{item[2]}}</p>
+                      <a class="btn btn-lg" href="#">
+                        <span>Añadir</span>
+                      </a>
+                    </div>
+                </div>
+                {% endfor %}
+            {% endif %}
+                  
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+{% endblock%}

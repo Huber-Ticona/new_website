@@ -1,21 +1,30 @@
 from flask import Blueprint, render_template, session , request, redirect , url_for
-import pymysql
-from database import obtener_conexion
+
+from modelos.ModeloUsuario import ModeloUsuario
+from modelos.entidades.Usuario import Usuario
+
 
 auth_bp = Blueprint('auth_bp', __name__ ,static_folder='static', template_folder='templates')
-
 
 @auth_bp.route('/login' ,methods = ['GET', 'POST'])
 def login():
 
     if request.method == 'POST':
-        nombre = request.form['nombre_usuario']
+        usuario = request.form['nombre_usuario']
         contra = request.form['contraseña']
 
-        print(nombre)
+        print(usuario)
+        usuario = Usuario(usuario,contra)
+        usuario_logueado = ModeloUsuario.login(usuario)
+        if usuario_logueado != None:
+            print('usuario encontrado')
+        else:
+            print('usuario no encontrado')
+
+        #return redirect(url_for('auth_bp.usuario'))
 
         #VALIDAR CUENTA EN DB 
-        miConexion = obtener_conexion()
+        '''miConexion = obtener_conexion()
         try:
             with miConexion.cursor() as cursor:
         
@@ -27,12 +36,18 @@ def login():
                 return render_template('contacto.html')
 
         finally:
-            miConexion.close()
+            miConexion.close()'''
 
     
     return render_template('login.html' )
         
+@auth_bp.route('/usuario')
+def usuario():
+    if 'usuario' in session:
+        user = session['usuario']
+    return f"<p>{user}<p>"
 
 @auth_bp.route('/logout')
 def logout():
-    return "<p>hola productos<p>"
+    session.pop('usuario', None)
+    return "<p>Sesión cerrada con exito<p>"

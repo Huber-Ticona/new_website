@@ -1,26 +1,71 @@
 {% extends "layout.html" %}
 
 {% block encabezado %}
+
+<link rel="stylesheet" href="{{url_for('static', filename= 'css/producto.css')}}">
 <title>Producto</title>
 {% endblock %}
 
 {% block contenido %}
 <div class="container">
-    <div class="row">
-        <div class="col-sm">
+    <div class="row" style="border:1px solid purple;">
+        <div class="col-md-6">
+
             <div class="contenedor-producto-imagen">
                 <div class="producto-imagen"> imagen </div>
                 <div class="producto-imagenes">imagenes</div>
             </div>
         </div>
-        <div class="col-sm">
+        <div class="col-md-6">
             <div class="contenedor-producto-detalle">
-                <h1 class="producto-titulo">trupan del bueno</h1>
-                <h1>165.600 c/u </h1>
+                <div class="producto-titulo">trupan del bueno</div>
+                <div class="producto-precio">165.600 c/u </div>
+                <div class="producto-accesos">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <button class="btn btn-outline-secondary" type="button" id="button-addon1"> + </button>
+                        </div>
+                        <input type="text" class="form-control" placeholder="1" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" id="button-addon2"> - </button>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary">Agregar al carro</button>
+                    </div>
+                </div>
             </div>
 
         </div>
 
     </div>
+</div>
+<div class="container">
+    <div class="productos-relacionados">
+        <div class="contenedor-vista-productos" id="cont">
+            {% if productos %}
+            {% for item in productos %}
+
+                <div class="card" id="card-contenido">
+                  {% if item[3] != None %}
+                    <img src="{{url_for('productos_bp.imagen_producto' , nombre = item[3] )}}" class="card-img-top" alt="...">
+                  {% else %}
+                    <img src="{{url_for('productos_bp.imagen_producto' , nombre = 'no_disponible.png' )}}" class="card-img-top" alt="...">
+                  {% endif %}
+
+                    <div class="card-body">
+                      <a class="card-title"  id="card-titulo" href="/producto">{{item[0]}}</a>
+                      <p class="card-text" id="card-precio">{{item[2]}}</p>
+                      <a class="btn btn-lg" href="#">
+                        <span>Añadir</span>
+                      </a>
+                    </div>
+                </div>
+                {% endfor %}
+            {% endif %}
+                  
+            </div>
+    </div>
+
 </div>
 {% endblock%}

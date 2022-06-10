@@ -20,16 +20,33 @@ def productos():
         miConexion.close()
 
 @api_bp.route('/tienda')
-def tienda():
+def tienda_categorias():
     miConexion = obtener_conexion()
     try:
         with miConexion.cursor() as cursor:
     
-            sql = "select nombre,categoria,precio from producto"
+            sql = "select nombre,categoria,precio,url_imagen from producto"
+            cursor.execute( sql )
+            consulta = cursor.fetchall()
+            print(consulta)
+            #devolver lista de categorias padres
+            return render_template('tienda.html' )
+
+    finally:
+        miConexion.close()
+
+@api_bp.route('/categoria')
+def tienda_productos():
+    miConexion = obtener_conexion()
+    try:
+        with miConexion.cursor() as cursor:
+    
+            sql = "select nombre,categoria,precio,url_imagen from producto"
             cursor.execute( sql )
             consulta = cursor.fetchall()
             print(consulta)
 
-            return render_template('tienda.html' , productos = consulta )
+            return render_template('categoria.html' , productos = consulta )
+
     finally:
         miConexion.close()

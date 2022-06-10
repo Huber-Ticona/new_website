@@ -1,0 +1,31 @@
+.contenedor-producto-imagen{
+    border: 1px solid red;
+    width: 300px;
+}
+.producto-imagen{
+    border: 1px solid blue;
+    height: 270px;
+    margin: 10px 5px;
+}
+.producto-imagenes{
+    border: 1px solid green;
+    margin: 10px 5px;
+}
+
+.contenedor-producto-detalle{
+    border: 1px solid orange;
+}
+.producto-titulo{
+    border: 1px solid red;
+    margin: 10px 5px;
+    height: 270px;
+}
+.producto-precio{
+    border: 1px solid blue;
+    
+    margin: 10px 5px;
+}
+.producto-accesos{
+    border: 1px solid aqua;
+    display: inline-block;
+}
