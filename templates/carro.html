@@ -1,0 +1,73 @@
+{% extends 'layout.html' %}
+
+{% block encabezado %}
+<link rel="stylesheet" href="{{url_for('static', filename= 'css/carro.css')}}">
+<title>Mi Carro</title>
+{% endblock %}
+
+{% block contenido %}
+{% if carro %}
+<div class="container-fluid" style="border: 1px solid green;">
+    
+    <div class="row" style="background-color: #e9e9e9;">
+        <div class="col-md-8">
+            <div class="carro-encabezado">Carro <span class="carro-encabezado-cantidad">{{carro|length}} productos</span></div>
+            <div class="carro-items">
+                {%for item in carro %}
+            <div class="carro-item">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="carro-item-titulo">{{item[2]}}</p>
+                            <small id="emailHelp" class="form-text text-muted">Solo por tiempo limitado</small>
+
+                        </div>
+                        <div class="col-md-6">
+                            <p class="carro-item-precio">$15000</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="carro-item-contenedor-imagen">
+                                <img class="carro-item-imagen" src="/imagen-producto/{{item[1]}}" >
+                            </div>
+                            
+                        </div>
+                        <div class="col-md-6">
+                            eliminar
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            {%endfor%}
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="carro-resumen">
+                <p>Resumen de cotizacion</p>
+                <p>Total: $450.000</p>
+            </div>
+            <div class="text-center">
+                <button class="btn btn-secondary" style="background-color:#ec801d ;" onclick="descargar()">Descargar Cotizacion</button>
+            </div>
+            
+        </div>
+
+    </div>
+    
+
+</div>
+{% else %}
+<div class="jumbotron">
+    <h1>Tu carro esta vacio</h1>
+    <p>No tienes ningun producto en tu carro.</p>
+    <a class="btn btn-secondary" href="/inicio">Volver a la Tienda</a>
+</div>
+{% endif %}
+<script>
+    function descargar(){
+        alert('en proceso')
+    }
+</script>
+{% endblock%}

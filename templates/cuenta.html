@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block encabezado %}
+<link rel="stylesheet" href="{{url_for('static', filename= 'css/cuenta.css')}}">
+<title>Mi cuenta</title>
+
+
+{% endblock %}
+
+
+{% block contenido %}
+<h1> Hola {{ current_user.usuario}}</h1>
+{% endblock %}

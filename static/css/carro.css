@@ -1,0 +1,52 @@
+.carro-resumen{
+    background-color: #ffff;
+    border-radius: 10px;
+    padding: 10px 10px;
+    margin: 10px 10px;
+}
+.carro-encabezado{
+    border-radius: 10px;
+    height: 50px;
+    background-color:  #ffff;
+    margin: 10px 10px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+}
+.carro-encabezado-cantidad{
+    
+    color: rgb(136, 136, 136);
+}
+.carro-items{
+    border-radius: 10px;
+    background-color:  #ffff;
+    
+    margin: 10px 10px;
+}
+.carro-item{
+    border-radius: 10px;
+    background-color:  #ffff;
+}
+.carro-item-titulo{
+    font-family: 'Open Sans', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+.carro-item-precio{
+    font-family: 'Open Sans', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: rgb(204,20,20);
+}
+.carro-item-contenedor-imagen{
+    width: 150px;
+    height: 150px;
+}
+
+.carro-item-imagen{
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    width: 80%;
+}

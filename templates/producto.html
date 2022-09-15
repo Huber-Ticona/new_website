@@ -7,31 +7,99 @@
 {% endblock %}
 
 {% block contenido %}
-<div class="container">
+
+<div class="modal fade" id="modal-carro-2" aria-hidden="true"   tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <div class="modal-2-contenido">
+          <div id="modal-2-imagen"></div>
+          <p id="modal-2-mensaje"></p>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTENIDO -->
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#"><i class="fa-solid fa-home-alt"></i></a></li>
+      {% if dicc['superior'] %}
+      <li class="breadcrumb-item"><a href="/categoria/{{dicc['superior']}}">{{dicc['superior']}}</a></li>
+      {% endif %}
+      {% if dicc["inferior"]%}
+      <li class="breadcrumb-item"><a href="/categoria/{{dicc['superior']}}/{{dicc['inferior']}}">{{dicc["inferior"]}}</a></li>
+      {% endif%}
+      <!--<li class="breadcrumb-item active" aria-current="page">Data</li>-->
+    </ol>
+  </nav>
+<div class="container-fluid" style="background-color: #fefefe;">
+
+  
     <div class="row" style="border:1px solid purple;">
         <div class="col-md-6">
 
             <div class="contenedor-producto-imagen">
-                <div class="producto-imagen"> imagen </div>
-                <div class="producto-imagenes">imagenes</div>
+                {% if productos %}
+                <script>
+                    
+                </script>
+            
+                <div class="producto-imagen">
+                  {% if productos[3] != None %}
+                    <img class="imagen" src="{{url_for('api_bp.imagen_producto' , nombre = productos[3] )}}"  alt="">
+                  {% else %}
+                    <img class="imagen" src="{{url_for('api_bp.imagen_producto' , nombre = 'no_disponible.png' )}}"  alt="...">
+                  {% endif %}
+                </div>
+                {%endif%}
+                <div class="contenedor-producto-imagenes">
+                  <div class="producto-imagenes">
+                    <div class="imagenes">
+                      <img id="img_0" src="{{url_for('api_bp.imagen_producto' , nombre = productos[3] )}}" class="img-fluid" alt="Responsive image">
+                    </div>
+                     </div>
+                </div>
+                {% if productos[5] != '[]' %}
+                
+                  <script>
+                    var lista_imagenes_extra = JSON.parse('{{productos[5]|safe}}')
+                    //console.log('tiene extras' , lista_imagenes_extra)
+                    for(let i = 0; i < lista_imagenes_extra.length ; i ++){
+                      let item = lista_imagenes_extra[i]
+                      let img = '<div class="imagenes"><img id="img_'+ (i+1).toString() +'" src="/imagen-producto/'+ item +'" class="img-fluid" alt="Responsive image"></div>' 
+                      $('.producto-imagenes').append(img)
+                    }
+                  </script>
+               
+                {%endif%}
+
             </div>
         </div>
+
         <div class="col-md-6">
             <div class="contenedor-producto-detalle">
-                <div class="producto-titulo">trupan del bueno</div>
-                <div class="producto-precio">165.600 c/u </div>
+                <div class="producto-titulo">{{productos[0]}}</div>
+                <div class="producto-precio">${{productos[2].replace(',','.')}}</div>
                 <div class="producto-accesos">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                          <button class="btn btn-outline-secondary" type="button" id="button-addon1"> + </button>
+                          <button class="btn btn-outline-secondary" type="button" onclick="disminuir()"> - </button>
                         </div>
-                        <input type="text" class="form-control" placeholder="1" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                        <input type="number" id="cantidad" min="1" value="1" aria-label="Example text with button addon" aria-describedby="button-addon1">
                         <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" type="button" id="button-addon2"> - </button>
+                            <button class="btn btn-outline-secondary" type="button" onclick="aumentar()"> + </button>
                         </div>
                     </div>
                     <div>
-                        <button class="btn btn-primary">Agregar al carro</button>
+                        <button class="btn btn-primary" onclick="agregar({{productos[4]}})">Agregar al carro</button>
+                        <button class="btn btn-primary" onclick="ver_carro()">ver carro</button>
                     </div>
                 </div>
             </div>
@@ -40,6 +108,67 @@
 
     </div>
 </div>
+    <br>
+
+    <div class="container">
+      <div class="row">
+      <p>Descripcion</p>
+      <div class="descripcion">
+        <p>hola esta es una descripcion</p>
+      </div>
+      </div>
+      
+    </div>
+
+    <script>
+      function aumentar(){
+        cantidad = $('#cantidad').val()
+        $('#cantidad').val(parseInt(cantidad) + 1)
+      }
+      function disminuir(){
+        cantidad = $('#cantidad').val()
+
+        if(parseInt(cantidad) > 1){
+          $('#cantidad').val(parseInt(cantidad) - 1)
+        }
+      }
+      
+      function agregar(id){
+        $('#modal-2-imagen').empty()
+        $('#modal-2-mensaje').empty()
+        cantidad = $('#cantidad').val()
+        nombre_producto = $('.producto-titulo').text()
+        console.log('agregando producto ',id , ' cantidad ', cantidad , 'al carro')
+
+        dato = JSON.stringify({ "producto_id": id , "cantidad": parseInt(cantidad), "nombre_producto": "{{productos[0]}}", "url_imagen": "{{productos[3]}}"})
+
+        $.ajax({
+            url: "{{url_for('tienda_bp.agregar_al_carro')}}",
+            type: 'post',
+            contentType: "application/json; charset=utf-8",
+            data: dato,
+            success: function (resp) {
+                console.log(resp)
+                if (resp.mensaje) {
+                    console.log('ahi respuesta')
+                    console.log(resp.producto)
+                    producto = resp.producto
+                    img = '<img class="item-carro-imagen" src="/imagen-producto/'+producto.url_imagen+'">'
+                    $('#modal-2-imagen').append(img)
+                    $('#modal-2-mensaje').append(resp.mensaje)
+                    $('#modal-carro-2').modal('show')
+                }
+            }
+        });
+      }
+      
+      
+    </script>
+
+    
+    <script src="{{url_for('static', filename= 'scripts/producto.js')}}"></script> 
+
+<!--
 <div class="container">
     <div class="productos-relacionados">
         <div class="contenedor-vista-productos" id="cont">
@@ -48,9 +177,9 @@
 
                 <div class="card" id="card-contenido">
                   {% if item[3] != None %}
-                    <img src="{{url_for('productos_bp.imagen_producto' , nombre = item[3] )}}" class="card-img-top" alt="...">
+                    <img src="{{url_for('api_bp.imagen_producto' , nombre = item[3] )}}" class="card-img-top" alt="...">
                   {% else %}
-                    <img src="{{url_for('productos_bp.imagen_producto' , nombre = 'no_disponible.png' )}}" class="card-img-top" alt="...">
+                    <img src="{{url_for('api_bp.imagen_producto' , nombre = 'no_disponible.png' )}}" class="card-img-top" alt="...">
                   {% endif %}
 
                     <div class="card-body">
@@ -67,5 +196,5 @@
             </div>
     </div>
 
-</div>
+</div>-->
 {% endblock%}

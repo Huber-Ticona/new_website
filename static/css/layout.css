@@ -1,11 +1,17 @@
+body, html {
+  height: 100%;
+  color: #464d69;
+  background-color: #ebebeb;
+  overflow-x: hidden;
+}
 
 .banner_1{
   border: 2px solid green;
   text-align: center;
 }
 .box-navbar-derecho{
-  border: 1px solid red;
-  width: 200px;
+  width: auto;
+  max-width: 400px;
   display: grid;
   grid-template-columns: auto auto auto;
   gap: 10px;
@@ -13,48 +19,107 @@
 
 }
 .item-navbar-derecho{
-  /*border: 1px solid blue;*/
-  display: inline;
-  text-align: center;
+  height: 50px;
+  top: 50%;
+  left: 50%;
+  display: inline-block;
+  margin: auto;
 }
 
-@media (max-width: 1199.98px) { 
-  .item-navbar-derecho{
-    border: 1px solid green;
-  }
- }
 
-  .text-small {
-    font-size: 0.9rem;
-  }
+/* CSS FOOTER */
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+a:hover, a:focus {
+  text-decoration: none;
+}
+
+footer {
+  background: #212529;
+}
+/* CSS FOOTER END */
+
+.boton-carro{
+  width: 45px;
+  height: 45px;
+  background-color: rgb(236,128,29);
+  border-radius: 5px;
+  border: none;
+  outline: none;
+}
+.boton-carro:focus {
+  border: none;
+  outline: none;
+}
+input{
+  width: 50px;
+}
+
+/* OCULTAR CONTROLES DE LOS INPUT NUMBER*/
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.item-carro-imagen{
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    width: 80%;
+
+}
+/* SIDE BAR */
+.principal_sidebar{
+  width: 100%;
+  transition: .3s ease;
+  margin-left: -100%;
+  position: fixed;
+  min-height: 100vh;
+  z-index: 9999; /* NIVEL DE CAPA */
+}
+.principal_sidebar.active{
+  margin-left: 0;
+}
+.sidebar{
+  border: 1px solid blue;
   
-  a {
-    color: inherit;
-    text-decoration: none;
-    transition: all 0.3s;
-  }
-  
-  a:hover, a:focus {
-    text-decoration: none;
-  }
-  
-  .form-control {
-    /*background: #212529; */
-    border-color: #545454;
-  }
-  
-  .form-control:focus {
-   /* background: #212529;*/
-  }
-  
-  footer {
-    background: #212529;
-  }
-  
-  
-  /* ==========================================
-      CUSTOM UTILS CLASSES
-    ========================================== */
-    body, html {
-      height: 100%;
-    }
+  min-height: 100vh;
+  background-color: #ebebeb;
+  min-width: 250px;
+  max-width: 250px ;
+}
+.sidebar_relleno{
+  width: 100%;
+  opacity: 80%;
+  background-color: #ec801d;
+}
+.sidebar_header{
+  padding: 8px 16px;
+  height: 82px;
+  width: 100%;
+  display: inline-block;
+}
+.sidebar li {
+  margin-left: 10px;
+  margin-bottom: 5px;
+}
+.sidebar li span{
+  float: left;
+}
+.sidebar li i{
+  float: right;
+}
+
+.breadcrumb{
+  background-color:#fefefe ;
+}
+

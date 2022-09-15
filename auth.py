@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, session , request, redirect , url_for
+from flask import Blueprint, render_template, session , request, redirect , url_for ,flash
+from flask_login import login_required, login_user, logout_user
 
 from modelos.ModeloUsuario import ModeloUsuario
 from modelos.entidades.Usuario import Usuario
@@ -14,40 +15,31 @@ def login():
         contra = request.form['contraseña']
 
         print(usuario)
-        usuario = Usuario(usuario,contra)
+        usuario = Usuario(0,usuario,contra)
         usuario_logueado = ModeloUsuario.login(usuario)
         if usuario_logueado != None:
             print('usuario encontrado')
+            if usuario_logueado.contrasena:
+                login_user(usuario_logueado)
+                return redirect(url_for('inicio'))
+
+            else:
+                flash('invalida contraseña')
+                print('contraseña invalida')
+            #return render_template('inicio.html' , usuario = usuario.usuario )
         else:
             print('usuario no encontrado')
-
-        #return redirect(url_for('auth_bp.usuario'))
-
-        #VALIDAR CUENTA EN DB 
-        '''miConexion = obtener_conexion()
-        try:
-            with miConexion.cursor() as cursor:
-        
-                sql = "select * from producto"
-                cursor.execute( sql )
-                consulta = cursor.fetchall()
-
-                print(consulta)
-                return render_template('contacto.html')
-
-        finally:
-            miConexion.close()'''
-
+            return render_template('login.html' )
     
     return render_template('login.html' )
-        
-@auth_bp.route('/usuario')
-def usuario():
-    if 'usuario' in session:
-        user = session['usuario']
-    return f"<p>{user}<p>"
+
+ 
+@auth_bp.route('/cuenta')
+@login_required
+def cuenta():
+    return render_template('cuenta.html')
 
 @auth_bp.route('/logout')
 def logout():
-    session.pop('usuario', None)
-    return "<p>Sesión cerrada con exito<p>"
+    logout_user()
+    return redirect(url_for('inicio'))

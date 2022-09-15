@@ -20,3 +20,10 @@
     max-width: 350px;
     min-width: 75px;
 }
+
+#test-responsive{
+    background-image: url('/imagen-producto/auto3.jpg');
+    
+    border: 1px solid red;
+    margin: 10px 10px;
+}

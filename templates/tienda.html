@@ -7,24 +7,189 @@
 {% endblock %}
 
 {% block contenido %}
-<div class="container-fluid">
-  
-    <h1 class="titulo-principal">CATEGORIAS</h1>
 
-</div>
+<div class="tienda d-flex">
+  <!-- LISTA CATEGORIAS VERSION MOVIL -->
+  <div class="tienda_sidebar d-flex">
 
-<div class="jumbotron jumbotron-fluid">
-    <div class="container">
-      <h1 class="display-4">Tableros</h1>
-      <p class="lead">Lo mejor en tableros de construccion y otros.</p>
+    <div class="sidebar_contenido">
+
+      <div class="header-box">
+        Filtros
+        <button class="btn d-lg-none d-block close-sidebar-categoria" style="float: right;"><i
+            class="fa-solid fa-times"></i></button>
+      </div>
+
+      <ul class="list-unstyled">
+        <li class="">
+          <button class="btn  d-block w-100" onclick="abrir_categorias()"><span>Categoria</span><i
+              class="fa-solid fa-caret-down"></i></button>
+          <div class="cont_categorias">
+            <ul class="list-unstyled">
+              {% if dicc['categorias_inferiores'] %}
+                {% for item in dicc['categorias_inferiores'] %}
+                  {% if item[0] == dicc['inferior'] %}
+                  <li class="item_lista"><strong><a href="/categoria/{{dicc['superior']}}/{{item[0]}}">{{item[0]}}</a></strong><span class="badge">{{item[1]}}</span></li>
+                  {% else %}
+                  <li class="item_lista"><a href="/categoria/{{dicc['superior']}}/{{item[0]}}">{{item[0]}}</a><span class="badge">{{item[1]}}</span></li>
+                  {%endif%}
+                {% endfor%}
+                {% endif %}
+            </ul>
+          </div>
+
+        <li class="">
+          <button class="btn  d-block w-100" onclick="abrir_precios()"><span>Precio</span><i
+              class="fa-solid fa-caret-down"></i></button>
+          <div class="cont_precios">
+            <ul class="list-unstyled">
+              <li><input type="checkbox">0 - 50000</li>
+              <li><input type="checkbox">50000 - 150000</li>
+              <li><input type="checkbox">150000 o superior</li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+
     </div>
+    <div class="tienda_sidebar_relleno">
+
+    </div>
+
+  </div>
+
+<div class="tienda_contenido w-100">
+
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#"><i class="fa-solid fa-home-alt"></i></a></li>
+      {% if dicc['superior'] %}
+      <li class="breadcrumb-item"><a href="/categoria/{{dicc['superior']}}">{{dicc['superior']}}</a></li>
+      {% endif %}
+      {% if dicc["inferior"]%}
+      <li class="breadcrumb-item"><a href="/categoria/{{dicc['superior']}}/{{dicc['inferior']}}">{{dicc['inferior']}}</a></li>
+      {% endif%}
+      <!--<li class="breadcrumb-item active" aria-current="page">Data</li>-->
+    </ol>
+  </nav>
+
+  <div class="text-center">
+    <button class="btn  d-lg-none open-sidebar-categoria">Filtrar por  <i class="fa-solid fa-filter"></i></button>
   </div>
   
+  <div class="container-fluid pt-3">
+    <div class="row">
+      <div class="col-lg-3 p-0 d-none d-lg-block d-lx-block" id="categorias_lg" >
+        <div class="header-box">
+          Filtros
+          <button class="btn d-lg-none d-block close-sidebar" style="float: right;"><i
+              class="fa-solid fa-times"></i></button>
+        </div>
+        <!-- LISTA CATEGORIAS VERSION PC -->
+        <div class="pc-categorias">
+         
+        <ul class="list-unstyled">
+          <li class="">
+            <button class="btn  d-block w-100" onclick="abrir_categorias_2()"><span>Categoria</span><i
+                class="fa-solid fa-caret-down"></i></button>
+            <div class="cont_categorias_2">
+              <ul class="list-unstyled">
+                {% if dicc['categorias_inferiores'] %}
+                {% for item in dicc['categorias_inferiores'] %}
+                  {% if item[0] == dicc['inferior'] %}
+                  <li class="item_lista"><input class="d-block d-lg-none d-lx-none" type="checkbox"><strong><a href="/categoria/{{dicc['superior']}}/{{item[0]}}">{{item[0]}}</strong></a><span class="badge">{{item[1]}}</span></li>
+                  {% else %}
+                  <li class="item_lista"><input class="d-block d-lg-none d-lx-none" type="checkbox"><a href="/categoria/{{dicc['superior']}}/{{item[0]}}">{{item[0]}}</a><span class="badge">{{item[1]}}</span></li>
+                  {%endif%}
+                {% endfor%}
+                {% endif %}
+              </ul>
+            </div>
+  
+          <li class="">
+            <button class="btn  d-block w-100" onclick="abrir_precios_2()"><span>Precio</span><i
+                class="fa-solid fa-caret-down"></i></button>
+            <div class="cont_precios_2">
+              <ul class="list-unstyled">
+                <li><input type="checkbox">0 - 50000</li>
+                <li><input type="checkbox">50000 - 150000</li>
+                <li><input type="checkbox">150000 o superior</li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+   
+        </div>
+  
+      </div>
 
-<div class="contenedor-categorias">   
-      <a class="item-categoria" href="/categoria">Planchas</a>
-      <a class="item-categoria" href="/categoria">Quincalleria</a>
-      <a class="item-categoria" href="/categoria">madera seca</a>
-      <a class="item-categoria" href="/categoria">otros</a>  
+
+      <div class="col-lg-9" id="">
+        <!-- VISUALIZACION DE PRODUCTOS -->
+        {% if dicc['productos'] %}
+        
+        <div class="header-vista-productos">
+          <p><strong>{{dicc['productos']|length }}</strong> PRODUCTOS</p>
+        </div>
+
+        <div class="contenedor-vista-productos" id="cont">
+          
+          {% for item in dicc['productos'] %}
+
+          <div id="card-contenido">
+            <div class="descuento">Oferta</div>
+            <div id="card-imagen">
+            {% if item[3] != None %}
+            <img src="{{url_for('api_bp.imagen_producto' , nombre = item[3] )}}"  class="img-fluid"  alt="{{item[0]}}">
+            {% else %}
+            <img src="{{url_for('api_bp.imagen_producto' , nombre = 'no_disponible.png' )}}" class="img-fluid"   alt="{{item[0]}}">
+            {% endif %}
+            </div>
+
+            <div class="dropdown-divider"></div>
+            <div class="card-body p-0 m-0" id="card-cuerpo">
+              <div id="card-titulo"><a href="/producto/{{item[0]}}">{{item[0]}}</a></div>
+              
+              
+              <div class="text-center">
+                <p id="card-precio">$ {{item[2].replace(',','.') }}</p>
+                <button class="btn agregar">Añadir</button>
+              </div>
+              
+            </div>
+            
+          </div>
+          {% endfor %}
+          {% else %}
+          <div class="header-vista-productos">
+            <p><strong>{{dicc['productos']|length }}</strong> PRODUCTOS</p>
+          </div>
+
+          <div class="contenedor-vista-productos" id="cont">
+          </div>
+          {% endif %}
+
+        </div>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+          </ul>
+        </nav>
+      </div>
+
+
+    </div>
+  </div>
+
 </div>
+
+</div>
+
+
+
+<script src="{{url_for('static', filename= 'scripts/tienda.js')}}"></script> 
 {% endblock%}
