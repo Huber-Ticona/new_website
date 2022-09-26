@@ -42,8 +42,8 @@
 <div class="container-fluid" style="background-color: #fefefe;">
 
   
-    <div class="row" style="border:1px solid purple;">
-        <div class="col-md-6">
+    <div class="row" >
+        <div class="col-lg-7">
 
             <div class="contenedor-producto-imagen">
                 {% if productos %}
@@ -53,14 +53,14 @@
             
                 <div class="producto-imagen">
                   {% if productos[3] != None %}
-                    <img class="imagen" src="{{url_for('api_bp.imagen_producto' , nombre = productos[3] )}}"  alt="">
+                    <img id="imagen" class="img-fluid" src="{{url_for('api_bp.imagen_producto' , nombre = productos[3] )}}"  alt="">
                   {% else %}
-                    <img class="imagen" src="{{url_for('api_bp.imagen_producto' , nombre = 'no_disponible.png' )}}"  alt="...">
+                    <img id="imagen"  class="img-luid" src="{{url_for('api_bp.imagen_producto' , nombre = 'no_disponible.png' )}}"  alt="...">
                   {% endif %}
                 </div>
                 {%endif%}
                 <div class="contenedor-producto-imagenes">
-                  <div class="producto-imagenes">
+                  <div class="d-flex flex-md-column flex-row gp-5 producto-imagenes">{#-flex-#}
                     <div class="imagenes">
                       <img id="img_0" src="{{url_for('api_bp.imagen_producto' , nombre = productos[3] )}}" class="img-fluid" alt="Responsive image">
                     </div>
@@ -83,10 +83,16 @@
             </div>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-lg-5">
             <div class="contenedor-producto-detalle">
-                <div class="producto-titulo">{{productos[0]}}</div>
+                <div class="header-producto-detalle">
+                  <strong>ARAUCO</strong>
+                  <div class="producto-titulo">{{productos[0]}}</div>
+                  <div><i class="fa-solid fa-check"></i> Despacho a domicilio</div>
+                </div>
+                
                 <div class="producto-precio">${{productos[2].replace(',','.')}}</div>
+                <div>Cantidad</div>
                 <div class="producto-accesos">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -97,8 +103,8 @@
                             <button class="btn btn-outline-secondary" type="button" onclick="aumentar()"> + </button>
                         </div>
                     </div>
-                    <div>
-                        <button class="btn btn-primary" onclick="agregar({{productos[4]}})">Agregar al carro</button>
+                    <div class="d-inline-flex botones" >
+                        <button class="btn btn-primary" onclick="agregar('{{productos[4]}}')">Agregar al carro</button>
                         <button class="btn btn-primary" onclick="ver_carro()">ver carro</button>
                     </div>
                 </div>

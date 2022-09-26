@@ -1,60 +1,95 @@
 .contenedor-producto-imagen{
-    border: 1px solid red;
-    width: auto;
+    display: flex;
+    height: 60vh;
 }
+/* CSS IMAGENES PRINCIPAL DEL PRODUCTO */
 .producto-imagen{
-    border: 1px solid #0000ff;
-    margin: 10px 10px;
+    order: 1;
     overflow: hidden;
-    min-width: 400px;
-    min-height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    width: 100%;/* 50vh antes*/
+
 }
-.imagen{
-    display: block;
-    margin: 0 auto;
-    max-width: 100%;
-    width: 80%;
+#imagen{
     transition: transform .5s ease;
+    height: 100%;
+    
 }
+@media(max-width:768px) {
+    .contenedor-producto-imagen{
+        flex-direction: column;
+        height: calc(60vh );
+    }
+    .producto-imagen{
+        order: 0;
+        width: 100%;
+    }
+    .contenedor-producto-imagenes{
+        order: 1;
+        min-height: 100px;
+        overflow-y: hidden;
+        margin-top: 20px;
+    }
+    .producto-imagenes{
+        
+    }
+}
+
 .producto-imagen:hover img{
     transform: scale(1.1);
   }
+/* CSS IMAGENES EXTRA DEL PRODUCTO */
 .contenedor-producto-imagenes{
-    border:  1px solid aqua;
-    margin: 10px 10px;
-    overflow-x: scroll ;
+    order: 0;
+    min-width: 100px;
+    overflow-y: scroll ;
+    
+
 }
 
 .producto-imagenes{
-    margin: 10px 10px;
-    border: 1px solid orange;
+    /* flex usado en tag div html */
+    gap: 10px !important;
+}
+.producto-imagenes .imagenes{
+    border: 1px solid rgb(113, 113, 113);
+    border-radius: 10px;
     display: flex;
-    row-gap: 5px;
-    overflow-y: hidden;
-}
-.producto-imagenes img{
-    width: 50px;
-    height: 50px;
-    border: 2px solid #ebebeb;
-}
-.producto-imagenes img:hover{
-    border: 2px solid red;  
+    justify-content: center;
+    align-items: center;
+    width: 70px;
+    
+    min-width: 70px;
+    min-height: 70px;
 }
 
+.producto-imagenes img{
+    max-width: 60px;
+    max-height: 60px;
+}
+.producto-imagenes .imagenes:hover{
+    border: 1px solid red;  
+}
+/* CSS DETALLE DEL PRODUCTO */
 .contenedor-producto-detalle{
-    border: 1px solid orange;
+    padding: 10px 10px;
+}
+.header-producto-detalle{
+    height: 15vh;
 }
 .producto-titulo{
-    border: 1px solid red;
-    margin: 10px 5px;
 
     font-size: 24px;
     line-height: 28px;
-    font-weight: 400;
+    font-weight: 300;
     font-family: 'lato' , sans-serif;
     text-transform: capitalize;
 }
 .producto-precio{
+    margin: 20px 0px;
     font-size: 25px;
     line-height: 22px;
     font-weight: 400;
@@ -62,8 +97,17 @@
     font-family: 'lato' , sans-serif;
 }
 .producto-accesos{
-    border: 1px solid aqua;
-    display: inline-block; 
+    display: flex;
+    flex-direction: row;
+
+}
+.producto-accesos .botones button{
+    background-color: transparent;
+    border: 1px solid #ec801d ;
+    border-radius: 20px;
+    font-size: 18px;
+    color: rgb(113, 113, 113);
+    font-family: 'lato' , sans-serif;
 }
 #cantidad{
     width: 50px;

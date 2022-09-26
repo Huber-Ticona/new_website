@@ -62,16 +62,17 @@ def tienda_productos(categoria_superior = None, categoria_inferior= None):
 
 @tienda_bp.route('/producto/<string:nombre>' , methods=['GET'])
 def vista_producto(nombre = None):
-    print('-'*5  + f'PRODUCTO {nombre} '  + '-'*5)
-    dicc = {} 
-    consulta = ModeloProducto.obtener_producto_x_nombre(nombre)
-    print(consulta)
-    id = consulta[1]
-    dicc = ModeloProducto.obtener_cat_inferior_superior(id)
-    print(dicc)
-    print('vista PRODUCTO v2')
-    print(consulta)
-    return render_template('producto.html'  , productos = consulta , dicc = dicc)
+    if nombre!= None:
+        print('-'*5  + f'PRODUCTO {nombre} '  + '-'*5)
+        dicc = {} 
+        consulta = ModeloProducto.obtener_producto_x_nombre(nombre)
+        print(consulta)
+        id = consulta[1]
+        dicc = ModeloProducto.obtener_cat_inferior_superior(id)
+        print(dicc)
+        print('vista PRODUCTO v2')
+        print(consulta)
+        return render_template('producto.html'  , productos = consulta , dicc = dicc)
         
 
 @tienda_bp.route('/agregar_al_carro' , methods=['POST'])

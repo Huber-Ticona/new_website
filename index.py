@@ -33,8 +33,6 @@ def inicio():
 def contacto():
     return render_template("contacto.html")
 
-
-
 @app.route('/servicios')
 def servicios():
     if 'usuario' in session:
