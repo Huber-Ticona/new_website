@@ -1,11 +1,8 @@
 
-import json
 from flask import Blueprint, abort, jsonify, render_template, send_file, request,session
 from markupsafe import escape
-from database import obtener_conexion
 from modelos.ModeloProducto import ModeloProducto
 from modelos.ModeloCategoria import ModeloCategoria
-
 
 tienda_bp = Blueprint('tienda_bp', __name__, static_folder='static', template_folder='templates')
 
@@ -31,8 +28,7 @@ def tienda_productos(categoria_superior = None, categoria_inferior= None):
         categoria_id = ModeloCategoria.obtener_categoria_id(categoria_inferior)
         if categoria_id != None: #SI EXISTE LA CATEGORIA
             productos = ModeloProducto.obtener_productos_x_categoria(categoria_id)
-            print('todos los productos')
-            print(productos)
+            
             dicc['productos'] = productos
 
         print('-'*10)
@@ -56,8 +52,9 @@ def tienda_productos(categoria_superior = None, categoria_inferior= None):
     else:
         abort(404, description="Resource not found")
         #retornar todos los productos o los mas vendidos ,etc...
-    
-    return render_template('tienda.html' , dicc = dicc )
+        
+
+    return render_template('tienda.html' , dicc = dicc  )
 
 
 @tienda_bp.route('/producto/<string:nombre>' , methods=['GET'])

@@ -1,0 +1,75 @@
+<div id="contenido_1">
+{% if categorias != None %}
+<script>
+    console.log({{categorias|safe}}) //test 
+</script>
+{% for item in categorias[0] %} {# [id_padre, padre, subcategorias, nivel] #}
+    
+    
+    {% set index = loop.index0 %}
+    {% if categorias[3][index] != 0 %} <!-- NO ES CATEGORIA FINAL -->
+    <div  id="dropdown" class="view_{{categorias[0][index]}}">
+
+    <div id="header_dropdown" >
+            <!-- VOLVER -->
+            <a href="#" class="list-group-item d-none d-lg-block inicio_slide_categorias">Volver</a>
+            <a href="#" class="list-group-item d-lg-none close_next_sidebar">Volver</a>
+
+            <a href="#" class="list-group-item d-none d-lg-block">ver todo {{categorias[1][index]}}{#categorias[0][index]#}</a>
+            {#<p class="btn bg-none d-none d-lg-block">nivel {{categorias[3][index]}} | loop:{{index}}</p>#}
+
+            <!-- CERRAR SIDEBAR -->
+            <a href="#" class="list-group-item d-none d-lg-block">Cerrar lg</a>
+            <a href="#" class="list-group-item d-lg-none close-sidebar">Cerrar md</a>
+            
+        
+    </div>
+
+    
+    <div class="row" id="body_dropdown">
+        {#<a href="#" class="list-group-item d-lg-none agregar">add and move</a>
+        <a href="#" class="list-group-item d-lg-none volver">volver</a>#}
+        {% set subcategorias = categorias[2][index].split(',') %}
+        <a href="#" class="list-group-item d-lg-none">ver todo {{categorias[1][index]}}</a>
+
+        {% for item in subcategorias %}
+        <div class="col-lg">
+            <div class="d-none d-lg-block imagen_categoria">
+                imagen
+            </div>
+            {% set new_item = item.split(';') %} 
+
+            <a href="#" class="list-group-item list-group-item-action categoria_link" id="{{new_item[0]}}">{{new_item[1]}}{#new_item[0]#}</a>
+    
+        {% if categorias[3][index] != 0 %}   <!-- Crea lista de subcategorias lvl 3-->
+            {% set aux_id = new_item[0]|int %}
+            {% set aux_list_id = categorias[0] %}
+            {% if  aux_id in aux_list_id %}
+            {% set aux_id2 = aux_list_id.index(aux_id) %}
+            
+            <ul class="list-unstyled d-none d-lg-block">
+                {% for item in (categorias[2][aux_id2]).split(',') %}
+                {% set aux_subcategoria = item.split(';')%}
+                <li>{{aux_subcategoria[1]}}</li>
+                {%endfor%}
+            </ul>
+            {%endif%}
+        {% endif %}   
+        </div>
+        {%endfor%}
+    </div>
+    {#else%} <!-- ES CATEGORIA FINAL -->
+    <div class="">
+        <ul>
+        {% set subcategorias = categorias[2][index].split(',') %}
+        {% for item in subcategorias%}
+            <li>{{item}}</li>
+        {% endfor %
+        </ul>
+    </div>#}
+    {%endif%}
+    </div> 
+    {%endfor%}
+    {%endif%}
+   
+</div>

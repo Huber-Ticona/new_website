@@ -1,0 +1,48 @@
+<ul class="list-unstyled">
+    <li>
+      <button class="btn d-block shadow-none w-100"  data-toggle="collapse" data-target="#lista-categorias-pc"><span class="titulo-filtro">Categorias</span><i
+        class="fa-solid fa-caret-down"></i></button>
+      <div class="collapse show" id="lista-categorias-pc">
+        <ul class="list-unstyled">
+        {% if dicc['categorias_inferiores'] %}
+        {% for item in dicc['categorias_inferiores'] %}
+          {% if item[0] == dicc['inferior'] %}
+          <li class="item_lista"><strong><a href="/categoria/{{dicc['superior']}}/{{item[0]}}">{{item[0]}}</strong></a><span class="badge">{{item[1]}}</span></li>
+          {% else %}
+          <li class="item_lista"><a href="/categoria/{{dicc['superior']}}/{{item[0]}}">{{item[0]}}</a><span class="badge">{{item[1]}}</span></li>
+          {%endif%}
+        {% endfor%}
+        {% endif %}
+      </ul>
+      </div>
+    </li>
+    <li class="">
+      <button class="btn d-block shadow-none w-100" data-toggle="collapse" data-target="#lista-marcas-pc" >
+        <span class="titulo-filtro">Marcas</span><i class="fa-solid fa-caret-down"></i></button>
+      <div class="collapse show" id="lista-marcas-pc">
+        <ul class="list-unstyled">
+        <li class="item_lista"><a href="">ARAUCO</a></li>
+        <li class="item_lista"><a href="">MASSISA</a></li>
+        </ul>
+      </div>
+    </li>
+
+    <li>
+      <button class="btn d-block shadow-none w-100" data-toggle="collapse" data-target="#lista-precios-pc" >
+        <span class="titulo-filtro">Rango de Precios</span><i class="fa-solid fa-caret-down"></i></button>
+      <div class="collapse show" id="lista-precios-pc">
+        
+        <div>
+          <range-selector
+            id="rangeSelector1"
+            min-label="Minimum"
+            max-label="Maximum"
+            min-range="1000"
+            max-range="2022"
+            hide-legends
+          />
+        </div>
+        
+
+    </li>
+  </ul>

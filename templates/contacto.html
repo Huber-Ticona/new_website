@@ -8,16 +8,28 @@
 {% block contenido %}
 
 <div class="container">
+  <div class="text-center">
+    <p class="form-titulo">CONTACTATE CON NOSOTROS</p>
+    
+  <div class="contenedor-ubicacion" id="">
+    <img src="{{url_for('static', filename='docs/enco_frontal.jpg')}}" alt="">
+  </div>
+  
+  <div class="map-responsive">
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d946.098775833662!2d-70.29954175845948!3d-18.465754082249692!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x915aa9af66bf7219%3A0x49681898de357509!2sMaderas%20ENCO%20S.A!5e0!3m2!1sen!2scl!4v1666988403461!5m2!1sen!2scl" 
+    width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+  
+  </div>
+  
     <div class="row">
-        <div class="col-sm">
-            <div class = "contenedor-ubicacion" id="">
-                <img src="{{url_for('static', filename='docs/enco_frontal.jpg')}}" alt="">
-            </div>
-        </div>
+            
         <div class="col-sm">
             <div class="form-container">
-                <p class="form-titulo">CONTACTATE CON NOSOTROS</p>
-                <form>
+                
+                
+                <!--
+                  <form>
                     <div class="form-group">
                         <label for="inputState">Motivo de consulta</label>
                         <select id="inputState" class="form-control">
@@ -48,7 +60,7 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
-                  </form>
+                  </form>-->
             </div>
         </div>
     </div>
@@ -64,7 +76,8 @@
                 <i class="fa-solid fa-location-pin"></i>
             </div>
             <p class="banner-contacto-titulo">NUESTRA LOCALIZACIÓN</p>
-            <p class="banner-contacto-cuerpo">AV SANTA MARIA CON RENATO ROCA, #2333 , Arica, Chile</p>
+            <p class="banner-contacto-cuerpo">AV SANTA MARIA #2482 <br>
+              Arica y parinacota</p>
           </div>
         
       </div>
@@ -73,8 +86,8 @@
             <div class="banner-contacto-icon">
                 <i class="fa-solid fa-message"></i>
             </div>
-            <p class="banner-contacto-titulo">DETALLES CONTACTO</p>
-            <p class="banner-contacto-cuerpo">E-mail: gestion@madenco.cl</p>
+            <p class="banner-contacto-titulo">NUESTRO CORREO</p>
+            <p class="banner-contacto-cuerpo">E-mail: contacto@madenco.cl</p>
           </div>
       </div>
       <div class="col-sm">
@@ -83,14 +96,18 @@
             <div class="banner-contacto-icon">
                 <i class="fa-solid fa-phone"></i>
             </div>
-            <p class="banner-contacto-titulo">CONTACTANOS</p>
-            <p class="banner-contacto-cuerpo">Telefono: xxxxxxxx </p>
+            <p class="banner-contacto-titulo">NUESTRO TELEFONO</p>
+            <p class="banner-contacto-cuerpo">
+              <ul class="list-unstyled">
+                <li>58 2593906</li>
+                <li>58 2593907</li>
+                <li>58 2593908</li>
+              </ul>
+            </p>
           </div>
 
       </div>
-      <div class="col-sm">
-        24/H SERVICIO AL CLIENTE
-      </div>
+    
     </div>
   </div>
 

@@ -1,10 +1,25 @@
 body, html {
-  height: 100%;
-  color: #464d69;
-  background-color: #ebebeb;
+  min-height: 100%;
+  /*background-color: #ebebeb;*/
+  /*background-color: #ffffff;*/
   overflow-x: hidden;
+  font-weight: 500;
+  font-family: 'Montserrat',sans-serif;
 }
 
+#nav_inicio{
+background-color: hsl(36, 95%, 51%);
+color:rgb(118,85,24);
+text-transform: uppercase;
+}
+#nav_inicio a:hover{
+  color: #ffff;
+  }
+#nav_inicio .nav-link{
+  color:white;
+  }
+#contenedor_logo{
+}
 .banner_1{
   border: 2px solid green;
   text-align: center;
@@ -28,19 +43,27 @@ body, html {
 
 
 /* CSS FOOTER */
-a {
-  color: inherit;
-  text-decoration: none;
-  transition: all 0.3s;
-}
+
 
 a:hover, a:focus {
   text-decoration: none;
 }
 
 footer {
-  background: #212529;
+  background:  rgb(236,128,29);
+  
 }
+footer h5{
+  color:  white;
+}
+footer  p{
+  color:  white;
+}
+footer a{
+  color:  white;
+
+}
+
 /* CSS FOOTER END */
 
 .boton-carro{
@@ -77,40 +100,41 @@ input[type=number] {
     width: 80%;
 
 }
+
 /* SIDE BAR */
 .principal_sidebar{
-  width: 100%;
-  transition: .3s ease;
+  min-width: 100%; /* update necesario */
+  max-width: 100%;  /* update necesario */
+  transition: .5s ease;
   margin-left: -100%;
   position: fixed;
   min-height: 100vh;
-  z-index: 9999; /* NIVEL DE CAPA */
+  z-index: 9998; /* NIVEL DE CAPA */
+  overflow-x: hidden; /* update*/
 }
 .principal_sidebar.active{
   margin-left: 0;
 }
 .sidebar{
-  border: 1px solid blue;
-  
+  min-width: 100% ;
+  transition: .5s ease;
   min-height: 100vh;
   background-color: #ebebeb;
-  min-width: 250px;
-  max-width: 250px ;
+  overflow-x: hidden;
 }
-.sidebar_relleno{
-  width: 100%;
-  opacity: 80%;
-  background-color: #ec801d;
+.sidebar .nav-link{
+  color:rgb(118,85,24);
 }
 .sidebar_header{
   padding: 8px 16px;
-  height: 82px;
+  height: auto;
   width: 100%;
-  display: inline-block;
+  display: flex; 
 }
 .sidebar li {
   margin-left: 10px;
   margin-bottom: 5px;
+  border-bottom: 1px solid #c1c1c1;
 }
 .sidebar li span{
   float: left;
@@ -118,8 +142,70 @@ input[type=number] {
 .sidebar li i{
   float: right;
 }
+/* VISUALIZACION DE SIDEBAR CATEGORIAS */
+.next_slide{
+  display: flex;
+  min-width: 100%;
+  overflow-x: hidden;
+}
+.next_sidebar{
+  background-color: #ebebeb;
+  transition: .5s ease;
+  min-width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.next_sidebar .custom_header{
+border: 1px solid blue;
+width: 100%;
+}
+/* VISUALIZACION DE SIDEBAR CATEGORIAS FIN  */
 
 .breadcrumb{
   background-color:#fefefe ;
 }
 
+/* DROPDOWN CATEGORIAS esqueleto PC */
+#contenido_1{
+  background-color: aqua;
+  
+  padding: 5px 5px;
+  position: relative;
+  z-index: 9998 ;
+  height: auto;
+  left: 0;
+  right: 0;
+  display: none;
+}
+@media(max-width:991px){
+  .slide_categorias{
+    display: none !important;
+  }
+}
+#dropdown{
+  border: 2px solid purple;
+  margin-top: 5px;
+  width: 100%;
+}
+#header_dropdown{
+  border:1px solid red;
+  display: inline-flex;
+  width: 100%;
+}
+#body_dropdown{
+  margin: 5px 5px
+}
+/* DROPDOWN CATEGORIAS  PC */
+
+.slide_categorias{
+  height: auto;
+  display: none;
+  border: 1px solid red;
+}
+.imagen_categoria{
+  width: 100px;
+  height: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid blue;
+}

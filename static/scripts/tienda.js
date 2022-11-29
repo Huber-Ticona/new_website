@@ -25,25 +25,11 @@ function abrir_precios(){
   }
 }
 /* para pc */
-function abrir_categorias_2(){
-  if ( $('.cont_categorias_2').is(":hidden")) {
-      $('.cont_categorias_2').slideDown("fast");
-      
-  }else {
-      $('.cont_categorias_2').slideUp("fast");
-  }
-}
-function abrir_precios_2(){
-  if ( $('.cont_precios_2').is(":hidden")) {
-      $('.cont_precios_2').slideDown("fast");
-  }else {
-      $('.cont_precios_2').slideUp("fast");
-  }
-}
+
 $('#card-contenido img').on('click',function(e){
   alt = e.target.alt
   window.location.href = "/producto/"+ alt
 })
-
-
-
+/* slider precio */
+window.addEventListener('range-changed', 
+(e) => {console.log(`Range changed for: ${e.detail.sliderId}. Min/Max range values are available in this object too`)})

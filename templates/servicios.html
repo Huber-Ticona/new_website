@@ -8,29 +8,70 @@
 
 {% block contenido %}
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-6">
-                VENTANALES
-                <div class="contenedor-imagen-servicio">
-                    <img class="imagen-servicio" src="/imagen-producto/ventana-custom-2.jpg" alt="">
-                </div>
-            
-        </div>
-        <div class="col-md-6">
-                PUERTAS
-                <div class="contenedor-imagen-servicio">
-                    <img class="imagen-servicio" src="/imagen-producto/ventana-custom-1.jpg" alt="">
-                </div>
-            
-        </div>
-    </div>
+     
+  <!--<div class="slide">
+    <div class="item" id="slide_1">TIENDA</div>
+    <div class="item" id="slide_2">TABLEROS</div>
+    <div class="item" id="slide_3">DE CONTRUCCION</div>
+  </div>
 
+  <div class="add">add</div>
+  <div class="less">volver</div>-->
+  
+  
+<script>
+  var index_slide = 1 //
+  var max_index = 3
+  
+  $('.add').on('click' , function(){
+    if(index_slide < max_index){
+      console.log('vista actual: ',index_slide)
+    $('#slide_'+index_slide.toString()).css('margin-left','-100%')
+    index_slide = index_slide +1
+    console.log('moviendo a ', index_slide)
+    }
+    let slide = $('.slide')
+    console.log('slide len: ',slide.length)
+    
+    
 
+    /*//aux = index_slide
+    //index_slide = index_slide + 1
+  
+    //let wd = index_slide * 100
+    $('.slide').css('width',wd.toString()+'%' )
+    
+    let x = '<div class="item" id="slide_' + index_slide.toString() + '"><div class="item2"></div>'
+    let y = 'SLIDE: ' +index_slide.toString()
+    let z = '</div>'
+    $('.slide').append(x + y + z)
+    $('#slide_'+ aux.toString()).css('margin-left','-100%' )
+    console.log('add...',index_slide)*/
+  })
 
+  $('.less').on('click' , function(){
+    console.log('vista actual: ',index_slide)
+    if(index_slide > 1 ){
+      
+      index_slide = index_slide - 1
+      $('#slide_'+index_slide.toString()).css('margin-left','0%' )
+      console.log('moviendo a ', index_slide)
+    }
+    
+    /*index_slide = index_slide - 1
+    //let wd = index_slide*100
+    //$('.slide').css('width',wd.toString()+'%' )
+    $('#slide_'+ index_slide.toString()).css('margin-left','0%' )
+    console.log('volver...',index_slide)*/
 
-</div>
+  })
 
+  $('.aux').on('click', function(){
+    console.log('cambiando')
+    $('.slide').css('transform','translateX(-100%)')
+  })
+
+</script>
 
 
 {% endblock%}

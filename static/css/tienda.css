@@ -109,6 +109,9 @@
     height: 40px;
     padding: 5px 5px;
     margin: 5px 5px;
+
+    font-size: 15px;
+    font-weight: 400px !important;
 }
 
 .tienda_sidebar li {
@@ -139,9 +142,9 @@
     font-family: 'arial';
     font-weight: 500;
 }
+
 /* categorias para pc*/
 .pc-categorias{
-    border-radius: 20px;
     background-color: #fefefe;
 }
 #categorias_lg li {
@@ -154,12 +157,20 @@
 #categorias_lg  li i {
     float: right;
 }
+.item_lista a{
+    font-size: 10px;
+    }
 .item_lista span{
 float: right !important;
-border: 1px solid fefefe;
+border: 1px solid #fefefe;
 padding-right: 10px;
-
 }
-
+/* new */
+.titulo-filtro{
+    font-size: 16px;
+    font-weight: 700;
+    color: rgb(113, 113, 113);
+    font-family: 'lato' , sans-serif;
+}
 /* FIN DEL CSS SIDE BAR*/
 

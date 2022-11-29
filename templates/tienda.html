@@ -3,6 +3,7 @@
 {% block encabezado %}
 
 <link rel="stylesheet" href="{{url_for('static', filename= 'css/tienda.css')}}">
+<script src="https://cdn.jsdelivr.net/gh/maxshuty/accessible-web-components/dist/simpleRange.min.js"></script>
 <title>Tienda</title>
 {% endblock %}
 
@@ -15,43 +16,15 @@
     <div class="sidebar_contenido">
 
       <div class="header-box">
-        Filtros
+        Filtros xd
         <button class="btn d-lg-none d-block close-sidebar-categoria" style="float: right;"><i
             class="fa-solid fa-times"></i></button>
       </div>
 
-      <ul class="list-unstyled">
-        <li class="">
-          <button class="btn  d-block w-100" onclick="abrir_categorias()"><span>Categoria</span><i
-              class="fa-solid fa-caret-down"></i></button>
-          <div class="cont_categorias">
-            <ul class="list-unstyled">
-              {% if dicc['categorias_inferiores'] %}
-                {% for item in dicc['categorias_inferiores'] %}
-                  {% if item[0] == dicc['inferior'] %}
-                  <li class="item_lista"><strong><a href="/categoria/{{dicc['superior']}}/{{item[0]}}">{{item[0]}}</a></strong><span class="badge">{{item[1]}}</span></li>
-                  {% else %}
-                  <li class="item_lista"><a href="/categoria/{{dicc['superior']}}/{{item[0]}}">{{item[0]}}</a><span class="badge">{{item[1]}}</span></li>
-                  {%endif%}
-                {% endfor%}
-                {% endif %}
-            </ul>
-          </div>
-
-        <li class="">
-          <button class="btn  d-block w-100" onclick="abrir_precios()"><span>Precio</span><i
-              class="fa-solid fa-caret-down"></i></button>
-          <div class="cont_precios">
-            <ul class="list-unstyled">
-              <li><input type="checkbox">0 - 50000</li>
-              <li><input type="checkbox">50000 - 150000</li>
-              <li><input type="checkbox">150000 o superior</li>
-            </ul>
-          </div>
-        </li>
-      </ul>
+      {% include 'tienda_filtro.html' %}
 
     </div>
+    
     <div class="tienda_sidebar_relleno">
 
     </div>
@@ -59,7 +32,7 @@
   </div>
 
 <div class="tienda_contenido w-100">
-
+  
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="#"><i class="fa-solid fa-home-alt"></i></a></li>
@@ -72,7 +45,20 @@
       <!--<li class="breadcrumb-item active" aria-current="page">Data</li>-->
     </ol>
   </nav>
+  <div>
+    <img src="{{url_for('api_bp.imagen_producto' , nombre = 'banner_melamina_vesto.jpg' )}}" class="img-fluid" alt="">
+  </div>
+  <div class="owl-carousel owl-theme  owl-loaded carrusel">
+    <div class="owl-stage-outer">
+        <div class="owl-stage">
+  
+          <div class="owl-item">
+            </div>
+            </div>
+            </div>
+            </div>
 
+  
   <div class="text-center">
     <button class="btn  d-lg-none open-sidebar-categoria">Filtrar por  <i class="fa-solid fa-filter"></i></button>
   </div>
@@ -81,44 +67,15 @@
     <div class="row">
       <div class="col-lg-3 p-0 d-none d-lg-block d-lx-block" id="categorias_lg" >
         <div class="header-box">
-          Filtros
+          FILTROS
           <button class="btn d-lg-none d-block close-sidebar" style="float: right;"><i
               class="fa-solid fa-times"></i></button>
         </div>
         <!-- LISTA CATEGORIAS VERSION PC -->
         <div class="pc-categorias">
          
-        <ul class="list-unstyled">
-          <li class="">
-            <button class="btn  d-block w-100" onclick="abrir_categorias_2()"><span>Categoria</span><i
-                class="fa-solid fa-caret-down"></i></button>
-            <div class="cont_categorias_2">
-              <ul class="list-unstyled">
-                {% if dicc['categorias_inferiores'] %}
-                {% for item in dicc['categorias_inferiores'] %}
-                  {% if item[0] == dicc['inferior'] %}
-                  <li class="item_lista"><input class="d-block d-lg-none d-lx-none" type="checkbox"><strong><a href="/categoria/{{dicc['superior']}}/{{item[0]}}">{{item[0]}}</strong></a><span class="badge">{{item[1]}}</span></li>
-                  {% else %}
-                  <li class="item_lista"><input class="d-block d-lg-none d-lx-none" type="checkbox"><a href="/categoria/{{dicc['superior']}}/{{item[0]}}">{{item[0]}}</a><span class="badge">{{item[1]}}</span></li>
-                  {%endif%}
-                {% endfor%}
-                {% endif %}
-              </ul>
-            </div>
-  
-          <li class="">
-            <button class="btn  d-block w-100" onclick="abrir_precios_2()"><span>Precio</span><i
-                class="fa-solid fa-caret-down"></i></button>
-            <div class="cont_precios_2">
-              <ul class="list-unstyled">
-                <li><input type="checkbox">0 - 50000</li>
-                <li><input type="checkbox">50000 - 150000</li>
-                <li><input type="checkbox">150000 o superior</li>
-              </ul>
-            </div>
-          </li>
-        </ul>
-   
+        {% include 'tienda_filtro.html' %}
+
         </div>
   
       </div>
@@ -129,7 +86,7 @@
         {% if dicc['productos'] %}
         
         <div class="header-vista-productos">
-          <p><strong>{{dicc['productos']|length }}</strong> PRODUCTOS</p>
+          <p style="width:200px ;border-bottom:1px solid black ;"><strong>{{dicc['productos']|length }}</strong> PRODUCTOS</p>
         </div>
 
         <div class="contenedor-vista-productos" id="cont">
@@ -138,6 +95,7 @@
 
           <div id="card-contenido">
             <div class="descuento">Oferta</div>
+            <div class="descuento" style="margin-top: 20px;">STOCK</div>
             <div id="card-imagen">
             {% if item[3] != None %}
             <img src="{{url_for('api_bp.imagen_producto' , nombre = item[3] )}}"  class="img-fluid"  alt="{{item[0]}}">
@@ -190,6 +148,5 @@
 </div>
 
 
-
-<script src="{{url_for('static', filename= 'scripts/tienda.js')}}"></script> 
+<script src="{{url_for('static', filename= 'scripts/tienda.js')}}"></script>
 {% endblock%}
