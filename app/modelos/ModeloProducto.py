@@ -1,5 +1,5 @@
 import json
-from database import obtener_conexion
+from ..extensiones import obtener_conexion
 
 class ModeloProducto():
 

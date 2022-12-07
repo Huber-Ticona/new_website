@@ -1,5 +1,5 @@
-from database import obtener_conexion
-from modelos.entidades.Usuario import Usuario
+from ..extensiones import obtener_conexion
+from .entidades.Usuario import Usuario
 
 class ModeloUsuario():
     @classmethod

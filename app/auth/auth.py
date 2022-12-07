@@ -1,19 +1,14 @@
 from flask import Blueprint, render_template, session , request, redirect , url_for ,flash
 from flask_login import login_required, login_user, logout_user
 
-from cache import cache
-
-from modelos.ModeloUsuario import ModeloUsuario
-from modelos.entidades.Usuario import Usuario
+from ..modelos.ModeloUsuario import ModeloUsuario
+from ..modelos.entidades.Usuario import Usuario
 
 
 auth_bp = Blueprint('auth_bp', __name__ ,static_folder='static', template_folder='templates')
 
 @auth_bp.route('/login' ,methods = ['GET', 'POST'])
 def login():
-    print('-'*10)
-    categorias = cache.get("all_categorias")
-    print(categorias)
     print('-'*10)
     if request.method == 'POST':
         usuario = request.form['nombre_usuario']
@@ -36,7 +31,7 @@ def login():
             print('usuario no encontrado')
             return render_template('login.html' )
     
-    return render_template('login.html' , categorias= categorias )
+    return render_template('auth/login.html')
 
  
 @auth_bp.route('/cuenta')
@@ -45,6 +40,7 @@ def cuenta():
     return render_template('cuenta.html')
 
 @auth_bp.route('/logout')
+@login_required
 def logout():
     logout_user()
     return redirect(url_for('inicio'))

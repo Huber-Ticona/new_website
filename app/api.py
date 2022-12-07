@@ -1,6 +1,4 @@
 from flask import Blueprint, render_template, jsonify,send_file
-from database import obtener_conexion
-
 api_bp = Blueprint('api_bp', __name__, static_folder='static', template_folder='templates')
 
 

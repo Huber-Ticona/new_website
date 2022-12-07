@@ -1,8 +1,9 @@
 
 from flask import Blueprint, abort, jsonify, render_template, send_file, request,session
 from markupsafe import escape
-from modelos.ModeloProducto import ModeloProducto
-from modelos.ModeloCategoria import ModeloCategoria
+
+from ..modelos.ModeloProducto import ModeloProducto
+from ..modelos.ModeloCategoria import ModeloCategoria
 
 tienda_bp = Blueprint('tienda_bp', __name__, static_folder='static', template_folder='templates')
 

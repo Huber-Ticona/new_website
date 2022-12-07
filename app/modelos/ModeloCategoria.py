@@ -1,4 +1,4 @@
-from database import obtener_conexion
+from ..extensiones import obtener_conexion
 
 class ModeloCategoria():
 
@@ -77,11 +77,11 @@ class ModeloCategoria():
         miConexion = obtener_conexion()
         try:
             with miConexion.cursor() as cursor:
-                #print('- OBTENIENDO ROLLUP CATEGORIAS -')
+                print('- OBTENIENDO ROLLUP CATEGORIAS -')
                 sql = '''
                 with vista as(
                 select  c.categoria_id as id , c.nombre , b.nombre as padre,b.categoria_id as padre_id , c.nivel
-                from categoria2 c inner join categoria2 b ON b.categoria_id = c.padre_id
+                from categoria c inner join categoria b ON b.categoria_id = c.padre_id
 
                 )
 
@@ -100,7 +100,7 @@ class ModeloCategoria():
                 nivel = [ item[2] for item in consulta ]
 
                 consulta = [ id, categoria_padre, sub_categoria , nivel ]
-                #print(consulta)
+                print(consulta)
                 return consulta
 
         except Exception as ex:
