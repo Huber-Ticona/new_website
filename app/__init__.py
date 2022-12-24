@@ -1,5 +1,5 @@
 from flask import Flask, render_template,session,url_for,send_file
-
+import os 
 from config import Config
 from .extensiones import cache, login_manager
 
@@ -22,8 +22,9 @@ def create_app(config_class= Config):
 
 
     # CARGA CONFIGIRACION
-    app.config.from_object(config_class) 
-
+    app.config.from_object(config_class)
+    UPLOAD_FOLDER = os.path.abspath('../Productos')
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
     # CARGA CONFIGURACION DE INSTANCIA
     #app.config.from_pyfile('config.py')
 
@@ -36,7 +37,7 @@ def create_app(config_class= Config):
     app.register_blueprint(main_bp, url_prefix='/')
     app.register_blueprint(api_bp, url_prefix='/')
     app.register_blueprint(auth_bp, url_prefix='/')
-    app.register_blueprint(tienda_bp, url_prefix='/')
+    app.register_blueprint(tienda_bp, url_prefix='/store')
     
     from .modelos.ModeloUsuario import ModeloUsuario
     from .modelos.ModeloCategoria import ModeloCategoria
@@ -50,7 +51,7 @@ def create_app(config_class= Config):
         return ModeloUsuario().get_by_id(id)
 
 
-    @cache.cached(timeout=20 , key_prefix='FUNCION_CATEGORIAS') 
+    #@cache.cached(timeout=20 , key_prefix='FUNCION_CATEGORIAS') 
     def get_all_categories():
         categorias = ModeloCategoria.rollup_categoria()
         return categorias

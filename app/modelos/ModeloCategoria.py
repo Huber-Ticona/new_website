@@ -2,55 +2,8 @@ from ..extensiones import obtener_conexion
 
 class ModeloCategoria():
 
-    @classmethod
-    def obtener_superior_id(self,superior):
-        miConexion = obtener_conexion()
-        try:
-            with miConexion.cursor() as cursor:
-                print('... buscando categoria superior: ',superior)
-                sql = "SELECT * from categoria WHERE JSON_EXTRACT(detalle, '$.tipo_categoria') = 'superior' and JSON_EXTRACT(detalle, '$.nombre_categoria') = %s "
-                cursor.execute( sql , superior )
-                consulta = cursor.fetchone()
-                #print(f'Categoria:  ')
-                print('Categoria_ID: ', consulta)
-                if consulta != None:
-                    return consulta[0] # solo categoria_id
-                else:
-                    return consulta  #retorna None
 
-        except Exception as ex:
-            raise Exception(ex)
-
-        finally:
-            miConexion.close()
-
-    @classmethod
-    def obtener_inferiores(self,superior_id ):
-        miConexion = obtener_conexion()
-        try:
-            with miConexion.cursor() as cursor:
-        
-                sql = """SELECT JSON_EXTRACT(categoria.detalle, '$.nombre_categoria'), count(producto.categoria)
-                        from (producto inner join categoria on producto.categoria = categoria.categoria_id ) 
-                        WHERE JSON_EXTRACT(categoria.detalle, '$.id_superior') = %s
-                        group by producto.categoria """
-
-                cursor.execute( sql , superior_id )
-
-                consulta = cursor.fetchall()
-                if consulta != None:
-                    consulta = [[(consulta[i][0]).replace('"',''),consulta[i][1]] for i in range(len(consulta))]
-                
-                print('Categoria_ID: ', consulta)
-                return consulta
-
-        except Exception as ex:
-            raise Exception(ex)
-
-        finally:
-            miConexion.close()
-
-    @classmethod
+    @classmethod # OBSOLETA
     def obtener_categoria_id(self,nombre_categoria):
         miConexion = obtener_conexion()
         try:
@@ -71,8 +24,51 @@ class ModeloCategoria():
 
         finally:
             miConexion.close()
+    
+    @classmethod  # USADA EN LA NUEVA VERSION DE TIENDA
+    def obtener_categoria_x_nombre_y_padre(self,nombre,padre_id):
+        miConexion = obtener_conexion()
+        try:
+            with miConexion.cursor() as cursor:
+        
+                sql = """
+                SELECT categoria_id, nombre, nivel ,padre_id from categoria 
+                WHERE nombre = %s and padre_id = %s """
 
-    @classmethod       
+                cursor.execute( sql , ( nombre, padre_id ) )
+                consulta = cursor.fetchone()
+                
+                print('Categoria: ', consulta)
+                return consulta
+
+        except Exception as ex:
+            raise Exception(ex)
+
+        finally:
+            miConexion.close()
+
+    @classmethod  # USADA EN LA NUEVA VERSION DE TIENDA
+    def obtener_categorias_hijas_x_padre(self,padre_id):
+        miConexion = obtener_conexion()
+        try:
+            with miConexion.cursor() as cursor:
+        
+                sql = """
+                SELECT categoria_id, nombre, nivel ,padre_id from categoria 
+                WHERE padre_id = %s  """
+
+                cursor.execute( sql , ( padre_id ) )
+                consulta = cursor.fetchall()
+                
+                print('Subcategorias: ', consulta)
+                return consulta
+
+        except Exception as ex:
+            raise Exception(ex)
+
+        finally:
+            miConexion.close()
+    @classmethod # USADA EN LA NUEVA VERSION DE TIENDA
     def rollup_categoria(self):
         miConexion = obtener_conexion()
         try:
@@ -80,7 +76,7 @@ class ModeloCategoria():
                 print('- OBTENIENDO ROLLUP CATEGORIAS -')
                 sql = '''
                 with vista as(
-                select  c.categoria_id as id , c.nombre , b.nombre as padre,b.categoria_id as padre_id , c.nivel
+                select  c.categoria_id as id ,replace(c.nombre,' ','-') as nombre , b.nombre as padre,b.categoria_id as padre_id , c.nivel
                 from categoria c inner join categoria b ON b.categoria_id = c.padre_id
 
                 )

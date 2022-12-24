@@ -16,8 +16,9 @@
     <link rel="stylesheet" href="{{url_for('static', filename= 'css/layout.css')}}">
    
     <link href="https://fonts.cdnfonts.com/css/montserrat?styles=17402,17397,17405,17406,17395,17396,17398,17399,17400,17401,17403,17404,17391,17392,17393,17394" rel="stylesheet">
-                
-                
+    <!-- FAVICON DE LA WEBSITE -->      
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+              
     {% block encabezado %}
     {% endblock %}
 </head>
@@ -37,18 +38,7 @@
               <a class="nav-link" href="/">Inicio<span class="sr-only">(current)</span></a>
             </li>
 
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Tienda
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="/categoria/tableros">Tableros</a>
-                <a class="dropdown-item" href="/categoria/quincalleria">Quincalleria</a>
-                <a class="dropdown-item" href="/categoria/madera">Madera</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">etcet</a>
-              </div>
-            </li>
+           
             <!-- TEST LISTA DESPLEGABLE -->
             <li class="nav-item">
               <button class="btn bg-none open_next_sidebar">Tienda</button>
@@ -88,19 +78,12 @@
               <li class="nav-item active">
                 <a class="nav-link" href="/">Inicio <span class="sr-only">(current)</span></a>
               </li>
-  
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Tienda
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="/categoria/tableros">Tableros</a>
-                  <a class="dropdown-item" href="/categoria/quincalleria">Quincalleria</a>
-                  <a class="dropdown-item" href="/categoria/madera">Madera</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">etcet</a>
-                </div>
+
+              <!-- NEW SWITCH TIENDA -->
+              <li class="nav-item">
+                <a class="nav-link visualizar_categorias_lg" href="#">Tienda</a>
               </li>
+              
   
               <li class="nav-item">
                 <a class="nav-link" href="/servicios">Servicios</a>
@@ -108,10 +91,7 @@
               <li class="nav-item">
                 <a class="nav-link" href="/contacto">Contacto</a>
               </li>
-              <!-- SWITCH -->
-              <li class="nav-item">
-                <a class="nav-link visualizar_categorias_lg" href="#">switch</a>
-              </li>
+              
               
               
             </ul>
@@ -167,116 +147,6 @@
       </div>
       </div>
      
-      <!--
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="/inicio">
-          <img src="{{ url_for('static', filename= 'docs/enco_logov3.png') }}" alt="..." height="36">
-        </a>
-
-        
-        <div class="box-navbar-derecho">
-          {% if current_user.is_anonymous %}
-          <div class="item-navbar-derecho">
-            <a class="nav-link" href="/login"><i class="fa-solid fa-user"></i>Login</a>
-          </div>
-          {% else %}
-          <div class="item-navbar-derecho">
-            <a class="nav-link" href="/cuenta"><i class="fa-solid fa-user"></i>Mi cuenta</a>
-          </div>
-          {% endif %}
-
-          <div class="item-navbar-derecho">
-            <button type="button" class="boton-carro" onclick="ver_carro()"><i class="fa-solid fa-cart-shopping"></i></button>
-          </div>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        </div>
-       
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-
-          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item active">
-              <a class="nav-link" href="/">Inicio <span class="sr-only">(current)</span></a>
-            </li>
-
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Tienda
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="/categoria/tableros">Tableros</a>
-                <a class="dropdown-item" href="/categoria/quincalleria">Quincalleria</a>
-                <a class="dropdown-item" href="/categoria/madera">Madera</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">etcet</a>
-              </div>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link" href="/servicios">Servicios</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/contacto">Contacto</a>
-            </li>
-            
-            
-          </ul>
-          {% if current_user.is_anonymous == False %}
-          <ul class="navbar-nav ml-auto">
-            <a class="nav-item nav-link " href="/logout">Cerrar Sesión</a>
-          </ul>
-          {% endif %}
-          <!-- search 
-          <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-          </form>
-        
-       </div>
-        
-      </nav>-->
-
-
-    <!-- SIDE BAR 
-    <button class="open-sidebar">ver</button>
-    <div class="main-container d-flex">
-      
-      <div class="sidebar" id="side_nav">
-
-        <div class="header-box">
-          Filtros
-          <button class="btn d-md-none d-block close-sidebar" style="float: right;"><i class="fa-solid fa-times"></i></button>
-          
-        </div>
-
-        <ul class="list-unstyled">
-            <li class="">
-              <button class="btn d-md-none d-block w-100" onclick="abrir_categorias()"><span>Categoria</span><i class="fa-solid fa-caret-down"></i></button>
-              <div class="cont_categorias">
-                <ul class="list-unstyled">
-                  <li>msd</li>
-                  <li>melamina</li>
-                </ul>
-              </div>
-            </li>
-            <li class="">
-              <button class="btn d-md-none d-block w-100" onclick="abrir_precios()"><span>Precio</span><i class="fa-solid fa-caret-down"></i></button>
-              <div class="cont_precios">
-              <ul class="list-unstyled">
-                <li>0 - 50000</li>
-                <li>50000 - 150000</li>
-                <li>150000 o superior</li>
-              </ul>
-            </div>
-            </li>
-        </ul>
-
-      </div>
-      
-    </div>
-    -->
-    
     <!-- Modal -->
     <div class="modal fade" id="modal-carro" data-backdrop="static" data-keyboard="false" tabindex="-1"
       aria-labelledby="staticBackdropLabel" aria-hidden="true">

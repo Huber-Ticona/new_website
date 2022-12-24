@@ -4,13 +4,15 @@
         class="fa-solid fa-caret-down"></i></button>
       <div class="collapse show" id="lista-categorias-pc">
         <ul class="list-unstyled">
-        {% if dicc['categorias_inferiores'] %}
-        {% for item in dicc['categorias_inferiores'] %}
-          {% if item[0] == dicc['inferior'] %}
+        {% if dicc['subcategorias'] %}
+        {% for item in dicc['subcategorias'] %}
+
+          {#% if item[0] == dicc['inferior'] %}
           <li class="item_lista"><strong><a href="/categoria/{{dicc['superior']}}/{{item[0]}}">{{item[0]}}</strong></a><span class="badge">{{item[1]}}</span></li>
           {% else %}
           <li class="item_lista"><a href="/categoria/{{dicc['superior']}}/{{item[0]}}">{{item[0]}}</a><span class="badge">{{item[1]}}</span></li>
-          {%endif%}
+          {%endif%#}
+          <li class="item_lista"><a href="/store/{% for x in dicc['miga_pan']%}/{{x.replace(' ','-')}}{% endfor %}/{{item[1].replace(' ','-')}}">{{item[1]}}</a><span class="badge">100</span></li>
         {% endfor%}
         {% endif %}
       </ul>
@@ -32,17 +34,10 @@
         <span class="titulo-filtro">Rango de Precios</span><i class="fa-solid fa-caret-down"></i></button>
       <div class="collapse show" id="lista-precios-pc">
         
-        <div>
-          <range-selector
-            id="rangeSelector1"
-            min-label="Minimum"
-            max-label="Maximum"
-            min-range="1000"
-            max-range="2022"
-            hide-legends
-          />
-        </div>
-        
+        precio range
+        {% include 'tienda/range_slider.html' %}
+      </div>
 
     </li>
+    
   </ul>

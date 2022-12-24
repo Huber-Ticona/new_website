@@ -199,8 +199,12 @@ width: 100%;
 
 .slide_categorias{
   height: auto;
+  width: 100vw;
   display: none;
   border: 1px solid red;
+  position: absolute;
+  z-index: 9997;
+  background-color: white;
 }
 .imagen_categoria{
   width: 100px;

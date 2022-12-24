@@ -1,5 +1,5 @@
 
-from flask import Blueprint, abort, jsonify, render_template, send_file, request,session
+from flask import Blueprint, abort, jsonify, render_template, send_file, request,session,url_for
 from markupsafe import escape
 
 from ..modelos.ModeloProducto import ModeloProducto
@@ -7,55 +7,73 @@ from ..modelos.ModeloCategoria import ModeloCategoria
 
 tienda_bp = Blueprint('tienda_bp', __name__, static_folder='static', template_folder='templates')
 
-@tienda_bp.route('/categoria')
-@tienda_bp.route('/categoria/<string:categoria_superior>')
-@tienda_bp.route('/categoria/<string:categoria_superior>/<string:categoria_inferior>')
-def tienda_productos(categoria_superior = None, categoria_inferior= None):
-    productos = []
-    dicc = {}
 
-    if categoria_superior != None and categoria_inferior != None:
-    # MOSTRAR PRODUCTOS ASOCIADOS A CATEGORIA INFERIOR.
-        print('------ SOLO CATEGORIA SUPERIOR E INFERIOR --------')
-        print(f'Mostrar todos los productos de: {categoria_superior} con {categoria_inferior}')
-        dicc['superior'] = categoria_superior.upper()
-        dicc['inferior'] = categoria_inferior.upper()
+@tienda_bp.route('<string:enombre1>')
+@tienda_bp.route('<string:enombre1>/<string:enombre2>')
+@tienda_bp.route('<string:enombre1>/<string:enombre2>/<string:enombre3>')
+#@tienda_bp.route('/categoria/<string:categoria_superior>/<string:categoria_inferior>')
+def tienda_productos(enombre1 = None,enombre2 = None,enombre3 = None):
+    miga_pan = [] # [nivel 1 , nivel 2 , nivel 3 ] 
+    x = [] # LISTA PRODUCTOS A MOSTRAR 
+    y = [] # LISTA DE SUBCATEGORIAS A MOSTRAR
+    dicc = {} 
+    if enombre1 != None and enombre2 != None and enombre3 != None:
+        dnombre1 = enombre1.replace('-',' ')
+        dnombre2 = enombre2.replace('-',' ')
+        dnombre3 = enombre3.replace('-',' ')
+        print(f'nombre1: {dnombre1} | nombre2: {dnombre2} | nombre3: {dnombre3}')
+        categoria1 = ModeloCategoria.obtener_categoria_x_nombre_y_padre(nombre= dnombre1 , padre_id = 1 )
+        if categoria1 == None:
+            print('categoria lvl 1 incorrecta --> abortando busqueda')
+            abort(404)
 
-        superior_id = ModeloCategoria.obtener_superior_id(categoria_superior)
-        if superior_id != None:
-            lista_inferiores = ModeloCategoria.obtener_inferiores(superior_id)
-            dicc['categorias_inferiores'] = lista_inferiores
-        print('-'*5)
-        categoria_id = ModeloCategoria.obtener_categoria_id(categoria_inferior)
-        if categoria_id != None: #SI EXISTE LA CATEGORIA
-            productos = ModeloProducto.obtener_productos_x_categoria(categoria_id)
-            
-            dicc['productos'] = productos
+        categoria2 = ModeloCategoria.obtener_categoria_x_nombre_y_padre(nombre= dnombre2 , padre_id= categoria1[0] )
+        if categoria2 == None:
+            print('categoria lvl 2 incorrecta --> abortando busqueda')
+            abort(404)
+        categoria3 = ModeloCategoria.obtener_categoria_x_nombre_y_padre(nombre= dnombre3 , padre_id= categoria2[0] )
+        x = ModeloProducto.obtener_productos_x_categoria(categoria3[0])    
+        miga_pan = [enombre1 , enombre2, enombre3 ]
 
-        print('-'*10)
 
-    elif categoria_superior != None:
-        print('------ SOLO CATEGORIA SUPERIOR --------')
-        print('Categoria superior: ', categoria_superior)
-        
-        dicc['superior'] = categoria_superior.upper()
-        
-        superior_id = ModeloCategoria.obtener_superior_id(categoria_superior)
-        if superior_id != None:
-            lista_inferiores = ModeloCategoria.obtener_inferiores(superior_id)
-            dicc['categorias_inferiores'] = lista_inferiores
-            productos = ModeloProducto.obtener_todos_x_cat_superior(superior_id)
-            print('todos los productos de ', superior_id)
-            print(productos)
-            dicc['productos'] = productos 
-        print('-'*10)
+    elif enombre1 != None and enombre2 != None:
+        dnombre1 = enombre1.replace('-',' ')
+        dnombre2 = enombre2.replace('-',' ')
+        print(f'nombre1: {dnombre1} | nombre2: {dnombre2}')
+        categoria1 = ModeloCategoria.obtener_categoria_x_nombre_y_padre(nombre= dnombre1 , padre_id = 1 )
+        if categoria1 == None:
+            print('categoria lvl 1 incorrecta --> abortando busqueda')
+            abort(404)
 
-    else:
-        abort(404, description="Resource not found")
-        #retornar todos los productos o los mas vendidos ,etc...
-        
+        categoria2 = ModeloCategoria.obtener_categoria_x_nombre_y_padre(nombre= dnombre2 , padre_id= categoria1[0] )
+        if categoria2 == None:
+            print('categoria lvl 2 incorrecta --> abortando busqueda')
+            abort(404)
 
-    return render_template('tienda.html' , dicc = dicc  )
+        print('Categoria lvl 1 y 2 correcta ---> Obteniendo Productos y subcategorias')
+        x = ModeloProducto.obtener_productos_x_categoria(categoria2[0])      
+        y = ModeloCategoria.obtener_categorias_hijas_x_padre(categoria2[0])
+        miga_pan = [enombre1 , enombre2 ]
+
+
+    elif enombre1 != None:
+        dnombre1 = enombre1.replace('-',' ')
+        print(f'nombre1: {dnombre1}')
+        categoria1 = ModeloCategoria.obtener_categoria_x_nombre_y_padre(nombre=dnombre1 , padre_id = 1 )
+        if categoria1 == None:
+            print('categoria lvl 1 incorrecta --> abortando busqueda')
+            abort(404)
+        print('Categoria lvl 1 correcta ---> Obteniendo Productos y subcategorias 1 y 2')
+        x = ModeloProducto.obtener_productos_x_categoria(categoria1[0])       
+        y = ModeloCategoria.obtener_categorias_hijas_x_padre(categoria1[0])
+        miga_pan = [enombre1]
+
+    dicc['productos'] = x  
+    dicc['subcategorias'] = y  
+    dicc['miga_pan'] = miga_pan
+    print('miga_pan: ', miga_pan)
+
+    return render_template('tienda/tienda.html' , dicc = dicc  )
 
 
 @tienda_bp.route('/producto/<string:nombre>' , methods=['GET'])
@@ -144,5 +162,9 @@ def mi_carro():
     if 'carro_temporal' in session:
         carro = session['carro_temporal']
 
-    return render_template('carro.html', carro = carro)
+    return render_template('tienda/carro.html', carro = carro)
    
+@tienda_bp.errorhandler(404)
+def page_not_found(e):
+    print('ERROR 404')
+    return jsonify(error=str(e)), 404

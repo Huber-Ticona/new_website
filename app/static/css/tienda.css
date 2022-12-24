@@ -92,7 +92,7 @@
   margin-left: -100%;
   position: fixed;
   min-height: 100vh;
-  z-index: 9998; /* NIVEL DE CAPA */
+  z-index: 9997; /* NIVEL DE CAPA */
   transition: .3s ease;
 }
 .tienda_sidebar.active{
@@ -173,4 +173,7 @@ padding-right: 10px;
     font-family: 'lato' , sans-serif;
 }
 /* FIN DEL CSS SIDE BAR*/
+
+/* REMOVER EL COLOR AZUL DEL ELEMENTO <a>*/
+a { color: inherit; }  
 

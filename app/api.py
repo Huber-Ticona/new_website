@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, jsonify,send_file
+from flask import Blueprint, render_template, jsonify,send_from_directory, current_app
+
 api_bp = Blueprint('api_bp', __name__, static_folder='static', template_folder='templates')
 
 
@@ -6,6 +7,6 @@ api_bp = Blueprint('api_bp', __name__, static_folder='static', template_folder='
 @api_bp.route('/imagen-producto/<string:nombre>')
 def imagen_producto(nombre = None):
 	try:
-		return send_file('Productos/'+ nombre , download_name = nombre)
+		return send_from_directory( current_app.config['UPLOAD_FOLDER'] , nombre )
 	except Exception as e:
 		return str(e)

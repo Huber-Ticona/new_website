@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, session
+from flask import Blueprint, render_template, session,jsonify
 
 main_bp = Blueprint('main_bp', __name__, static_folder='static', template_folder='templates')
 
@@ -21,9 +21,7 @@ def servicios():
     return render_template('servicios.html')
 
 
-@main_bp.errorhandler(404)
-def page_not_found(e):
-    return render_template('404.html'), 404
+
 
 @main_bp.route('/test')
 def test():

@@ -50,11 +50,9 @@ $('.next_sidebar').on('click', '.close_next_sidebar', function(){
 
   //MOVER NEXT_SLIDE  CATEGORIA SIGUIENTE
 $('.next_sidebar').on('click', '.categoria_link', function(){
-  if(next < 3){
+ 
     console.log('moviendo side ',next)
     let aux = next
-    next = next + 1
-
     console.log(this.id)
     console.log(typeof(this.id)) //data -> 1: ver categoria / 2: volver de categoria
     let id = parseInt(this.id)
@@ -64,15 +62,18 @@ $('.next_sidebar').on('click', '.categoria_link', function(){
       console.log('existe div')
       var copia = $('.view_' + id).html();
       //console.log(copia)
-      $('#side_' + next.toString() ).empty()
-      $('#side_' + next.toString() ).append(copia)
-      $('#side_' + aux.toString() ).css('margin-left','-100%' ) 
-    }else{
-      console.log('no existe div')
+      if(next < 3){
+        next = next + 1
+        $('#side_' + next.toString() ).empty()
+        $('#side_' + next.toString() ).append(copia)
+        $('#side_' + aux.toString() ).css('margin-left','-100%' ) 
+      }else{
+        console.log('no se permite mas desplazamiento')
+      }
     }
-  }else{
-      console.log('no se permite mas desplazamiento')
-    }
+    else{
+        console.log('no existe div')
+      }
 })
 
 $('.slide_categorias').on('click', '.categoria_link',function(){

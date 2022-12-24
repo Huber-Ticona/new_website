@@ -3,6 +3,7 @@
 {% block encabezado %}
 
 <link rel="stylesheet" href="{{url_for('static', filename= 'css/tienda.css')}}">
+<link rel="stylesheet" href="{{url_for('tienda_bp.static', filename= 'range_slider.css' )}}">
 <script src="https://cdn.jsdelivr.net/gh/maxshuty/accessible-web-components/dist/simpleRange.min.js"></script>
 <title>Tienda</title>
 {% endblock %}
@@ -21,7 +22,7 @@
             class="fa-solid fa-times"></i></button>
       </div>
 
-      {% include 'tienda_filtro.html' %}
+      {% include 'tienda/tienda_filtro.html' %}
 
     </div>
     
@@ -32,19 +33,23 @@
   </div>
 
 <div class="tienda_contenido w-100">
-  
+  <!-- MIGAS DE PAN -->
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
+      <img src="{{url_for('static',filename='icons/youtube.png')}}" style="border-radius:10px;" class="img-fluid" alt="Responsive image" width="32">
       <li class="breadcrumb-item"><a href="#"><i class="fa-solid fa-home-alt"></i></a></li>
-      {% if dicc['superior'] %}
-      <li class="breadcrumb-item"><a href="/categoria/{{dicc['superior']}}">{{dicc['superior']}}</a></li>
-      {% endif %}
-      {% if dicc["inferior"]%}
-      <li class="breadcrumb-item"><a href="/categoria/{{dicc['superior']}}/{{dicc['inferior']}}">{{dicc['inferior']}}</a></li>
+      {% if dicc['miga_pan']%}
+      {% set aux_url = namespace(value='/store')   %}
+
+      {%for item in dicc['miga_pan']  %}
+      {% set aux_url.value = aux_url.value + '/' + item  %}
+      <li class="breadcrumb-item"><a href="{{aux_url.value}}">{{item.replace('-',' ')}}</a></li>
+      {%endfor%}
       {% endif%}
       <!--<li class="breadcrumb-item active" aria-current="page">Data</li>-->
     </ol>
   </nav>
+  <!-- MIGAS DE PAN END -->
   <div>
     <img src="{{url_for('api_bp.imagen_producto' , nombre = 'banner_melamina_vesto.jpg' )}}" class="img-fluid" alt="">
   </div>
@@ -74,7 +79,7 @@
         <!-- LISTA CATEGORIAS VERSION PC -->
         <div class="pc-categorias">
          
-        {% include 'tienda_filtro.html' %}
+        {% include 'tienda/tienda_filtro.html' %}
 
         </div>
   
@@ -98,19 +103,19 @@
             <div class="descuento" style="margin-top: 20px;">STOCK</div>
             <div id="card-imagen">
             {% if item[3] != None %}
-            <img src="{{url_for('api_bp.imagen_producto' , nombre = item[3] )}}"  class="img-fluid"  alt="{{item[0]}}">
+            <img src="{{url_for('api_bp.imagen_producto' , nombre = item[3] )}}"  class="img-fluid"  alt="{{item[1]}}">
             {% else %}
-            <img src="{{url_for('api_bp.imagen_producto' , nombre = 'no_disponible.png' )}}" class="img-fluid"   alt="{{item[0]}}">
+            <img src="{{url_for('api_bp.imagen_producto' , nombre = 'no_disponible.png' )}}" class="img-fluid"   alt="{{item[1]}}">
             {% endif %}
             </div>
 
             <div class="dropdown-divider"></div>
             <div class="card-body p-0 m-0" id="card-cuerpo">
-              <div id="card-titulo"><a href="/producto/{{item[0]}}">{{item[0]}}</a></div>
+              <div id="card-titulo"><a href="/producto/{{item[0]}}">{{item[1]}}</a></div>
               
               
               <div class="text-center">
-                <p id="card-precio">$ {{item[2].replace(',','.') }}</p>
+                <p id="card-precio">${{item[2]}} {#{item[2].replace(',','.') }#}</p>
                 <button class="btn agregar">Añadir</button>
               </div>
               
@@ -149,4 +154,5 @@
 
 
 <script src="{{url_for('static', filename= 'scripts/tienda.js')}}"></script>
+
 {% endblock%}

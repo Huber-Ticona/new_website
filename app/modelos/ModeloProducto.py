@@ -26,11 +26,13 @@ class ModeloProducto():
         try:
             with miConexion.cursor() as cursor:
                 print('Tipo categoria_id: ', type(categoria_id))
-                sql = "SELECT nombre,categoria,FORMAT(precio, 'Currency'),url_imagen FROM producto WHERE categoria = %s"
+                sql = """
+                select producto_id, nombre , precio , url_imagen , imagen_extra , detalle from producto 
+                where JSON_CONTAINS(detalle, '%s' ,'$.categorias') = 1"""
                 cursor.execute( sql, categoria_id )
-
-                consulta = list(cursor.fetchall())
-                consulta = [ list(item) for item in consulta ]
+                consulta = cursor.fetchall()
+                #consulta = list(cursor.fetchall())
+                #consulta = [ list(item) for item in consulta ]
                 print(consulta)
                 
 
