@@ -3,6 +3,9 @@
  <script>
     console.log({{categorias|safe}}) //test 
 </script>
+{% set rutas_id = rutas[0] %} 
+{% set rutas_url = rutas[1] %} 
+
 {% for item in categorias[0] %} {# [id_padre, padre, subcategorias, nivel] #}
     
     
@@ -15,7 +18,7 @@
             <!-- VOLVER MD -->
             <a href="#" class="list-group-item d-lg-none close_next_sidebar">Volver</a>
 
-            {% if categorias[3][index] != 1 %}  
+            {% if categorias[3][index] > 1 %}  
             <!-- VOLVER LG -->
             <a href="#" class="list-group-item d-none d-lg-block inicio_slide_categorias">Volver</a>
             <!-- VER TODO LG-->  
@@ -35,26 +38,32 @@
     <div class="row" id="body_dropdown">
         {#<a href="#" class="list-group-item d-lg-none agregar">add and move</a>
         <a href="#" class="list-group-item d-lg-none volver">volver</a>#}
-        {% set subcategorias = categorias[2][index].split(',') %}
-        <a href="#" class="list-group-item d-lg-none">ver todo {{categorias[1][index]}}</a>
+        {% set index0 = rutas_id.index(categorias[0][index]) %}
+        <a href="/{{rutas_url[index0]}}" class="list-group-item d-lg-none">ver todo {{categorias[1][index]}}</a>
 
+        {% set subcategorias = categorias[2][index].split(',') %}
         {% for item in subcategorias %}
         <div class="col-lg">
             <div class="d-none d-lg-block imagen_categoria">
                 imagen
             </div>
             {% set new_item = item.split(';') %} 
-
-            {% if categorias[3][index] == 2  %}
-            <a href="/store/{{categorias[1][index]}}/{{new_item[1]}}" class="list-group-item list-group-item-action d-none d-lg-block" id="{{new_item[0]}}">lg lvl2:{{new_item[1].replace('-',' ')}}{#new_item[0]#}</a>
-            <a href="#" class="list-group-item list-group-item-action d-lg-none categoria_link" id="{{new_item[0]}}">md lvl2:{{new_item[1].replace('-',' ')}}{#new_item[0]#}</a>
-            {%elif categorias[3][index] == 3 %}
-            <a href="/store/{{categorias[1][index]}}/{{new_item[1]}}" class="list-group-item list-group-item-action" id="{{new_item[0]}}">md-lg lvl3:{{new_item[1].replace('-',' ')}}{#new_item[0]#}</a>
-            {%else%}
-            <a href="#" class="list-group-item list-group-item-action categoria_link" id="{{new_item[0]}}">{{new_item[1]}}{#new_item[0]#}</a>
+            {% set aux_id = new_item[0]|int %} {# id de la categoria, usado para buscar la ruta y subcategorias #}
+            {% if  aux_id in rutas_id %}
+                {% set index1 = rutas_id.index(aux_id) %}
+                {% if categorias[3][index] == 1 %}
+                <a href="#" class="list-group-item list-group-item-action categoria_link" id="{{new_item[0]}}">{{new_item[1].replace('-',' ')}}</a>
+                {% elif categorias[3][index] == 2  %}
+                <a href="/{{rutas_url[index1]}}" class="list-group-item list-group-item-action d-none d-lg-block" id="{{new_item[0]}}">{{new_item[1].replace('-',' ')}}</a>
+                <a href="#" class="list-group-item list-group-item-action d-lg-none categoria_link" id="{{new_item[0]}}">{{new_item[1].replace('-',' ')}}</a>
+                {% elif categorias[3][index] == 3 %}
+                <a href="/{{rutas_url[index1]}}" class="list-group-item list-group-item-action" id="{{new_item[0]}}">{{new_item[1].replace('-',' ')}}</a>
+                {% endif %}
             {%endif%}
+            
+
         {% if categorias[3][index] > 1 %}   <!-- Crea lista de subcategorias lvl 3-->
-            {% set aux_id = new_item[0]|int %}
+            
             {% set aux_list_id = categorias[0] %}
             {% if  aux_id in aux_list_id %}
             {% set aux_id2 = aux_list_id.index(aux_id) %}

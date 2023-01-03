@@ -1,7 +1,7 @@
 var aux_sidebar_cola = [] // DETERMINA SI VOLVER AL SIDEBAR PRINCIPAL O AL NEXT_SIDEBAR POR ID
 var aux_sidebar_id = 0
 var next = 1
-var switch_slide_pc = false
+var switch_slide_pc = false // False: indica visualizar lvl 2 // True: indica no mostrar categorias formato lvl 3
 $('.open-sidebar').on('click', function(){
     $('.principal_sidebar').addClass('active')
   })
@@ -9,19 +9,23 @@ $('.open-sidebar').on('click', function(){
 $('.principal_sidebar').on('click','.close-sidebar', function(){
   next = 1 // para volver a navegar desde categoria nivel 1
   $('.sidebar').css('margin-left','0' ) 
-  
+  // se restauran los margenes de los side de navegacion.
+  $('#side_1').css('margin-left','0' )
+  $('#side_2').css('margin-left','0' )
+  $('#side_3').css('margin-left','0' )
   $('.principal_sidebar').removeClass('active')
   console.log('cerrando sidebar principal')
 })
 
 // ABRIR NEXT SLIDE
 $('.open_next_sidebar').on('click', function(){
-  
+    console.log('---- abriendo sidebar ----')
+    console.log('next', next)
     $('.sidebar').css('margin-left','-100%' ) 
     $('#side_'+ next.toString()).empty()
     let y = $('.view_1').html();// nivel de categoria 1 = TIENDA
     $('#side_'+ next.toString()).append(y)
-    
+    console.log('---- abriendo sidebar end  ----')
 
   //
   //let z = '</div>'
@@ -50,7 +54,7 @@ $('.next_sidebar').on('click', '.close_next_sidebar', function(){
 
   //MOVER NEXT_SLIDE  CATEGORIA SIGUIENTE
 $('.next_sidebar').on('click', '.categoria_link', function(){
- 
+    console.log('------ navegando categorias sidebar------')
     console.log('moviendo side ',next)
     let aux = next
     console.log(this.id)
@@ -74,12 +78,14 @@ $('.next_sidebar').on('click', '.categoria_link', function(){
     else{
         console.log('no existe div')
       }
+    console.log('------ end ------')
 })
 
+// vista categorias LG 
 $('.slide_categorias').on('click', '.categoria_link',function(){
-console.log('navegando categorias PC')
-if(switch_slide_pc != true){
-  console.log(this.id)
+  console.log('--- navegando categorias PC ---')
+  if(switch_slide_pc != true){
+    console.log(this.id)
     console.log(typeof(this.id)) //data -> 1: ver categoria / 2: volver de categoria
     let id = parseInt(this.id)
     console.log('ver categoria' , id)
@@ -95,10 +101,12 @@ if(switch_slide_pc != true){
     }else{
       console.log('no existe div')
     }
-}else{
-  console.log('no se permite mostrar mas niveles')
-}
-})
+    }
+  else{
+    console.log('no se permite mostrar mas niveles')
+  }
+  console.log('--- end ----')
+}) 
 $('.slide_categorias').on('click', '.inicio_slide_categorias',function(){
   let y = $('.view_1').html();// nivel de categoria 1 = TIENDA
   switch_slide_pc = false
@@ -107,19 +115,21 @@ $('.slide_categorias').on('click', '.inicio_slide_categorias',function(){
 })
 
 $('nav').on('click','.visualizar_categorias_lg',function(){
-  console.log('test view')
+  switch_slide_pc = false
   if($('.slide_categorias').css('display') == 'block'){ 
-    
+    console.log('------ CERRAR categorias LG -------')
     
     $('.slide_categorias').hide('fast')
     //$('#contenido_0').css('display','block')
   } else { 
+    console.log('------ VER categorias LG -------')
     let y = $('.view_1').html();// nivel de categoria 1 = TIENDA
     $('.slide_categorias').empty()
     $('.slide_categorias').append(y)
     $('.slide_categorias').show('fast') 
     //$('#contenido_0').css('display','none')
   }
+  console.log('------ END LG -------')
 })
 
 //

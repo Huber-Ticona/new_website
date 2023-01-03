@@ -38,7 +38,7 @@ class ModeloCategoria():
                 cursor.execute( sql , ( nombre, padre_id ) )
                 consulta = cursor.fetchone()
                 
-                print('Categoria: ', consulta)
+                #print('Categoria: ', consulta)
                 return consulta
 
         except Exception as ex:
@@ -96,6 +96,41 @@ class ModeloCategoria():
                 nivel = [ item[2] for item in consulta ]
 
                 consulta = [ id, categoria_padre, sub_categoria , nivel ]
+                print(consulta)
+                return consulta
+
+        except Exception as ex:
+            raise Exception(ex)
+
+        finally:
+            miConexion.close()
+
+    @classmethod 
+    def obt_rutas(self):
+        miConexion = obtener_conexion()
+        try:
+            with miConexion.cursor() as cursor:
+                print('- OBTENIENDO LAS RUTAS DE LAS CATEGORIAS -')
+                sql = '''
+                WITH RECURSIVE rutas (categoria_id, nombre, nivel, ruta) AS (
+                SELECT c.categoria_id, c.nombre, c.nivel, c.nombre
+                FROM categoria c
+                WHERE c.padre_id IS NULL
+                UNION ALL
+                SELECT c.categoria_id, c.nombre, c.nivel, CONCAT(r.ruta, '/', c.nombre)
+                FROM categoria c
+                INNER JOIN rutas r ON c.padre_id = r.categoria_id
+                )
+                SELECT r.categoria_id, replace(r.ruta,' ','-') as ruta, r.nombre, r.nivel
+                FROM rutas r;
+                '''
+
+                cursor.execute( sql )
+                consulta = list(cursor.fetchall())
+                
+                id = [ item[0] for item in consulta ]
+                ruta = [ item[1] for item in consulta ]
+                consulta = [ id, ruta ]
                 print(consulta)
                 return consulta
 

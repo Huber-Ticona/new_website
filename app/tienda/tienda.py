@@ -72,7 +72,8 @@ def tienda_productos(enombre1 = None,enombre2 = None,enombre3 = None):
     dicc['subcategorias'] = y  
     dicc['miga_pan'] = miga_pan
     print('miga_pan: ', miga_pan)
-
+    
+    
     return render_template('tienda/tienda.html' , dicc = dicc  )
 
 
@@ -80,15 +81,11 @@ def tienda_productos(enombre1 = None,enombre2 = None,enombre3 = None):
 def vista_producto(nombre = None):
     if nombre!= None:
         print('-'*5  + f'PRODUCTO {nombre} '  + '-'*5)
-        dicc = {} 
         consulta = ModeloProducto.obtener_producto_x_nombre(nombre)
+
+        print('vista PRODUCTO')
         print(consulta)
-        id = consulta[1]
-        dicc = ModeloProducto.obtener_cat_inferior_superior(id)
-        print(dicc)
-        print('vista PRODUCTO v2')
-        print(consulta)
-        return render_template('producto.html'  , productos = consulta , dicc = dicc)
+        return render_template('tienda/producto.html'  , producto = consulta  )
         
 
 @tienda_bp.route('/agregar_al_carro' , methods=['POST'])
@@ -167,4 +164,4 @@ def mi_carro():
 @tienda_bp.errorhandler(404)
 def page_not_found(e):
     print('ERROR 404')
-    return jsonify(error=str(e)), 404
+    return render_template('404.html')

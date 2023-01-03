@@ -2,8 +2,8 @@
 
 {% block encabezado %}
 
-<link rel="stylesheet" href="{{url_for('static', filename= 'css/tienda.css')}}">
-<link rel="stylesheet" href="{{url_for('tienda_bp.static', filename= 'range_slider.css' )}}">
+<link rel="stylesheet" href="{{url_for('tienda_bp.static', filename= 'css/tienda.css')}}">
+<link rel="stylesheet" href="{{url_for('tienda_bp.static', filename= 'css/range_slider.css' )}}">
 <script src="https://cdn.jsdelivr.net/gh/maxshuty/accessible-web-components/dist/simpleRange.min.js"></script>
 <title>Tienda</title>
 {% endblock %}
@@ -99,8 +99,8 @@
           {% for item in dicc['productos'] %}
 
           <div id="card-contenido">
-            <div class="descuento">Oferta</div>
-            <div class="descuento" style="margin-top: 20px;">STOCK</div>
+            {#<div class="descuento">Oferta</div>
+            <div class="descuento" style="margin-top: 20px;">STOCK</div>#}
             <div id="card-imagen">
             {% if item[3] != None %}
             <img src="{{url_for('api_bp.imagen_producto' , nombre = item[3] )}}"  class="img-fluid"  alt="{{item[1]}}">
@@ -111,7 +111,7 @@
 
             <div class="dropdown-divider"></div>
             <div class="card-body p-0 m-0" id="card-cuerpo">
-              <div id="card-titulo"><a href="/producto/{{item[0]}}">{{item[1]}}</a></div>
+              <div id="card-titulo"><a href="/store/producto/{{item[1]}}">{{item[1]}}</a></div>
               
               
               <div class="text-center">

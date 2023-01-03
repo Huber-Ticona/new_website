@@ -213,3 +213,7 @@ width: 100%;
   margin-right: auto;
   border: 1px solid blue;
 }
+/* OWL CARROUSEL CONFIGURACION */
+.owl-dots .owl-dot.active {
+  outline: none;
+}

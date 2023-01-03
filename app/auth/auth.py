@@ -4,6 +4,7 @@ from flask_login import login_required, login_user, logout_user
 from ..modelos.ModeloUsuario import ModeloUsuario
 from ..modelos.entidades.Usuario import Usuario
 
+from flask_dance.contrib.facebook import facebook
 
 auth_bp = Blueprint('auth_bp', __name__ ,static_folder='static', template_folder='templates')
 
@@ -34,6 +35,15 @@ def login():
     return render_template('auth/login.html')
 
  
+@auth_bp.route('/login-facebook')
+def login_facebook():
+    if not facebook.authorized:
+        return redirect(url_for('facebook.login'))
+    res = facebook.get('/me?fields=name,email')
+    print(res.json())
+
+    return "login con facebook"
+
 @auth_bp.route('/cuenta')
 @login_required
 def cuenta():

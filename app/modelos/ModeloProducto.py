@@ -33,7 +33,7 @@ class ModeloProducto():
                 consulta = cursor.fetchall()
                 #consulta = list(cursor.fetchall())
                 #consulta = [ list(item) for item in consulta ]
-                print(consulta)
+                #print(consulta)
                 
 
                 return consulta
