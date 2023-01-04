@@ -68,23 +68,23 @@ class ModeloCategoria():
 
         finally:
             miConexion.close()
-    @classmethod # USADA EN LA NUEVA VERSION DE TIENDA
+
+    @classmethod # USADA EN LA NUEVA VERSION DE TIENDA, Optimizada by AI
     def rollup_categoria(self):
         miConexion = obtener_conexion()
         try:
             with miConexion.cursor() as cursor:
                 print('- OBTENIENDO ROLLUP CATEGORIAS -')
                 sql = '''
-                with vista as(
-                select  c.categoria_id as id ,replace(c.nombre,' ','-') as nombre , b.nombre as padre,b.categoria_id as padre_id , c.nivel
-                from categoria c inner join categoria b ON b.categoria_id = c.padre_id
-
+                WITH vista AS(
+                    SELECT c.categoria_id AS id, REPLACE(c.nombre,' ','-') AS nombre, b.nombre AS padre, b.categoria_id AS padre_id, c.nivel
+                    FROM categoria c INNER JOIN categoria b ON b.categoria_id = c.padre_id
                 )
 
-                select distinct(padre),padre_id , nivel ,group_concat(concat(id,';',nombre))
-                from vista 
-                group by padre
-                order by nivel
+                SELECT DISTINCT padre, padre_id, nivel, GROUP_CONCAT(concat(id,';',nombre))
+                FROM vista
+                GROUP BY padre, padre_id, nivel
+                ORDER BY nivel
                 '''
                 cursor.execute( sql )
                 consulta = list(cursor.fetchall())
