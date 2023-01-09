@@ -26,7 +26,9 @@ def create_app(config_class= Config):
     app.config.from_object(config_class)
     UPLOAD_FOLDER = os.path.abspath('../Productos')
     app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-    app.config['TEMPLATES_AUTO_RELOAD'] = True
+
+    app.config['RECAPTCHA_PUBLIC_KEY'] = '6Lc0S9ojAAAAAMQGIqpU6I8XL3yac7HpZrE5zMI6'
+    app.config['RECAPTCHA_PRIVATE_KEY'] = '6Lc0S9ojAAAAAEKcEdlXwoP3g-1rEGsvaSHdDiwW'
     # CARGA CONFIGURACION DE INSTANCIA
     #app.config.from_pyfile('config.py')
 
@@ -58,12 +60,12 @@ def create_app(config_class= Config):
         return ModeloUsuario().get_by_id(id)
 
 
-    @cache.cached(timeout= 60 , key_prefix='FUNCION_OBT_ROLLUP_CATEGORIAS') 
+    @cache.cached(timeout= 360 , key_prefix='FUNCION_OBT_ROLLUP_CATEGORIAS') 
     def get_all_categories():
         categorias = ModeloCategoria.rollup_categoria()
         return categorias
 
-    @cache.cached(timeout= 60 , key_prefix='FUNCION_OBT_RUTAS_CATEGORIAS') 
+    @cache.cached(timeout= 360 , key_prefix='FUNCION_OBT_RUTAS_CATEGORIAS') 
     def get_all_rutas():
         rutas = ModeloCategoria.obt_rutas()
         return rutas

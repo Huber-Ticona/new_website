@@ -3,17 +3,17 @@ from flask_login import UserMixin
 
 class Usuario(UserMixin):
 
-    def __init__(self,id ,usuario ,contrasena):
+    def __init__(self,id , rut ,contrasena, nombre, apellido, correo):
         self.id = id
-        self.usuario = usuario
+        self.rut = rut
+        self.nombre = nombre
+        self.apellido = apellido
+        self.correo = correo
         self.contrasena = contrasena
-        self.nombre = None
-        self.apellido = None
-        self.correo = None
         
     @classmethod
-    def comprobar_contrasena(self,hash_contrasena,contrasena):
-        if hash_contrasena == contrasena:
+    def comprobar_contrasena(self,hash_contrasena,plain_contrasena):
+        if hash_contrasena == plain_contrasena:
             return True
         else:
              return False

@@ -25,7 +25,7 @@ class ModeloProducto():
         miConexion = obtener_conexion()
         try:
             with miConexion.cursor() as cursor:
-                print('Tipo categoria_id: ', type(categoria_id))
+                #print('Tipo categoria_id: ', type(categoria_id))
                 sql = """
                 select producto_id, nombre , precio , url_imagen , imagen_extra , detalle from producto 
                 where JSON_CONTAINS(detalle, '%s' ,'$.categorias') = 1"""

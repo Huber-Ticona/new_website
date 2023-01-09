@@ -1,0 +1,273 @@
+{% extends 'layout.html' %}
+{% block encabezado %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+{% endblock %}
+
+<style>
+    .icono-error {
+        display: none;
+      }
+</style>
+{% block contenido %}
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+    </div> 
+    {% endfor %}
+    <div class="container">
+        <div class= "row">
+            <div class="col">
+            <div class="">
+                    <p>Registrate en pocos pasos</p>
+                    <form id="formulario" method="post" class="form-horizontal">
+                        {{ form.csrf_token }}
+                        <!-- CAMPO NOMBRE-->
+                        <div class="form-group">
+                            {{ form.nombre.label(class="col-sm-2 control-label") }}
+                            <div class="col-sm-10">
+                                {{ form.nombre(class="form-control",pattern="[A-Za-z\sñ]*" ,title="Solo se permiten letras y espacios") }}
+                                <span></span>
+                            </div>
+                            
+                        </div>
+                        <!-- CAMPO APELLIDO-->
+                        <div class="form-group">
+                            {{ form.apellido.label(class="col-sm-2 control-label") }}
+                            <div class="col-sm-10">
+                                {{ form.apellido(class="form-control",pattern="[A-Za-z\sñ]*" ,title="Solo se permiten letras y espacios") }}
+                            </div>
+                        </div>
+                        <!-- CAMPO RUT-->
+                        <div class="form-group">
+                            {{ form.rut.label(class="col-sm-2 control-label") }}
+                            <div class="col-sm-10">
+                                {{ form.rut(class="form-control" ,placeholder='XXXXXXX-X') }}
+                                <i class="fas fa-times icono-error" style="display: none;"></i>
+                            </div>
+                        </div>
+                        <!-- validar RUT-->
+                        <div class="container">
+                            <div class="alert" id="alert-rut" role="alert">
+                            </div>
+                        </div>
+
+                        <!-- CAMPO EMAIL-->
+                        <div class="form-group">
+                            {{ form.correo.label(class="col-sm-2 control-label" ) }}
+                            <div class="col-sm-10">
+                                {{ form.correo(class="form-control", type='email',placeholder='example@gmail.com') }}
+                            </div>
+                        </div>
+                        <!-- validar parametros email-->
+                        <div class="container">
+                            <div class="alert" id="alert-correo" role="alert">
+                            </div>
+                        </div>
+
+                        <!-- CAMPO CONTRASEÑA-->
+                        <div class="form-group">
+                            {{ form.contraseña.label(class="col-sm-2 control-label") }}
+                            <div class="col-sm-10">
+                                {{ form.contraseña(class="form-control") }}
+                            </div>
+                        </div>
+                        <!-- validar parametros contraseña-->
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm">
+                                    <span>Debes usar al menos:</span>
+                                </div>
+                                <div class="col-sm-8">
+                                    <div id="contraseña-requisito-no_mas_seguidos">No más de 2 caracteres idénticos seguidos </div>
+                                    <div id="contraseña-requisito-mayuscula">1 mayuscula</div>
+                                    <div id="contraseña-requisito-minuscula">1 minuscula</div>
+                                    <div id="contraseña-requisito-numero_caracter">1 numero o caracter especial</div>
+                                    <div id="contraseña-requisito-8_caracteres">minimo 8 caracteres</div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <!-- RECAPTCHA-->
+                        <div class="form-group">
+                                {{ form.recaptcha(class="btn btn-info")}}
+                            
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm" >
+                                <input type="submit" value="Registrarse" class="btn btn-primary" style="width: auto;">
+                            </div>
+                        </div>
+                    </form>     
+            </div>
+        </div>
+    </div>
+    <script>
+        
+
+        function validatePassword(password) {
+            var result = {
+                success: true,
+                errors: []
+            };
+        
+            // No más de 2 caracteres idénticos seguidos
+            if (/([a-zA-Z0-9])\1{2,}/.test(password)) {
+                result.success = false;
+                result.errors.push('no_mas_seguidos');
+            }
+            // Una letra minúscula (a-z)
+            if (!/[a-z]/.test(password)) {
+                result.success = false;
+                result.errors.push('minuscula');
+            }
+            // Una letra mayúscula (A-Z)
+            if (!/[A-Z]/.test(password)) {
+                result.success = false;
+                result.errors.push('mayuscula');
+            }
+            // 8-20 caracteres
+            if (!/^.{8,20}$/.test(password)) {
+                result.success = false;
+                result.errors.push('8_caracteres');
+            }
+            // Número o carácter especial
+            if (!/[0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
+                result.success = false;
+                result.errors.push('numero_caracter');
+            }
+            return result;
+        }
+        function validateEmail(email) {
+            var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(email);
+        }
+        
+        function validaRut(rutCompleto) {
+            rutCompleto = rutCompleto.replace("‐","-");
+            if (!/^[0-9]+[-|‐]{1}[0-9kK]{1}$/.test( rutCompleto ))
+                return false;
+            var tmp 	= rutCompleto.split('-');
+            var digv	= tmp[1]; 
+            var rut 	= tmp[0];
+            if ( digv == 'K' ) digv = 'k' ;
+            
+            return (dv(rut) == digv );
+        }
+        function dv(T){
+            var M=0,S=1;
+            for(;T;T=Math.floor(T/10))
+                S=(S+T%10*(9-M++%6))%11;
+            return S?S-1:'k';
+        }
+
+        $('#rut').keyup(function() {
+            var rut = $(this).val();
+            var alert = $('#alert-rut');
+    
+            if (validaRut(rut)) {
+                alert.removeClass('alert-danger').addClass('alert-success');
+                alert.html('Rut válido');
+            } else {
+                alert.removeClass('alert-success').addClass('alert-danger');
+                alert.html('Rut no válido');
+            }
+        });
+        
+        $('#correo').keyup(function() {
+            var email = $(this).val();
+            var alert = $('#alert-correo');
+    
+            if (validateEmail(email)) {
+                alert.removeClass('alert-danger').addClass('alert-success');
+                alert.html('Correo válido');
+            } else {
+                alert.removeClass('alert-success').addClass('alert-danger');
+                alert.html('Correo no válido');
+            }
+        });
+
+        $('#contraseña').keyup(function() {
+            // Ejemplo de uso:
+            let lista_condiciones = ['no_mas_seguidos','minuscula','mayuscula','8_caracteres','numero_caracter']
+            password = $(this).val()
+            
+            if (password.length > 0){
+                result = validatePassword(password)
+                if (result.success) {
+                    console.log('Contraseña válida');
+                    for (let i = 0; i < lista_condiciones.length; i++) {
+                        $('#contraseña-requisito-' + lista_condiciones[i]).css('color', 'green')
+                    }
+                } else {
+                    console.log('Contraseña no válida');
+                    console.log(`Errores: ${result.errors.join(', ')}`);
+                    let lista_errores = result.errors
+                    for (let i = 0; i < lista_condiciones.length; i++) {
+                        if(lista_errores.includes(lista_condiciones[i]))
+                            $('#contraseña-requisito-' + lista_condiciones[i]).css('color', 'red')
+                        else{
+                            $('#contraseña-requisito-' + lista_condiciones[i]).css('color', 'green')
+                        }
+                    }
+                }
+            }else{
+                for (let i = 0; i < lista_condiciones.length; i++) {
+                    $('#contraseña-requisito-' + lista_condiciones[i]).css('color', 'black')
+                }
+            }
+            
+        });
+
+        $('#formulario').submit(function(event) {
+            console.log('------ VALIDANDO TODOS LOS CAMPOS -------')
+                // obtener valores de los campos
+                var nombre = $('#nombre').val();
+                var apellido = $('#apellido').val();
+                var rut = $('#rut').val();
+                var correo = $('#correo').val();
+                var contraseña = $('#contraseña').val();
+                console.log('Datos:')
+                console.log('nombre: ', nombre)
+                console.log('apellido: ', apellido)
+                console.log('rut: ', rut)
+                console.log('correo: ', correo)
+                console.log('contraseña: ', contraseña)
+        
+                // comprobar que todos los campos estén completos
+                if (!nombre || !apellido || !rut || !correo || !contraseña) {
+                    alert('Por favor, completa todos los campos');
+                    event.preventDefault();
+                    return;
+                }
+
+                // comprobar que la contraseña cumpla con los requisitos
+                estadoContraseña = validatePassword(contraseña)
+                if (!estadoContraseña.success) {
+                    toastr.error('La contraseña no cumple los requisitos', 'Error', {timeOut: 3000});
+                    event.preventDefault();
+                    return;
+                }
+                // comprobar que el RUT sea válido
+                if (!validaRut(rut)) {
+                    toastr.error('El RUT no es válido\nAcuerdese del formato (Ej: 12345678-9)', 'Error', {timeOut: 3000});
+                    event.preventDefault();
+                    return;
+                }
+        
+                // comprobar que el correo sea válido
+                if (!validateEmail(correo)) {
+                    toastr.error('El correo no cumple el formato ( xx@xx.xx )', 'Error', {timeOut: 3000});
+                    event.preventDefault();
+                    return;
+                }
+                console.log('------ VALIDANDO TODOS LOS CAMPOS -------')
+            });
+        
+        
+
+        
+    </script>
+    </div>
+{% endblock%}

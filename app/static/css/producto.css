@@ -39,7 +39,7 @@
 }
 
 .producto-imagen:hover img{
-    transform: scale(1.1);
+    /*transform: scale(1.1);*/
   }
 /* CSS IMAGENES EXTRA DEL PRODUCTO */
 .contenedor-producto-imagenes{

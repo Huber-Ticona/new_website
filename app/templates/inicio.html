@@ -13,7 +13,7 @@
 {% endblock %}
 
 {% block contenido %}
-<!-- SLIDE INICIO -->
+<!-- carrousel INICIO -->
 <div id="slide-1" class="carousel slide d-none" data-ride="carousel">
   <div class="carousel-inner">
     <div class="carousel-item active">
@@ -41,6 +41,10 @@
     <span class="sr-only">Next</span>
   </a>
 </div>
+
+<p id="titulo"> NO UI SLIDER xd</p>
+<div id="slider"></div>
+
 <br>
 <div>
   <img src="{{url_for('api_bp.imagen_producto' , nombre = 'mel_banner.jpg' )}}" class="img-fluid" alt="">
@@ -211,8 +215,17 @@
         
       },
       dots:true
-  })
   });
+  var slider = document.getElementById('slider');
+  noUiSlider.create(slider, {
+    start: [20, 80],
+    range: {
+      'min': 0,
+      'max': 100
+    }
+  });
+  });
+
 </script>
 
 

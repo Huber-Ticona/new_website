@@ -18,7 +18,12 @@
     <link href="https://fonts.cdnfonts.com/css/montserrat?styles=17402,17397,17405,17406,17395,17396,17398,17399,17400,17401,17403,17404,17391,17392,17393,17394" rel="stylesheet">
     <!-- FAVICON DE LA WEBSITE -->      
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-              
+    <!-- NO UI SLIDER -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/nouislider.css') }}">
+    <script src="{{ url_for('static', filename='assets/nouislider.min.js') }}"></script>
+    <!-- DRIFT (IMG ZOOM)-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/drift-basic.css') }}">
+    <script src="{{ url_for('static', filename='assets/Drift.min.js') }}"></script>
     {% block encabezado %}
     {% endblock %}
 </head>
@@ -185,7 +190,7 @@
           <div class="modal-footer">
             <button onclick="vaciar_carro()">Vaciar Carro</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            <a type="button" class="btn btn-primary" href="/mi-carro">Ir al carro de compras</a>
+            <a type="button" class="btn btn-primary" href="{{url_for('tienda_bp.mi_carro')}}">Ir al carro de compras</a>
           </div>
         </div>
       </div>

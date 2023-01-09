@@ -3,8 +3,8 @@
 {% block encabezado %}
 
 <link rel="stylesheet" href="{{url_for('tienda_bp.static', filename= 'css/tienda.css')}}">
-<link rel="stylesheet" href="{{url_for('tienda_bp.static', filename= 'css/range_slider.css' )}}">
-<script src="https://cdn.jsdelivr.net/gh/maxshuty/accessible-web-components/dist/simpleRange.min.js"></script>
+<!-- NO UI SLIDER -->
+
 <title>Tienda</title>
 {% endblock %}
 
@@ -21,15 +21,12 @@
         <button class="btn d-lg-none d-block close-sidebar-categoria" style="float: right;"><i
             class="fa-solid fa-times"></i></button>
       </div>
-
-      {% include 'tienda/tienda_filtro.html' %}
-
+      {% with id_slider = 'slider_filtro_movil' %}
+                {% include 'tienda/tienda_filtro.html' %}
+      {% endwith %}
     </div>
-    
     <div class="tienda_sidebar_relleno">
-
     </div>
-
   </div>
 
 <div class="tienda_contenido w-100">
@@ -49,24 +46,17 @@
       <!--<li class="breadcrumb-item active" aria-current="page">Data</li>-->
     </ol>
   </nav>
-  <!-- MIGAS DE PAN END -->
-  <div>
-    <img src="{{url_for('api_bp.imagen_producto' , nombre = 'banner_melamina_vesto.jpg' )}}" class="img-fluid" alt="">
-  </div>
-  <div class="owl-carousel owl-theme  owl-loaded carrusel">
-    <div class="owl-stage-outer">
-        <div class="owl-stage">
-  
-          <div class="owl-item">
-            </div>
-            </div>
-            </div>
-            </div>
+    <!-- MIGAS DE PAN END -->
+    <div>
+      <img src="{{url_for('api_bp.imagen_producto' , nombre = 'banner_melamina_vesto.jpg' )}}" class="img-fluid" alt="">
+    </div>
+    
+    
 
   
-  <div class="text-center">
-    <button class="btn  d-lg-none open-sidebar-categoria">Filtrar por  <i class="fa-solid fa-filter"></i></button>
-  </div>
+    <div class="text-center">
+      <button class="btn  d-lg-none open-sidebar-categoria">Filtrar por  <i class="fa-solid fa-filter"></i></button>
+    </div>
   
   <div class="container-fluid pt-3">
     <div class="row">
@@ -78,21 +68,25 @@
         </div>
         <!-- LISTA CATEGORIAS VERSION PC -->
         <div class="pc-categorias">
-         
-        {% include 'tienda/tienda_filtro.html' %}
 
-        </div>
-  
+          {% with id_slider = 'slider_filtro_escritorio' %}
+                {% include 'tienda/tienda_filtro.html' %}
+          {% endwith %}
+        
+        
+        
       </div>
 
-
+      </div>
       <div class="col-lg-9" id="">
         <!-- VISUALIZACION DE PRODUCTOS -->
         {% if dicc['productos'] %}
         
         <div class="header-vista-productos">
           <p style="width:200px ;border-bottom:1px solid black ;"><strong>{{dicc['productos']|length }}</strong> PRODUCTOS</p>
+          
         </div>
+        
 
         <div class="contenedor-vista-productos" id="cont">
           
@@ -149,10 +143,7 @@
   </div>
 
 </div>
-
 </div>
-
-
 <script src="{{url_for('static', filename= 'scripts/tienda.js')}}"></script>
 
 {% endblock%}

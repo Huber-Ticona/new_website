@@ -1,6 +1,6 @@
 
 from flask import Blueprint, abort, jsonify, render_template, send_file, request,session,url_for
-from markupsafe import escape
+from html import escape
 
 from ..modelos.ModeloProducto import ModeloProducto
 from ..modelos.ModeloCategoria import ModeloCategoria
@@ -18,9 +18,9 @@ def tienda_productos(enombre1 = None,enombre2 = None,enombre3 = None):
     y = [] # LISTA DE SUBCATEGORIAS A MOSTRAR
     dicc = {} 
     if enombre1 != None and enombre2 != None and enombre3 != None:
-        dnombre1 = enombre1.replace('-',' ')
-        dnombre2 = enombre2.replace('-',' ')
-        dnombre3 = enombre3.replace('-',' ')
+        dnombre1 = escape(enombre1.replace('-',' '))
+        dnombre2 = escape(enombre2.replace('-',' '))
+        dnombre3 = escape(enombre3.replace('-',' '))
         print(f'nombre1: {dnombre1} | nombre2: {dnombre2} | nombre3: {dnombre3}')
         categoria1 = ModeloCategoria.obtener_categoria_x_nombre_y_padre(nombre= dnombre1 , padre_id = 1 )
         if categoria1 == None:
@@ -37,8 +37,8 @@ def tienda_productos(enombre1 = None,enombre2 = None,enombre3 = None):
 
 
     elif enombre1 != None and enombre2 != None:
-        dnombre1 = enombre1.replace('-',' ')
-        dnombre2 = enombre2.replace('-',' ')
+        dnombre1 , dnombre2= escape(enombre1.replace('-',' ')) , escape(enombre2.replace('-',' '))
+        
         print(f'nombre1: {dnombre1} | nombre2: {dnombre2}')
         categoria1 = ModeloCategoria.obtener_categoria_x_nombre_y_padre(nombre= dnombre1 , padre_id = 1 )
         if categoria1 == None:
@@ -57,8 +57,9 @@ def tienda_productos(enombre1 = None,enombre2 = None,enombre3 = None):
 
 
     elif enombre1 != None:
-        dnombre1 = enombre1.replace('-',' ')
+        dnombre1 = escape(enombre1.replace('-',' '))
         print(f'nombre1: {dnombre1}')
+
         categoria1 = ModeloCategoria.obtener_categoria_x_nombre_y_padre(nombre=dnombre1 , padre_id = 1 )
         if categoria1 == None:
             print('categoria lvl 1 incorrecta --> abortando busqueda')
@@ -81,10 +82,12 @@ def tienda_productos(enombre1 = None,enombre2 = None,enombre3 = None):
 def vista_producto(nombre = None):
     if nombre!= None:
         print('-'*5  + f'PRODUCTO {nombre} '  + '-'*5)
+        print('-'*5  + f'PRODUCTO escape {escape(nombre)} '  + '-'*5)
         consulta = ModeloProducto.obtener_producto_x_nombre(nombre)
 
-        print('vista PRODUCTO')
         print(consulta)
+        if consulta == None:
+            abort(404)
         return render_template('tienda/producto.html'  , producto = consulta  )
         
 

@@ -30,6 +30,23 @@ $('#card-contenido img').on('click',function(e){
   alt = e.target.alt
   window.location.href = "/producto/"+ alt
 })
-/* slider precio */
-window.addEventListener('range-changed', 
-(e) => {console.log(`Range changed for: ${e.detail.sliderId}. Min/Max range values are available in this object too`)})
+
+$(document).ready(function(){
+  console.log('pagina cargada')
+  var slider_sm = document.getElementById('slider_filtro_movil');
+  var slider_lg = document.getElementById('slider_filtro_escritorio');
+  noUiSlider.create(slider_sm, {
+    start: [20, 80],
+    range: {
+      'min': 0,
+      'max': 100
+    }
+  });
+  noUiSlider.create(slider_lg, {
+    start: [20, 80],
+    range: {
+      'min': 0,
+      'max': 100
+    }
+  });
+});

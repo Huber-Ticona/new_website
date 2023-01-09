@@ -32,10 +32,9 @@
     <li>
       <button class="btn d-block shadow-none w-100" data-toggle="collapse" data-target="#lista-precios-pc" >
         <span class="titulo-filtro">Rango de Precios</span><i class="fa-solid fa-caret-down"></i></button>
+
       <div class="collapse show" id="lista-precios-pc">
-        
-        precio range
-        {% include 'tienda/range_slider.html' %}
+        <div id="{{id_slider}}"></div>
       </div>
 
     </li>
