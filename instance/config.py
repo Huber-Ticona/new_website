@@ -42,6 +42,19 @@ class ConfigProduction(Config):
     USER = 'root'
     PASSWORD = 'Enco$0011'
     DB = 'madenco_web'
+
+    # RECAPTCHA
+    RECAPTCHA_PUBLIC_KEY = '6Lc0S9ojAAAAAMQGIqpU6I8XL3yac7HpZrE5zMI6'
+    RECAPTCHA_PRIVATE_KEY = '6Lc0S9ojAAAAAEKcEdlXwoP3g-1rEGsvaSHdDiwW'
+    
+    # CONFIGURACION MAIL
+    MAIL_SERVER = 'smtp.gmail.com'
+    MAIL_PORT = 465
+    MAIL_USERNAME = 'xmundial.streameryt1998@gmail.com'
+    MAIL_PASSWORD = 'pkoenqywblyinssq'
+    MAIL_USE_TLS = False
+    MAIL_USE_SSL= True
+
     
     # CACHE CONFIG
     #CACHE_TYPE = "SimpleCache"  # Flask-Caching related configs
