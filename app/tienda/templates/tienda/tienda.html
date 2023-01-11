@@ -33,15 +33,13 @@
   <!-- MIGAS DE PAN -->
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <img src="{{url_for('static',filename='icons/youtube.png')}}" style="border-radius:10px;" class="img-fluid" alt="Responsive image" width="32">
       <li class="breadcrumb-item"><a href="#"><i class="fa-solid fa-home-alt"></i></a></li>
       {% if dicc['miga_pan']%}
-      {% set aux_url = namespace(value='/store')   %}
-
-      {%for item in dicc['miga_pan']  %}
-      {% set aux_url.value = aux_url.value + '/' + item  %}
-      <li class="breadcrumb-item"><a href="{{aux_url.value}}">{{item.replace('-',' ')}}</a></li>
-      {%endfor%}
+        {% set aux_url = namespace(value='/store')   %}
+        {% for item in dicc['miga_pan']  %}
+          {% set aux_url.value = aux_url.value + '/' + item  %}
+          <li class="breadcrumb-item"><a href="{{aux_url.value}}">{{item.replace('-',' ')}}</a></li>
+        {% endfor %}
       {% endif%}
       <!--<li class="breadcrumb-item active" aria-current="page">Data</li>-->
     </ol>
@@ -58,17 +56,17 @@
       <button class="btn  d-lg-none open-sidebar-categoria">Filtrar por  <i class="fa-solid fa-filter"></i></button>
     </div>
   
-  <div class="container-fluid pt-3">
+  <div class="container pt-3 pr-0">
     <div class="row">
       <div class="col-lg-3 p-0 d-none d-lg-block d-lx-block" id="categorias_lg" >
-        <div class="header-box">
-          FILTROS
-          <button class="btn d-lg-none d-block close-sidebar" style="float: right;"><i
-              class="fa-solid fa-times"></i></button>
-        </div>
+        
         <!-- LISTA CATEGORIAS VERSION PC -->
         <div class="pc-categorias">
-
+          <div class="header-box">
+            FILTROS
+            <button class="btn d-lg-none d-block close-sidebar" style="float: right;"><i
+                class="fa-solid fa-times"></i></button>
+          </div>
           {% with id_slider = 'slider_filtro_escritorio' %}
                 {% include 'tienda/tienda_filtro.html' %}
           {% endwith %}

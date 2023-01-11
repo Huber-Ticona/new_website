@@ -20,4 +20,7 @@ class Registrar_Cuenta_Form(FlaskForm):
 class Login_Form(FlaskForm):
     rut = StringField('RUT',validators=[InputRequired()])
     contraseña = StringField('Contraseña', validators=[InputRequired()])
-       
+
+class Correo_Form(FlaskForm):
+    correo = StringField('Correo', validators=[InputRequired(), Email(),Length(min=8)])
+    recaptcha = RecaptchaField()

@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+{% block encabezado %}
+    
+{% endblock %}
+
+{% block contenido %}
+
+{% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+    </div>
+    {% endfor %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <form id="formulario"  method="post" class="form">
+                {{ form.csrf_token }}
+                <!-- CAMPO CORREO -->
+                <div class="form-group">
+                    {{ form.correo.label(class="col-sm-2 control-label") }}
+                    <div class="col-sm-10">
+                        {{ form.correo(class="form-control", type='email',placeholder='example@gmail.com') }}
+                        <span></span>
+                    </div>
+                </div>
+                <!-- RECAPTCHA-->
+                <div class="form-group">
+                    {{ form.recaptcha(class="btn btn-info")}}
+                
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm" >
+                        <input type="submit" value="Enviar" class="btn btn-primary" style="width: auto;">
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

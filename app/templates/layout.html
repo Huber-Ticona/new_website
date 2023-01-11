@@ -53,9 +53,7 @@
             <li class="nav-item">
               <a class="nav-link" href="/servicios">Servicios</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/contacto">Contacto</a>
-            </li>
+            
           </ul>
         </div>
         
@@ -93,18 +91,16 @@
               <li class="nav-item">
                 <a class="nav-link" href="/servicios">Servicios</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/contacto">Contacto</a>
-              </li>
+             
               
               
               
             </ul>
-            {% if current_user.is_anonymous == False %}
+            {#% if current_user.is_anonymous == False %}
             <ul class="navbar-nav ml-auto">
               <a class="nav-item nav-link " href="/logout">Cerrar Sesión</a>
             </ul>
-            {% endif %}
+            {% endif %#}
             <!-- search -->
             <div class="input-group m-0">
               <input type="text" class="form-control" style="max-width:250px ;"  placeholder="Buscar producto" aria-label="Buscador de productos" aria-describedby="button-addon2">
@@ -196,47 +192,107 @@
       </div>
     </div>
 
-   
+   {#<footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-3">
+          <div class="my-3">
+            <img src="{{ url_for('static', filename= 'docs/enco_logo_blanco.png') }}" alt="..." class="img-fluid">
+          </div>
+        </div>
+        <div class="col-9">
+          <div class="container-fluid my-3">
+            <div class="row">
+              <div class="col">
+                <h5 class="">Nuestra Empresa</h5>
+                <ul class="list-unstyled text-muted">
+                    <li><a href="#">Sobre nosotros</a></li>
+                    <li><a href="/contacto">Contacto</a></li>
+                    <li><a href="/servicios">Servicios</a></li>
+                </ul>
+            </div>
+            <div class="col">
+                <h5 class="">Recursos</h5>
+                <ul class="list-unstyled text-muted">
+                    <li><a href="#">Eventos</a></li>
+                </ul>
+            </div>
+            <div class="col">
+              <h5 class="">Aspectos legales</h5>
+              <ul class="list-unstyled text-muted">
+                  <li><a href="#">Terminos y condiciones</a></li>
+                  <li><a href="#">Politicas de privacidad</a></li>
+                  <li><a href="#">Politicas de cookies</a></li>
+                  <li><a href="#">Preguntas frecuentes</a></li>
+                  
+              </ul>
+          </div>
+            <div class="col">
+                <h5 class="">Redes Sociales</h5>
+                <div class="contenedor-redes-sociales">
+                  <img src="{{url_for('static',filename='icons/youtube.png')}}" style="border-radius:10px;" class="img-fluid" id="red-social" alt="Responsive image" width="32">
+                  <img src="{{url_for('static',filename='icons/instagram.png')}}" style="border-radius:10px;" class="img-fluid" id="red-social" alt="Responsive image" width="32">
+                  <img src="{{url_for('static',filename='icons/facebook.png')}}" style="border-radius:10px;" class="img-fluid" id="red-social" alt="Responsive image" width="32">
+                  <i class="fa-brands fa-lg fa-youtube" style="color:#FFFFFF; width:32; height:32;"></i>
+                </div>
+            </div>
+            </div>
+            </div>
+          </div>
 
-    <!-- FOOTER -->
+        </div>
+
+    </div>
+   </footer>#}
+   <br>
+
+
+    <!-- FOOTER 1-->
     <div class="d-flex flex-column">
   
       <!-- FOOTER -->
       <footer class="w-100 py-4 flex-shrink-0">
           <div class="container py-4">
               <div class="row gy-4 gx-5">
-                  <div class="col-lg-4 col-md-6">
-                      <img src="{{ url_for('static', filename= 'docs/enco_logo_blanco.png') }}" alt="..." height="120">
+                  <div class="col-lg-2 col-md-6">
+                      <div class="my-3">
+                        <img src="{{ url_for('static', filename= 'docs/enco_logo_blanco.png') }}" alt="..." class="img-fluid">
+                      </div>
                       <p class="small" >Empresa N° 1 en Maderas</p>
-                      <p class="small mb-0">&copy; Copyrights. All rights reserved. {#<a class="text-primary" href="#">Dev-Huber</a>#} </p>
+                      <p class="small mb-0">&copy; Copyrights. Todos los derechos reservados. {#<a class="text-primary" href="#">Dev-Huber</a>#} </p>
                   </div>
-                  <div class="col-lg-2 col-md-6">
-                      <h5 class="mb-3">Accesos Rapidos</h5>
+                  <div class="col-lg-3 col-md-6">
+                      <h5 class="mb-3 my-3">Nuestra Empresa</h5>
                       <ul class="list-unstyled text-muted">
-                          <li><a href="#">Inicio</a></li>
-                          <li><a href="#">Tienda</a></li>
+                          <li><a href="#">Sobre nosotros</a></li>
+                          <li><a href="#">Contacto</a></li>
                           <li><a href="#">Servicios</a></li>
-                          <li><a href="#">Etc...</a></li>
                       </ul>
                   </div>
                   <div class="col-lg-2 col-md-6">
-                      <h5 class="mb-3">Productos Frecuentes</h5>
+                      <h5 class="mb-3 my-3">Recursos</h5>
                       <ul class="list-unstyled text-muted">
-                          <li><a href="#">Melaminas</a></li>
-                          <li><a href="#">Terciados</a></li>
-                          <li><a href="#">Rodones</a></li>
-                          <li><a href="#">etc...</a></li>
+                          <li><a href="#">Eventos</a></li>
                       </ul>
                   </div>
-                  <div class="col-lg-4 col-md-6">
-                      <h5 class="mb-3">Suscripción</h5>
-                      <p class="small">Dejanos tu correo para recibir gratis todas las novedades sobre los productos al instante.</p>
-                      <form action="#">
-                          <div class="input-group mb-3">
-                              <input class="form-control" type="text" placeholder="Correo Electronico" aria-label="Recipient's username" aria-describedby="button-addon2">
-                              <button class="btn btn-primary" id="button-addon2" type="button"><i class="fas fa-paper-plane"></i></button>
-                          </div>
-                      </form>
+                  <div class="col-lg-3 col-md-6">
+                    <h5 class="mb-3 my-3">Aspectos legales</h5>
+                    <ul class="list-unstyled text-muted">
+                        <li><a href="#">Terminos y condiciones</a></li>
+                        <li><a href="#">Politicas de privacidad</a></li>
+                        <li><a href="#">Politicas de cookies</a></li>
+                        <li><a href="#">Preguntas frecuentes</a></li>
+                        
+                    </ul>
+                </div>
+                  <div class="col-lg-2 col-md-6">
+                      <h5 class="mb-3">Redes Sociales</h5>
+                      <div class="contenedor-redes-sociales">
+                        <img src="{{url_for('static',filename='icons/youtube.png')}}" style="border-radius:10px;" class="img-fluid" id="red-social" alt="Responsive image" width="32">
+                        <img src="{{url_for('static',filename='icons/instagram.png')}}" style="border-radius:10px;" class="img-fluid" id="red-social" alt="Responsive image" width="32">
+                        <img src="{{url_for('static',filename='icons/facebook.png')}}" style="border-radius:10px;" class="img-fluid" id="red-social" alt="Responsive image" width="32">
+                        <i class="fa-brands fa-lg fa-youtube" style="color:#FFFFFF; width:32; height:32;"></i>
+                      </div>
                   </div>
               </div>
           </div>

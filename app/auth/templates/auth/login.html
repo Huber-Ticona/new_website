@@ -11,10 +11,17 @@
         {{ message }}
     </div>
     {% endfor %}
-    <div class="container">
-        <div class= "row">
-            <div class="col">
-            <div class="">
+    
+    <div class="container-fluid">
+        <div class= "row mt-5">
+            <div class="col-md justify-content-center order-2">
+                <div class="text-center">
+                    <div>imagssse</div>
+                </div>
+                
+            </div>
+            <div class="col-md justify-content-center order-1 order-md-last">
+            <div class="text-center">
                     <p>Iniciar sesión</p>
                     <form id="formulario"  method="post">
                         {{form.csrf_token}}
@@ -25,6 +32,9 @@
 
                         <div class="form-group">
                             {{form.contraseña( class="form-control" , type='password')}}
+                        </div>
+                        <div>
+                            <span>¿Olvidaste tu contraseña? <a href="{{url_for('auth_bp.recuperar_contraseña')}}">recuperar contraseña</a> </span>
                         </div>
                         <div class="col text-center">
                             <br>

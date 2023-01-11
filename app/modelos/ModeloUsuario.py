@@ -10,6 +10,9 @@ class ModeloUsuario():
             with miConexion.cursor() as cursor:
                 correo = datos['correo'] 
                 rut = datos['rut']
+
+                if (datos['nombre'] is None) or (datos['apellido'] is None) or (datos['rut'] is None) or (datos['correo'] is None) or (datos['contraseña'] is None):
+                    return {'estado':False , 'mensaje': 'Todos los campos son obligatorios'}
                 # comprobar si ya existe un usuario con el mismo correo o rut
                 sql = """
                 SELECT usuario_id, nombre ,apellido  ,
@@ -92,3 +95,21 @@ class ModeloUsuario():
 
         finally:
             miConexion.close()
+    @classmethod
+    def buscar_correo(self, correo):
+        miconexion = obtener_conexion()
+        try:
+            with miconexion.cursor() as cursor:
+                print(f'-------- OBTENER CORREO: {correo} -------')
+                sql = "SELECT usuario_id , rut , contrasena , nombre , apellido , correo from usuario WHERE correo = %s"
+                cursor.execute( sql , correo )
+                consulta = cursor.fetchone()
+                
+                print('usuario: ',consulta)
+                print('-------- END -------')
+                return consulta
+
+        except Exception as ex:
+            raise Exception(ex)
+        finally:
+            miconexion.close()

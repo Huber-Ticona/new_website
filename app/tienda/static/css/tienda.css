@@ -111,9 +111,7 @@
 
 .header-box {
     height: 40px;
-    padding: 5px 5px;
-    margin: 5px 5px;
-
+    text-align: center;
     font-size: 15px;
     font-weight: 400px !important;
 }
@@ -162,7 +160,9 @@
     float: right;
 }
 .item_lista a{
-    font-size: 10px;
+    font-size: 14px;
+    text-transform: capitalize;
+    font-weight: 500;
     }
 .item_lista span{
 float: right !important;

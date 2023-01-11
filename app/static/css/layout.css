@@ -3,7 +3,7 @@ body, html {
   /*background-color: #ebebeb;*/
   /*background-color: #ffffff;*/
   overflow-x: hidden;
-  font-weight: 500;
+  font-weight: 300;
   font-family: 'Montserrat',sans-serif;
 }
 
@@ -63,7 +63,12 @@ footer a{
   color:  white;
 
 }
-
+#red-social{
+  background-color: white;
+}
+#red-social:hover{
+  background-color: black;
+}
 /* CSS FOOTER END */
 
 .boton-carro{

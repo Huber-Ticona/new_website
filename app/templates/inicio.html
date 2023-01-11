@@ -14,17 +14,17 @@
 
 {% block contenido %}
 <!-- carrousel INICIO -->
-<div id="slide-1" class="carousel slide d-none" data-ride="carousel">
+<div id="slide-1" class="carousel slide " data-ride="carousel">
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img class="d-block w-100" src="{{url_for('api_bp.imagen_producto' , nombre = 'slide_enco01.jpg' )}}" height="500" alt="First slide">
+      <img class="d-block w-100" src="{{url_for('api_bp.imagen_producto' , nombre = 'nueva_coleccion_banner.jpg' )}}" height="500" alt="First slide">
       <div class="carousel-caption d-none d-md-block">
-        <h5>BIENVENIDO</h5>
-        <p>COMPRA YA</p>
+        <h5></h5>
+        <p></p>
       </div>
     </div>
     <div class="carousel-item ">
-      <img class="d-block w-100" src="{{url_for('api_bp.imagen_producto' , nombre = 'slide_enco01.jpg' )}}" height="500" alt="First slide">
+      <img class="d-block w-100" src="{{url_for('api_bp.imagen_producto' , nombre = 'banner_melamina_vesto.jpg' )}}" height="500" alt="First slide">
       <div class="carousel-caption d-none d-md-block">
         <h5>BIENVENIDO</h5>
         <p>COMPRA YA</p>
@@ -42,16 +42,10 @@
   </a>
 </div>
 
-<p id="titulo"> NO UI SLIDER xd</p>
-<div id="slider"></div>
-
 <br>
-<div>
-  <img src="{{url_for('api_bp.imagen_producto' , nombre = 'mel_banner.jpg' )}}" class="img-fluid" alt="">
-</div>
 <!-- CATEGORIAS DESTACADAS INICIO -->
 <div class="container-fluid">
-  <p id="titulo">CATEGORIAS DESTACADAS 23</p>
+  {#<p id="titulo">CATEGORIAS DESTACADAS</p>
   <div class="row">
     <div class="col-4">
       <div class="card" style="width: 18rem;">
@@ -82,7 +76,7 @@
           <a href="#" class="btn ver-categoria">Ver todo</a>
         </div>
       </div>
-    </div>
+    </div>#}
 
   </div>
 <!--<div id="body">
@@ -113,70 +107,55 @@
           <div class="owl-item">
             <div id="card-contenido">
               <div id="card-imagen">
-                <img src="{{url_for('api_bp.imagen_producto' , nombre = 'melamina-cerezo.jpg' )}}" class="card-img-top" alt="...">
+                <img src="{{url_for('api_bp.imagen_producto' , nombre = 'MELAMINA MARMARA 18 MM.jfif' )}}" class="card-img-top" alt="...">
               </div>
-              <div class="card-body">
-                <p class="card-title">Melamina coigue 100 x 130 x 5mm</p>
-                <p class="card-text">130000.</p>
-                <a href="#" class="btn btn-primary">ADD</a>
-              </div>
-              </div>
-          </div>
-          <div class="owl-item">
-            <div id="card-contenido">
-              <div id="card-imagen">
-                <img src="{{url_for('api_bp.imagen_producto' , nombre = 'melamina-cerezo.jpg' )}}" class="card-img-top" alt="...">
-              </div>
-              <div class="card-body">
-                <p class="card-title">Melamina coigue 100 x 130 x 5mm</p>
-                <p class="card-text">130000.</p>
-                <a href="#" class="btn btn-primary">ADD</a>
+              <div class="dropdown-divider"></div>
+              <div class="card-body p-0 m-0" id="card-cuerpo">
+                <p id="card-titulo">Melamina coigue 100 x 130 x 5mm</p>
+                <div class="text-center">
+                  <p id="card-precio">$$99999{#{item[2].replace(',','.') }#}</p>
+                  <button class="btn agregar">Añadir</button>
+                </div>
               </div>
               </div>
           </div>
           <div class="owl-item">
             <div id="card-contenido">
               <div id="card-imagen">
-                <img src="{{url_for('api_bp.imagen_producto' , nombre = 'melamina-cerezo.jpg' )}}" class="card-img-top" alt="...">
+                <img src="{{url_for('api_bp.imagen_producto' , nombre = 'MELAMINA ROBLE CAVA 15 MM.jfif' )}}" class="card-img-top" alt="...">
               </div>
-              <div class="card-body">
-                <p class="card-title">Melamina coigue 100 x 130 x 5mm</p>
-                <p class="card-text">130000.</p>
-                <a href="#" class="btn btn-primary">ADD</a>
-              </div>
-              </div>
-          </div>
-          <div class="owl-item">
-            <div id="card-contenido">
-              <div id="card-imagen">
-                <img src="{{url_for('api_bp.imagen_producto' , nombre = 'melamina-cerezo.jpg' )}}" class="card-img-top" alt="...">
-              </div>
-              <div class="card-body">
-                <p class="card-title">Melamina coigue 100 x 130 x 5mm</p>
-                <p class="card-text">130000.</p>
-                <a href="#" class="btn btn-primary">ADD</a>
+              <div class="dropdown-divider"></div>
+              <div class="card-body p-0 m-0" id="card-cuerpo">
+                <p id="card-titulo">Melamina coigue 100 x 130 x 5mm</p>
+                <div class="text-center">
+                  <p id="card-precio">$99999 {#{item[2].replace(',','.') }#}</p>
+                  <button class="btn agregar">Añadir</button>
+                </div>
               </div>
               </div>
           </div>
           <div class="owl-item">
             <div id="card-contenido">
               <div id="card-imagen">
-                <img src="{{url_for('api_bp.imagen_producto' , nombre = 'melamina-cerezo.jpg' )}}" class="card-img-top" alt="...">
+                <img src="{{url_for('api_bp.imagen_producto' , nombre = 'MELAMINA TEKA ARTICO 18 MM.jfif' )}}" class="card-img-top" alt="...">
               </div>
-              <div class="card-body">
-                <p class="card-title">Melamina coigue 100 x 130 x 5mm</p>
-                <p class="card-text">130000.</p>
-                <a href="#" class="btn btn-primary">ADD</a>
+              <div class="dropdown-divider"></div>
+              <div class="card-body p-0 m-0" id="card-cuerpo">
+                <p id="card-titulo">Melamina coigue 100 x 130 x 5mm</p>
+                <div class="text-center">
+                  <p id="card-precio">$99999 {#{item[2].replace(',','.') }#}</p>
+                  <button class="btn agregar">Añadir</button>
+                </div>
               </div>
               </div>
           </div>
           <div class="owl-item">
             <div id="card-contenido">
               <div id="card-imagen">
-                <img src="{{url_for('api_bp.imagen_producto' , nombre = 'melamina-cerezo.jpg' )}}" class="card-img-top" alt="...">
+                <img src="{{url_for('api_bp.imagen_producto' , nombre = 'MDF TRUPÁN 5,5 MM.jfif' )}}" class="card-img-top" alt="...">
               </div>
-              <div class="card-body">
-                <p class="card-title">Melamina coigue 100 x 130 x 5mm</p>
+              <div class="card-body p-0 m-0" id="card-cuerpo">
+                <p id="card-titulo">Melamina coigue 100 x 130 x 5mm</p>
                 <p class="card-text">130000.</p>
                 <a href="#" class="btn btn-primary">ADD</a>
               </div>
@@ -216,14 +195,7 @@
       },
       dots:true
   });
-  var slider = document.getElementById('slider');
-  noUiSlider.create(slider, {
-    start: [20, 80],
-    range: {
-      'min': 0,
-      'max': 100
-    }
-  });
+  
   });
 
 </script>

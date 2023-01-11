@@ -1,7 +1,7 @@
 
 from flask import Blueprint, abort, jsonify, render_template, send_file, request,session,url_for
 from html import escape
-
+from ..extensiones import cache
 from ..modelos.ModeloProducto import ModeloProducto
 from ..modelos.ModeloCategoria import ModeloCategoria
 
@@ -11,7 +11,7 @@ tienda_bp = Blueprint('tienda_bp', __name__, static_folder='static', template_fo
 @tienda_bp.route('<string:enombre1>')
 @tienda_bp.route('<string:enombre1>/<string:enombre2>')
 @tienda_bp.route('<string:enombre1>/<string:enombre2>/<string:enombre3>')
-#@tienda_bp.route('/categoria/<string:categoria_superior>/<string:categoria_inferior>')
+@cache.cached(timeout=30)
 def tienda_productos(enombre1 = None,enombre2 = None,enombre3 = None):
     miga_pan = [] # [nivel 1 , nivel 2 , nivel 3 ] 
     x = [] # LISTA PRODUCTOS A MOSTRAR 
@@ -163,6 +163,16 @@ def mi_carro():
         carro = session['carro_temporal']
 
     return render_template('tienda/carro.html', carro = carro)
+
+@tienda_bp.route('/keys')
+def cache_keys():
+    claves = cache.cache._cache.keys()
+    print('claves: ',claves)
+    for i in claves:
+        x = cache.get(i)
+        print(f'CLAVE: {i} | VALOR: {x}')
+    
+    return f'<h1>VISUALIZANDO CACHE</h1>'
    
 @tienda_bp.errorhandler(404)
 def page_not_found(e):
