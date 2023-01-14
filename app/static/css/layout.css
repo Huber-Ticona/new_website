@@ -17,6 +17,8 @@ text-transform: uppercase;
   }
 #nav_inicio .nav-link{
   color:white;
+  font-size: 17px;
+  font-weight: 500;
   }
 #contenedor_logo{
 }
@@ -44,13 +46,15 @@ text-transform: uppercase;
 
 /* CSS FOOTER */
 
-
-a:hover, a:focus {
+/* REMOVER COLOR AZUL DE TODOS LOS LINKS*/
+a { color: inherit; } 
+a:hover, a:focus , a:active {
   text-decoration: none;
+  color: inherit; 
 }
 
 footer {
-  background:  rgb(236,128,29);
+  background: hsl(36, 95%, 51%);
   
 }
 footer h5{
@@ -164,7 +168,65 @@ input[type=number] {
 border: 1px solid blue;
 width: 100%;
 }
-/* VISUALIZACION DE SIDEBAR CATEGORIAS FIN  */
+/* SIDEBAR CATEGORIAS FIN  */
+
+/* VISUALIZACION DE SIDEBAR CARRITO */
+.sidebar_carrito{
+  display: flex;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0; /* ubicar el sidebar en la derecha */
+  min-width: 100%; /* definir el ancho del sidebar */
+  min-height: 100%; /* establecer la altura del sidebar */
+  width: 100%;
+  z-index: 9999; /* establecer el índice z para que el sidebar aparezca encima del contenido */
+  margin-right: -100%; /* establecer el margen derecho en un valor negativo para desplazar el sidebar hacia la izquierda */
+  /*transition: 0.3s ease;  agregar una transición para suavizar el movimiento */
+}
+.sidebar_carrito.show {
+  margin-right: 0;
+}
+.sidebar_carrito_relleno{
+  width: calc(100vw - 400px);
+  opacity: 35%;
+  background-color: rgb(157, 157, 157);/* establecer el color de fondo */
+}
+.sidebar_carrito_contenido{
+  width: 400px ;
+  background: #fff;
+}
+
+.sidebar_carrito_contenido .carrito_item{
+  padding: 0px 0px;
+  margin-bottom: 10px;
+  border: 1px solid rgb(157, 157, 157);
+  border-radius: 10px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.carrito_nombre_precio{
+  display: flex;
+  flex-direction: column;
+}
+.carrito_item_nombre{
+  overflow-y: hidden;
+  font-size: 14px;
+}
+.carrito_item_precio{
+  font-size: 20p;
+}
+@media (max-width: 576px) {
+  .sidebar_carrito_contenido{
+      width: 80%; /* ancho para pantallas móviles */
+  }
+  .sidebar_carrito_relleno{
+    width: 20%;}
+}
+
+/* END CARRITO */
 
 .breadcrumb{
   background-color:#fefefe ;
@@ -212,8 +274,8 @@ width: 100%;
   background-color: white;
 }
 .imagen_categoria{
-  width: 100px;
-  height: 100px;
+  width: 200px;
+  height: auto;
   margin-left: auto;
   margin-right: auto;
   border: 1px solid blue;

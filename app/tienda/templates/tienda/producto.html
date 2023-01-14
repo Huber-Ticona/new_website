@@ -29,14 +29,7 @@
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="#"><i class="fa-solid fa-home-alt"></i></a></li>
-      {#% if dicc['superior'] %}
-      <li class="breadcrumb-item"><a href="/categoria/{{dicc['superior']}}">{{dicc['superior']}}</a></li>
-      {% endif %}
-      {% if dicc["inferior"]%}
-      <li class="breadcrumb-item"><a href="/categoria/{{dicc['superior']}}/{{dicc['inferior']}}">{{dicc["inferior"]}}</a></li>
-      {% endif%#}
-      <!--<li class="breadcrumb-item active" aria-current="page">Data</li>-->
+      <li class="breadcrumb-item"><a href="javascript:history.back()"><i class="fa fa-arrow-left"></i> Volver</a></li>
     </ol>
   </nav>
 <div class="container-fluid" style="background-color: #fefefe;">
@@ -116,7 +109,7 @@
 </div>
 <p>test auto reload</p>
     <br>
-    <img id="test_img" src="https://assets.imgix.net/dog.png?w=400" data-zoom="">
+    <img id="test_img" src="https://assets.imgix.net/dog.png?w=400" data-zoom="https://assets.imgix.net/dog.png?w=600">
     <div class="zoom-container" style="width: 300px;height:300px;border:2px solid red;">
 
     </div>
@@ -130,7 +123,7 @@
     </div>
 
     <script>
-      const zoomContainer = document.getElementById("contenedor-producto-detalle");
+      const zoomContainer = document.getElementById("zoom-container");
       new Drift(document.getElementById("test_img"), {
         inlinePane: zoomContainer,
         zoomFactor: 2
@@ -155,7 +148,7 @@
         nombre_producto = $('.producto-titulo').text()
         console.log('agregando producto ',id , ' cantidad ', cantidad , 'al carro')
 
-        dato = JSON.stringify({ "producto_id": id , "cantidad": parseInt(cantidad), "nombre_producto": "{{producto[0]}}", "url_imagen": "{{producto[3]}}"})
+        dato = JSON.stringify({ "producto_id": id , "cantidad": parseInt(cantidad), "nombre_producto": "{{producto[0]}}", "url_imagen": "{{producto[3]}}" ,"precio_unitario":"{{producto[2]}}"})
 
         $.ajax({
             url: "{{url_for('tienda_bp.agregar_al_carro')}}",

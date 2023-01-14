@@ -132,4 +132,11 @@ $('nav').on('click','.visualizar_categorias_lg',function(){
   console.log('------ END LG -------')
 })
 
-//
+// sidebar carrito
+$('.sidebar_carrito_relleno').on('click',function(){
+  document.querySelector(".sidebar_carrito").classList.remove("show");
+})
+function abrir_carrito(){
+  console.log('abriendo carrito')
+  document.querySelector(".sidebar_carrito").classList.add("show");
+}

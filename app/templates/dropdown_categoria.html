@@ -43,14 +43,15 @@
 
         {% set subcategorias = categorias[2][index].split(',') %}
         {% for item in subcategorias %}
-        <div class="col-lg">
+        <div class="col-lg text-center">
             <div class="d-none d-lg-block imagen_categoria">
-                imagen
+                <img src="{{url_for('api_bp.imagen_producto' , nombre = 'melaminas_v1.png' )}}" alt="" class="img-fluid" width="200px">
             </div>
             {% set new_item = item.split(';') %} 
             {% set aux_id = new_item[0]|int %} {# id de la categoria, usado para buscar la ruta y subcategorias #}
             {% if  aux_id in rutas_id %}
                 {% set index1 = rutas_id.index(aux_id) %}
+                <strong style="font-size: 16px;text-transform:capitalize;">
                 {% if categorias[3][index] == 1 %}
                 <a href="#" class="list-group-item list-group-item-action categoria_link" id="{{new_item[0]}}">{{new_item[1].replace('-',' ')}}</a>
                 {% elif categorias[3][index] == 2  %}
@@ -59,6 +60,7 @@
                 {% elif categorias[3][index] == 3 %}
                 <a href="/{{rutas_url[index1]}}" class="list-group-item list-group-item-action" id="{{new_item[0]}}">{{new_item[1].replace('-',' ')}}</a>
                 {% endif %}
+                </strong>
             {%endif%}
             
 
@@ -67,13 +69,15 @@
             {% set aux_list_id = categorias[0] %}
             {% if  aux_id in aux_list_id %}
             {% set aux_id2 = aux_list_id.index(aux_id) %}
-            
-            <ul class="list-unstyled d-none d-lg-block">
+            <div class="d-flex justify-content-center">
+                <ul class="list-unstyled  d-none d-lg-block" style="width: fit-content;text-align:left;text-transform:capitalize;">
                 {% for item in (categorias[2][aux_id2]).split(',') %}
                 {% set aux_subcategoria = item.split(';')%}
                 <li><a href="/store/{{categorias[1][index]}}/{{new_item[1]}}/{{aux_subcategoria[1]}}">{{aux_subcategoria[1].replace('-',' ')}}</a></li>
                 {%endfor%}
             </ul>
+            </div>
+            
             {%endif%}
         {% endif %}   
         </div>

@@ -56,8 +56,8 @@ class ModeloUsuario():
         try:
             with miConexion.cursor() as cursor:
         
-                sql = "SELECT usuario_id , rut , contrasena , nombre , apellido , correo from usuario WHERE rut = %s "
-                cursor.execute( sql , usuario.rut)
+                sql = "SELECT usuario_id , rut , contrasena , nombre , apellido , correo from usuario WHERE correo = %s "
+                cursor.execute( sql , usuario.correo)
                 consulta = cursor.fetchone()
                 print(consulta)
 

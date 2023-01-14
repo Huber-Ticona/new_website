@@ -18,7 +18,7 @@ class Registrar_Cuenta_Form(FlaskForm):
             print(str(e))
 
 class Login_Form(FlaskForm):
-    rut = StringField('RUT',validators=[InputRequired()])
+    correo = StringField('correo',validators=[InputRequired(), Email()])
     contraseña = StringField('Contraseña', validators=[InputRequired()])
 
 class Correo_Form(FlaskForm):

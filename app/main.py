@@ -20,8 +20,13 @@ def servicios():
         print(usuario)
     return render_template('servicios.html')
 
+@main_bp.route('/terminos-y-condiciones')
+def terminos():
+    return render_template('terminos_y_condiciones.html')
 
-
+@main_bp.route('/politicas')
+def politicas():
+    return render_template('politicas.html')
 
 @main_bp.route('/test')
 def test():

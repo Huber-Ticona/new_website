@@ -1,55 +1,67 @@
 {% extends 'layout.html' %}
 
 {% block encabezado %}
-<link rel="stylesheet" href="{{url_for('static', filename= 'css/carro.css')}}">
+<link rel="stylesheet" href="{{url_for('tienda_bp.static', filename= 'css/carro.css')}}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
 <title>Mi Carro</title>
 {% endblock %}
 
 {% block contenido %}
 {% if carro %}
+{% set productos = carro['productos']%}
 <div class="container-fluid" style="border: 1px solid green;">
-    
-    <div class="row" style="background-color: #e9e9e9;">
+    <div class="carro-encabezado"><span class="carro-encabezado-cantidad">{{productos|length}} productos </span>en el carro.</div>
+            
+    <div class="row m-3">
         <div class="col-md-8">
-            <div class="carro-encabezado">Carro <span class="carro-encabezado-cantidad">{{carro|length}} productos</span></div>
             <div class="carro-items">
-                {%for item in carro %}
+                
+                {%for item in productos %}
             <div class="carro-item">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p class="carro-item-titulo">{{item[2]}}</p>
-                            <small id="emailHelp" class="form-text text-muted">Solo por tiempo limitado</small>
+                    <div class="row m-0 p-0">
+                        <div class="col-1 m-0 p-0 d-flex flex-column justify-content-center align-items-center" >
+                            <span><i class="fa-solid fa-caret-up"></i></span>
+                            {{item['cantidad']}}
+                            <span><i class="fa-solid fa-caret-down"></i></span>
+                        </div>
+                        <div class="col-2  m-0 p-0">
+                            <img src="{{url_for('api_bp.imagen_producto' , nombre = item['url_imagen'] ) }}" alt="" class="img-fluid" style="height: 100px;">
+                        </div>
+                        <div class="col m-0 p-0">
+                            <p class="carro-item-titulo">{{item['nombre_producto']}}</p>
+                        </div>
+                        
 
-                        </div>
-                        <div class="col-md-6">
-                            <p class="carro-item-precio">$15000</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="carro-item-contenedor-imagen">
-                                <img class="carro-item-imagen" src="/imagen-producto/{{item[1]}}" >
-                            </div>
-                            
-                        </div>
-                        <div class="col-md-6">
-                            eliminar
+                        <div class="col-2 m-0 p-0 d-flex flex-column justify-content-between">
+                            <p class="carro-item-precio">${{item['precio_unitario'].replace(',','.')}}</p>
+                            <i class="fa-solid fa-x text-center"></i>   
                         </div>
                     </div>
-                </div>
 
             </div>
             {%endfor%}
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="carro-resumen">
+        <div class="col-md-4 d-flex flex-column justify-content-between">
+            
+            <div>
+                <div class="carro-resumen">
                 <p>Resumen de cotizacion</p>
+                {% set total = sum%}
                 <p>Total: $450.000</p>
+                </div>
+                {% if current_user.is_anonymous == False %}
+                <div class="text-center">
+                    <button class="btn btn-secondary" style="background-color:#ec801d ;" onclick="descargar()">Descargar Cotizacion</button>
+             
+                </div>
+                {%endif%}
+                
             </div>
+              
             <div class="text-center">
-                <button class="btn btn-secondary" style="background-color:#ec801d ;" onclick="descargar()">Descargar Cotizacion</button>
+                <a href="javascript:history.back()" class="btn bg-none" > <i class="fa fa-arrow-left"></i>  Volver a la tienda</a>
             </div>
             
         </div>
@@ -67,7 +79,29 @@
 {% endif %}
 <script>
     function descargar(){
-        alert('en proceso')
+        
+        var len_carro = parseInt('{{carro|length}}')
+        var productos_id = []
+        var productos_precio = []
+        for(let i = 0; i< len_carro; i ++ ){
+            productos_id.push(parseInt)
+        }
+        var data = JSON.stringify({
+            "usuario_id" : '{{current_user.id}}',
+            "productos_id" : 'asdasd'
+        })
+
+        $.ajax({
+            url : "{{url_for('tienda_bp.crear_cotizacion')}}",
+            type: 'post',
+            contentType: "application/json; charset=utf-8",
+            data: data,
+            success: function(resp){
+                console.log('respuesta: ',resp.mensaje)
+                toastr.success(resp.mensaje , 'success', {timeOut: 5000});
+                
+            }
+        })
     }
 </script>
 {% endblock%}

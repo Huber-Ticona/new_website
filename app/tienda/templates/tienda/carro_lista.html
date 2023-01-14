@@ -1,0 +1,36 @@
+
+<div class="carrito-body p-3">
+    {% if carro %}
+        {% set productos = carro['productos']%}
+        {% for item in productos %}
+        <div class="carrito_item">
+            <div class="row m-0 p-0 o">
+                <div class="col-1 m-0 p-0 d-flex flex-column justify-content-center" >
+                    {{item['cantidad']}}
+                </div>
+                <div class="col-2  m-0 p-0">
+                    <img src="{{url_for('api_bp.imagen_producto' , nombre = item['url_imagen'] ) }}" alt="" class="img-fluid" height="auto">
+                </div>
+                <div class="col  m-0">
+                    <div class="carrito_nombre_precio">
+                            <div class="carrito_item_nombre">
+                                {{item['nombre_producto']}}
+                            </div>
+                            <div class="carrito_item_precio">
+                                ${{item['precio_unitario'].replace(',','.')}}
+                            </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col-1 m-0 p-0 d-flex flex-column justify-content-center">
+                    <i class="fa-solid fa-trash"></i>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% endif %}
+</div>
+<div class="carrito-footer text-center p-3">
+    <a href="{{url_for('tienda_bp.mi_carro')}}" class="btn btn-secondary">Ir al carro</a>
+</div>

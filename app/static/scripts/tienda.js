@@ -28,11 +28,10 @@ function abrir_precios(){
 
 $('#card-contenido img').on('click',function(e){
   alt = e.target.alt
-  window.location.href = "/producto/"+ alt
+  window.location.href = "producto/"+ alt
 })
 
 $(document).ready(function(){
-  console.log('pagina cargada')
   var slider_sm = document.getElementById('slider_filtro_movil');
   var slider_lg = document.getElementById('slider_filtro_escritorio');
   noUiSlider.create(slider_sm, {

@@ -1,0 +1,42 @@
+<div class="cuenta-detalle-header">
+    <h1>Mis Cotizaciones</h1>
+    <small>Aqui encontraras tu lista de Cotizaciones.</small>
+</div>
+<div class="m-3">
+    {% if cotizaciones|length > 0 %}
+    <table class="table table-sm">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Cotizacion</th>
+            <th scope="col">Monto</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for item in cotizaciones %}
+          <tr>
+            <th scope="row">{{loop.index}}</th>
+            <td>Cotizacion_{{item[0]}}</td>
+            <td>{{item[1]}}</td>
+            <td>{{item[2]}}</td>
+            <td>
+                <div class="d-flex">
+                    <button  class="btn bg-none eliminar_cotizacion"><i class="fa-solid fa-trash"></i></button>
+                    <button class="btn bg-none ver_pdf" style="border: 1px solid black;">
+                        <i class="fa-regular fa-file-pdf" style="width: 32px; height:32px;"></i>
+                        <span style="font-size: 12px;">Ver </span>
+                    </button>
+                </div>
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+    <div class="jumbotron">
+        No has registrado cotizaciones.
+    </div>
+    {% endif %}
+</div>

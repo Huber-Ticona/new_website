@@ -2,6 +2,9 @@
 
 {% block encabezado %}
 <link rel="stylesheet" href="{{url_for('static', filename= 'css/cuenta.css')}}">
+<!-- PDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
 <title>Mi cuenta</title>
 
 
@@ -9,23 +12,55 @@
 
 
 {% block contenido %}
-<h1> Hola {{ current_user.nombre}} </h1>
-<div class="row">
-    <div class="col-md">
-      <div class="list-group" id="list-tab" role="tablist">
-        <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">Mis cotizaciones</a>
-        <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">Mis favoritos</a>
-        <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">Mis consultas</a>
-        <a class=""  href="{{url_for('auth_bp.logout')}}">Cerrar Sessión</a>
+<div class="container-fluid mt-5">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="contenedor-cuenta-links">
+
+          <div class="cuenta-link link" data-url="/cuenta/mi-perfil"><i class="fa-regular fa-user" style="height: 20px;"></i><span>Mi Perfil</span></div>
+          <div class="cuenta-link link" data-url="/cuenta/mis-cotizaciones"><i class="fa-regular fa-file-lines" style="height: 20px;"></i>  Mis Cotizaciones</div>
+          <div class="cuenta-link" data-url="#"><i class="fa-regular fa-heart" style="height: 20px;"></i> Mis Favoritos</div>
+          <div class="cuenta-link"><i class="fa-solid fa-envelopes-bulk"></i> Suscripciones</div>
+          <br>
+          <a href="/logout"><div class="cuenta-link"><i class="fa-solid fa-arrow-right-from-bracket"></i> Cerrar sesion</div></a>
       </div>
     </div>
-    <div class="col-md d-none d-lg-block">
-      <div class="tab-content" id="nav-tabContent">
-        <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">home xd</div>
-        <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">profil xd</div>
-        <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">xd hackin messa</div>
-        <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">setings cddd</div>
+    <div class="col-md-8">
+      <div class="contenedor-cuenta-detalle">
+        
+        
       </div>
     </div>
   </div>
+  <script>
+    $('.contenedor-cuenta-links').on('click','.link', function(){
+      var optionUrl = $(this).data("url"); // obtener la url de la opción seleccionada
+      $.ajax({
+          url: optionUrl,
+          method: 'post',
+          success: function(data) {
+              // actualizar la segunda columna con el contenido devuelto por la petición
+              $(".contenedor-cuenta-detalle").html(data);
+          }
+      });
+
+      $(".contenedor-cuenta-detalle").on("click", ".eliminar_cotizacion", function() {
+        // código para eliminar cotizacion
+        alert('eliminarmcotizacion ')
+     });
+
+     $(".contenedor-cuenta-detalle").on("click", ".ver_pdf", function() {
+      // código para eliminar cotizacion
+      const doc = new jsPDF();
+
+      doc.text("Hello world!", 10, 10);
+      doc.save("a4.pdf");
+      // Guardar el pdf en el cliente
+      //doc.save('tabla_productos.pdf');
+        });
+
+      });
+  </script>
+
+</div>
 {% endblock %}
