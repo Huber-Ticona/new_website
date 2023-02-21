@@ -1,5 +1,6 @@
-from flask import Blueprint, render_template, session , request, redirect , url_for ,flash
+from flask import Blueprint, render_template, session , request, redirect , url_for ,flash,abort,jsonify,send_from_directory,send_file
 from flask_login import login_required, login_user, logout_user,current_user
+
 from html import escape
 from ..modelos.ModeloUsuario import ModeloUsuario
 from ..modelos.ModeloCotizacion import ModeloCotizacion
@@ -9,7 +10,7 @@ from ..forms import Registrar_Cuenta_Form,Login_Form,Correo_Form
 
 from flask import current_app
 from flask_mail import Message
-from ..extensiones import mail
+from ..extensiones import mail, generar_pdf,verificar_pdf
 from flask_dance.contrib.facebook import facebook
 
 auth_bp = Blueprint('auth_bp', __name__ ,static_folder='static', template_folder='templates')
@@ -63,17 +64,28 @@ def crear_cuenta():
 
 @auth_bp.route('/login-facebook')
 def login_facebook():
+    
     if not facebook.authorized:
         return redirect(url_for('facebook.login'))
-    res = facebook.get('/me?fields=name,email')
-    print(res.json())
 
-    return "login con facebook"
+    res = facebook.get('/me?fields=first_name,last_name,email')
+    datos_api = res.json()
+    data = {
+        "nombre" : datos_api['first_name'],
+        "apellido" : datos_api['last_name'],
+        "correo" : datos_api['email']
+    }
+    respuesta = ModeloUsuario.registrar_con_red_social(data)
+    login_user( respuesta['usuario'] )
+
+    return redirect(url_for('main_bp.inicio'))
 
 @auth_bp.route('/cuenta')
 @login_required
 def cuenta():
     return render_template('auth/cuenta.html')
+
+
 
 @auth_bp.route('/logout')
 @login_required
@@ -81,7 +93,7 @@ def logout():
     logout_user()
     return redirect(url_for('main_bp.inicio'))
 
-@auth_bp.route('/recuperar-contrasena',methods=['GET','POST'])
+@auth_bp.route('/recuperar-contrasena' , methods=['GET','POST'])
 def recuperar_contraseña():
     print('--------- RECUPERAR PASSWORD ----------')
 
@@ -146,6 +158,39 @@ def mis_cotizaciones():
         print(f'Cotizaciones de {usuario_id}')
         cotizaciones = ModeloCotizacion.obtener_cotizacion_x_usuario(usuario_id)
         return render_template('auth/mis_cotizaciones.html',cotizaciones = cotizaciones)
+
+
+@auth_bp.route('/cuenta/mis-cotizaciones/ver/<int:cotizacion_id>')
+@login_required
+def ver_cotizacion(cotizacion_id = None):
+    print('cotizacion id : ',cotizacion_id)
+
+    print(f'-- Visualizando cotizaciones de usuario id: { current_user.id } -------')
+
+    detalle_cotizacion = ModeloCotizacion.obtener_cotizacion_x_id( cotizacion_id , current_user.id)
+    print(detalle_cotizacion)
+    if detalle_cotizacion['estado'] == False:
+        print(detalle_cotizacion['mensaje'])
+        abort(detalle_cotizacion['error'])
+
+    
+    #verificar si existe el PDF en el servidor.
+    pdf_url = verificar_pdf(cotizacion_id)
+    if pdf_url == None:
+        print('------ PDF no encontrado --> Generando PDF y enviando... ------')
+        pdf_url = generar_pdf(detalle_cotizacion)
+
+    # Enviando el PDF al cliente
+    print('enviando url pdf ... ')
+    
+    return send_from_directory( current_app.config['COTIZACION_FOLDER'] , f'cotizacion_{cotizacion_id}.pdf' )
+	
+
+@auth_bp.route('/cuenta/mis-cotizaciones/eliminar/<int:cotizacion_id>')
+@login_required
+def eliminar_cotizacion(cotizacion_id = None):
+    x = 0
+    print(f'--Eliminando cotizacion nro {cotizacion_id } de usuario id: { current_user.id } -------')
 
 '''def send_password_reset_email(user):
     token = user.get_reset_password_token()

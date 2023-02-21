@@ -44,15 +44,13 @@
 /* CSS IMAGENES EXTRA DEL PRODUCTO */
 .contenedor-producto-imagenes{
     order: 0;
-    min-width: 100px;
-    overflow-y: scroll ;
-    
-
 }
 
 .producto-imagenes{
     /* flex usado en tag div html */
     gap: 10px !important;
+    align-items: center;
+
 }
 .producto-imagenes .imagenes{
     border: 1px solid rgb(113, 113, 113);

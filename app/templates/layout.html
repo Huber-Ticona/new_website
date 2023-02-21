@@ -23,6 +23,11 @@
     <script src="{{ url_for('static', filename='assets/nouislider.min.js') }}"></script>
     <!-- DRIFT (IMG ZOOM)-->
     <link rel="stylesheet" href="{{ url_for('static', filename='assets/drift-basic.css') }}">
+    <!-- OWL-CARRUSEL -->
+    <link rel="stylesheet" href="{{url_for('static', filename= 'assets/owl.carousel.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename= 'assets/owl.theme.default.min.css')}}">
+    <script src="{{url_for('static', filename= 'assets/owl.carousel.min.js')}}"></script>
+
     <script src="{{ url_for('static', filename='assets/Drift.min.js') }}"></script>
     {% block encabezado %}
     {% endblock %}
@@ -46,7 +51,7 @@
            
             <!-- TEST LISTA DESPLEGABLE -->
             <li class="nav-item">
-              <button class="btn bg-none open_next_sidebar">Tienda</button>
+              <button class="btn bg-none open_next_sidebar">Catálogo</button>
             </li>
             
 
@@ -84,7 +89,7 @@
 
               <!-- NEW SWITCH TIENDA -->
               <li class="nav-item">
-                <a class="nav-link visualizar_categorias_lg" href="#">Tienda</a>
+                <a class="nav-link visualizar_categorias_lg" href="#">Catálogo</a>
               </li>
               
   
@@ -146,7 +151,9 @@
         </div>
         <div class="sidebar_carrito">
         <div class="sidebar_carrito_relleno"></div>
-        <div class="sidebar_carrito_contenido"></div>
+        <div class="sidebar_carrito_contenido">
+          
+        </div>
         </div>
       </div>
 
@@ -215,7 +222,7 @@
                       <h5 class="mb-3 my-3">Nuestra Empresa</h5>
                       <ul class="list-unstyled text-muted">
                           <li><a href="#">Sobre nosotros</a></li>
-                          <li><a href="#">Contacto</a></li>
+                          <li><a href="/contacto">Contacto</a></li>
                           <li><a href="#">Servicios</a></li>
                       </ul>
                   </div>
@@ -240,8 +247,8 @@
                       <div class="contenedor-redes-sociales">
                         <img src="{{url_for('static',filename='icons/youtube.png')}}" style="border-radius:10px;" class="img-fluid" id="red-social" alt="Responsive image" width="32">
                         <img src="{{url_for('static',filename='icons/instagram.png')}}" style="border-radius:10px;" class="img-fluid" id="red-social" alt="Responsive image" width="32">
-                        <img src="{{url_for('static',filename='icons/facebook.png')}}" style="border-radius:10px;" class="img-fluid" id="red-social" alt="Responsive image" width="32">
-                        <i class="fa-brands fa-lg fa-youtube" style="color:#FFFFFF; width:32; height:32;"></i>
+                        <a href="https://www.facebook.com/EncoMaderas"><img src="{{url_for('static',filename='icons/facebook.png')}}" style="border-radius:10px;" class="img-fluid" id="red-social" alt="Responsive image" width="32">
+                        </a><i class="fa-brands fa-lg fa-youtube" style="color:#FFFFFF; width:32; height:32;"></i>
                       </div>
                   </div>
               </div>
@@ -251,7 +258,9 @@
 
   <!-- BOOTSTRAP AND JPOPPER-->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
   <script src="{{url_for('static', filename= 'scripts/layout.js')}}"></script>
+
   <script>
     function ver_carro(){
       console.log('viendo carro')

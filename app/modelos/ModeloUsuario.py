@@ -1,7 +1,8 @@
 from ..extensiones import obtener_conexion
 from .entidades.Usuario import Usuario
 from flask import jsonify
-
+from werkzeug.security import check_password_hash , generate_password_hash
+import secrets
 class ModeloUsuario():
     @classmethod
     def registrar(self , datos ):
@@ -34,13 +35,62 @@ class ModeloUsuario():
                     )
 
                 # si no existe, insertar los datos del formulario en la base de datos
+                contraseña = generate_password_hash( datos['contraseña'] , method='sha256')
+
                 sql = "INSERT INTO usuario(nombre,apellido,rut,correo,contrasena) VALUES (%s,%s,%s,%s,%s) "
-                cursor.execute( sql , (datos['nombre'] ,datos['apellido'] ,datos['rut'] , datos['correo'] , datos['contraseña'] ) )
+                cursor.execute( sql , (datos['nombre'] ,datos['apellido'] ,datos['rut'] , datos['correo'] , contraseña ) )
                 miConexion.commit()
 
                 return dict(
                     estado = True,
                     mensaje = f'Usuario registrado {datos["nombre"]}'
+                )
+                
+
+        except Exception as ex:
+            raise Exception(ex)
+
+        finally:
+            miConexion.close()
+
+    @classmethod
+    def registrar_con_red_social(self , datos ):
+        miConexion = obtener_conexion()
+        try:
+            with miConexion.cursor() as cursor:
+                correo = datos['correo']
+
+                # comprobar si ya existe un usuario con el mismo correo
+                sql = """
+                SELECT usuario_id , rut , contrasena , nombre , apellido , correo FROM usuario WHERE correo = %s 
+                """
+                cursor.execute( sql , (correo))
+
+                consulta = cursor.fetchone()
+
+                if consulta is not None:
+                    # si ya existe un usuario con el mismo correo, no se registra el usuario en la BD
+                    return dict(
+                        estado = False,
+                        mensaje = f'Ya existe un usuario con el mismo correo. --> No registrar',
+                        usuario = Usuario(consulta[0],consulta[1] , True , consulta[3],consulta[4],consulta[5] )
+                    )
+
+                # si no existe, insertar los datos del formulario en la base de datos
+                random_pass = secrets.token_hex(16)
+                contraseña = generate_password_hash( random_pass  , method='sha256')
+                print('random_pass: ' , random_pass)
+                print('hashed_pass: ' , contraseña)
+            
+                sql = "INSERT INTO usuario(nombre,apellido,correo,contrasena) VALUES (%s,%s,%s,%s) "
+                cursor.execute( sql , (datos['nombre'] ,datos['apellido'], datos['correo'] , contraseña ) )
+                usuario_id = cursor.lastrowid
+                miConexion.commit()
+
+                return dict(
+                    estado = True,
+                    mensaje = f'Usuario registrado {datos["nombre"]}',
+                    usuario = Usuario(usuario_id, None, True, datos['nombre'] , datos['apellido'] , datos['correo'] )
                 )
                 
 
@@ -62,7 +112,7 @@ class ModeloUsuario():
                 print(consulta)
 
                 if consulta != None:
-                    return Usuario(consulta[0],consulta[1] , Usuario.comprobar_contrasena(usuario.contrasena ,consulta[2]), consulta[3],consulta[4],consulta[5] )
+                    return Usuario(consulta[0],consulta[1] , Usuario.comprobar_contrasena(consulta[2], usuario.contrasena), consulta[3],consulta[4],consulta[5] )
                 else:
                     return None
 

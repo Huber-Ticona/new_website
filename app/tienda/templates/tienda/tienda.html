@@ -49,12 +49,42 @@
     <div>
       <img src="{{url_for('api_bp.imagen_producto' , nombre = 'banner_melamina_vesto.jpg' )}}" class="img-fluid" alt="">
     </div>
-    
-    
+    <div class="rectangulo"></div>
+    <div class="contenedor-carrusel-tienda" >
 
+
+      <div class="owl-carousel owl-theme  owl-loaded tienda_carrusel">
+        <div class="owl-stage-outer">
+            <div class="owl-stage">
+
+              <div class="owl-item">
+                <div class="tienda_carrusel_item"></div>
+              </div>
+              <div class="owl-item">
+                <div class="tienda_carrusel_item"></div>
+              </div>
+              <div class="owl-item">
+                <div class="tienda_carrusel_item"></div>
+              </div>
+              <div class="owl-item">
+                <div class="tienda_carrusel_item"></div>
+              </div>
+              <div class="owl-item">
+                <div class="tienda_carrusel_item"></div>
+              </div>
+              <div class="owl-item">
+                <div class="tienda_carrusel_item"></div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    
   
-    <div class="text-center">
-      <button class="btn  d-lg-none open-sidebar-categoria">Filtrar por  <i class="fa-solid fa-filter"></i></button>
+    <div class="text-center mt-2">
+      <button class="btn  d-lg-none open-sidebar-categoria"><img style="color:blue; " src="{{url_for('static', filename='icons/filter.png')}}" alt="" class="img-fluid" width="32"> Filtrar por</button>
+      <button class="btn  d-lg-none open-sidebar-ordenar"><img src="{{url_for('static', filename='icons/sort.png')}}" alt="" class="img-fluid" width="32" > Ordenar por</button>
     </div>
   
   <div class="container pt-3 pr-0">
@@ -96,7 +126,7 @@
             <div class="descuento" style="margin-top: 20px;">STOCK</div>#}
             <div id="card-imagen">
             {% if item[3] != None %}
-            <img src="{{url_for('api_bp.imagen_producto' , nombre = item[3] )}}"  class="img-fluid"  alt="{{item[1]}}">
+            <a href="/store/producto/{{item[1]}}"><img src="{{url_for('api_bp.imagen_producto' , nombre = item[3] )}}"  class="img-fluid"  alt="{{item[1]}}"></a>
             {% else %}
             <img src="{{url_for('api_bp.imagen_producto' , nombre = 'no_disponible.png' )}}" class="img-fluid"   alt="">
             {% endif %}
@@ -146,6 +176,7 @@
 
 </div>
 </div>
+
 <script src="{{url_for('static', filename= 'scripts/tienda.js')}}"></script>
 
 {% endblock%}

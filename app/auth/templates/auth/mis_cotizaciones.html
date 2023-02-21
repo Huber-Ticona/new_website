@@ -19,12 +19,12 @@
           <tr>
             <th scope="row">{{loop.index}}</th>
             <td>Cotizacion_{{item[0]}}</td>
-            <td>{{item[1]}}</td>
+            <td> ${{("{:,}".format(item[1]|int)).replace(',','.')  }}</td>
             <td>{{item[2]}}</td>
             <td>
                 <div class="d-flex">
-                    <button  class="btn bg-none eliminar_cotizacion"><i class="fa-solid fa-trash"></i></button>
-                    <button class="btn bg-none ver_pdf" style="border: 1px solid black;">
+                    <button  class="btn bg-none eliminar_cotizacion" data-url="{{url_for('auth_bp.eliminar_cotizacion', cotizacion_id= item[0] )}}"><i class="fa-solid fa-trash"></i></button>
+                    <button class="btn bg-none ver_cotizacion" data-url="{{url_for('auth_bp.ver_cotizacion', cotizacion_id= item[0] )}}" style="border: 1px solid black;">
                         <i class="fa-regular fa-file-pdf" style="width: 32px; height:32px;"></i>
                         <span style="font-size: 12px;">Ver </span>
                     </button>

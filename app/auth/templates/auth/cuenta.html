@@ -12,6 +12,27 @@
 
 
 {% block contenido %}
+<!--
+<div class="modal" tabindex="-1" id="modal_pdf">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cotización</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <embed src="../../../../hello_world_2.pdf" type="application/pdf" width="100%" height="500px" />
+
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_pdf" data-whatever="@getbootstrap">Open modal for @getbootstrap</button>
+-->
 <div class="container-fluid mt-5">
   <div class="row">
     <div class="col-md-4">
@@ -33,6 +54,8 @@
     </div>
   </div>
   <script>
+    
+
     $('.contenedor-cuenta-links').on('click','.link', function(){
       var optionUrl = $(this).data("url"); // obtener la url de la opción seleccionada
       $.ajax({
@@ -44,22 +67,24 @@
           }
       });
 
-      $(".contenedor-cuenta-detalle").on("click", ".eliminar_cotizacion", function() {
-        // código para eliminar cotizacion
-        alert('eliminarmcotizacion ')
-     });
+    })
 
-     $(".contenedor-cuenta-detalle").on("click", ".ver_pdf", function() {
+    $(".contenedor-cuenta-detalle").on("click", ".eliminar_cotizacion", function() {
       // código para eliminar cotizacion
-      const doc = new jsPDF();
+      let url = $(this).data("url"); // obtener la url de la opción seleccionada
+      console.log(url)
+      alert('eliminando cotizacion nro: ', url)
 
-      doc.text("Hello world!", 10, 10);
-      doc.save("a4.pdf");
-      // Guardar el pdf en el cliente
-      //doc.save('tabla_productos.pdf');
-        });
+    });
 
+    $(".contenedor-cuenta-detalle").on("click", ".ver_cotizacion", function() {
+      // código para eliminar cotizacion
+      let url = $(this).data("url"); // obtener la url de la opción seleccionada
+      console.log(url)
+      document.location.href = url
+      
       });
+
   </script>
 
 </div>

@@ -13,7 +13,8 @@ class Usuario(UserMixin):
         
     @classmethod
     def comprobar_contrasena(self,hash_contrasena,plain_contrasena):
-        if hash_contrasena == plain_contrasena:
+        if check_password_hash(hash_contrasena, plain_contrasena):
+            print('Las contraseñas coinciden')
             return True
         else:
              return False

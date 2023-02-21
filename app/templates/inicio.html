@@ -2,11 +2,6 @@
 
 {% block encabezado %}
 <link rel="stylesheet" href="{{url_for('static', filename= 'css/inicio.css')}}">
-
-<link rel="stylesheet" href="{{url_for('static', filename= 'assets/owl.carousel.min.css')}}">
-<link rel="stylesheet" href="{{url_for('static', filename= 'assets/owl.theme.default.min.css')}}">
-
-
 <title>Inicio</title>
 
 
@@ -17,14 +12,14 @@
 <div id="slide-1" class="carousel slide " data-ride="carousel">
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img class="d-block w-100" src="{{url_for('api_bp.imagen_producto' , nombre = 'nueva_coleccion_banner.jpg' )}}" height="500" alt="First slide">
+      <img class="d-block w-100" src="{{url_for('api_bp.imagen_producto' , nombre = 'nueva_coleccion_banner.jpg' )}}"  alt="First slide">
       <div class="carousel-caption d-none d-md-block">
         <h5></h5>
         <p></p>
       </div>
     </div>
     <div class="carousel-item ">
-      <img class="d-block w-100" src="{{url_for('api_bp.imagen_producto' , nombre = 'banner_melamina_vesto.jpg' )}}" height="500" alt="First slide">
+      <img class="d-block w-100" src="{{url_for('api_bp.imagen_producto' , nombre = 'banner_melamina_vesto.jpg' )}}"  alt="First slide">
       <div class="carousel-caption d-none d-md-block">
         <h5>BIENVENIDO</h5>
         <p>COMPRA YA</p>
@@ -45,8 +40,17 @@
 <br>
 <!-- CATEGORIAS DESTACADAS INICIO -->
 <div class="container-fluid">
-  {#<p id="titulo">CATEGORIAS DESTACADAS</p>
+  <p id="titulo">CATEGORIAS DESTACADAS</p>
   <div class="row">
+    <div class="col">
+      <img src="https://www.imperial.cl/file/v7753185415318533260/general/TablerosConst__Mobile.png" alt=""  class="img-fluid" width="200px">
+    </div>
+    <div class="col">
+      <img src="https://www.imperial.cl/file/v6791230195948664634/general/Tableros_Mobile.png" alt="" class="img-fluid" >
+    </div>
+  </div>
+  <br>
+  {#<div class="row">
     <div class="col-4">
       <div class="card" style="width: 18rem;">
         <img src="{{url_for('api_bp.imagen_producto' , nombre = 'tableros.jpg' )}}" class="card-img-top" alt="...">
@@ -97,13 +101,46 @@
 </div>
 
 <div class="container-fluid">
-
-  <p id="titulo">PRODUCTOS DESTACADOS</p>
+  <div class="text-center">
+    <img src="https://www.treck.cl/tiendaonline/images/site/Bn-despacho-sincosto.gif" alt="" class="img-fluid" height="50" width="600">
+  <div id="titulo">PRODUCTOS DESTACADOS</div>
+</div>
   
-  <div class="owl-carousel owl-theme  owl-loaded carrusel">
+  
+  <div class="owl-carousel owl-theme  owl-loaded carrusel_productos_inicio">
     <div class="owl-stage-outer">
         <div class="owl-stage">
   
+          <div class="owl-item">
+            <div id="card-contenido">
+              <div id="card-imagen">
+                <img src="{{url_for('api_bp.imagen_producto' , nombre = 'MELAMINA MARMARA 18 MM.jfif' )}}" class="card-img-top" alt="...">
+              </div>
+              <div class="dropdown-divider"></div>
+              <div class="card-body p-0 m-0" id="card-cuerpo">
+                <p id="card-titulo">Melamina coigue 100 x 130 x 5mm</p>
+                <div class="text-center">
+                  <p id="card-precio">$$99999{#{item[2].replace(',','.') }#}</p>
+                  <button class="btn agregar">Añadir al carro</button>
+                </div>
+              </div>
+              </div>
+          </div>
+          <div class="owl-item">
+            <div id="card-contenido">
+              <div id="card-imagen">
+                <img src="{{url_for('api_bp.imagen_producto' , nombre = 'MELAMINA MARMARA 18 MM.jfif' )}}" class="card-img-top" alt="...">
+              </div>
+              <div class="dropdown-divider"></div>
+              <div class="card-body p-0 m-0" id="card-cuerpo">
+                <p id="card-titulo">Melamina coigue 100 x 130 x 5mm</p>
+                <div class="text-center">
+                  <p id="card-precio">$$99999{#{item[2].replace(',','.') }#}</p>
+                  <button class="btn agregar">Añadir al carro</button>
+                </div>
+              </div>
+              </div>
+          </div>
           <div class="owl-item">
             <div id="card-contenido">
               <div id="card-imagen">
@@ -176,13 +213,16 @@
 
 
 <script>
-  $(document).ready(function(){ // UNA VEZ QUE LA PAGINA SE CARGUE 
-    $('.carrusel').owlCarousel({
+  
+    $('.carrusel_productos_inicio').owlCarousel({
       loop:true,
       margin: 5 ,
       responsiveClass:true,
       nav: false,
-      navText: ["<div class='nav-button owl-prev'>+<i class='fa-solid fa-square-chevron-right'></i></div>", "<div class='nav-button owl-next'>+</div>"],
+      navText: [
+      '<svg width="50" height="50" viewBox="0 0 24 24"><path d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z"/></svg>',
+      '<svg width="50" height="50" viewBox="0 0 24 24"><path d="M5 3l3.057-3 11.943 12-11.943 12-3.057-3 9-9z"/></svg>'
+    ],
       responsive:{
           0:{
               items:2,
@@ -198,12 +238,9 @@
       dots:true
   });
   
-  });
 
 </script>
 
-
-<script src="{{url_for('static', filename= 'assets/owl.carousel.min.js')}}"></script>
   
 </div>
 

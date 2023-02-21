@@ -27,22 +27,19 @@
 
 <!-- CONTENIDO -->
 
-<nav aria-label="breadcrumb">
+
+<div class="container" style="background-color: #fefefe;">
+
+  <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="javascript:history.back()"><i class="fa fa-arrow-left"></i> Volver</a></li>
     </ol>
   </nav>
-<div class="container-fluid" style="background-color: #fefefe;">
-
-  
     <div class="row" >
         <div class="col-lg-7">
 
             <div class="contenedor-producto-imagen">
                 {% if producto %}
-                <script>
-                    
-                </script>
             
                 <div class="producto-imagen">
                   {% if producto[3] != None %}
@@ -53,7 +50,7 @@
                 </div>
                 {%endif%}
                 <div class="contenedor-producto-imagenes">
-                  <div class="d-flex flex-md-column flex-row gp-5 producto-imagenes">{#-flex-#}
+                  <div class="d-flex flex-md-column flex-row producto-imagenes">{#-flex-#}
                     <div class="imagenes">
                       <img id="img_0" src="{{url_for('api_bp.imagen_producto' , nombre = producto[3] )}}" class="img-fluid" alt="Responsive image">
                     </div>

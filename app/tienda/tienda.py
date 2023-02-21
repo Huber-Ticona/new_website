@@ -79,7 +79,7 @@ def tienda_productos(enombre1 = None,enombre2 = None,enombre3 = None):
     return render_template('tienda/tienda.html' , dicc = dicc  )
 
 
-@tienda_bp.route('/producto/<string:nombre>' , methods=['GET'])
+@tienda_bp.route('/producto/<string:nombre>' , methods=['GET','POST'])
 def vista_producto(nombre = None):
     if nombre!= None:
         print('-'*5  + f'PRODUCTO {nombre} '  + '-'*5)
@@ -169,8 +169,6 @@ def cache_keys():
 def crear_cotizacion():
     data = request.get_json()
     usuario_id = int(data["usuario_id"])
-    print('usuario_id: ',usuario_id)
-
     if 'carro_temporal' in session:
         carro = session['carro_temporal']
         productos = carro['productos']
@@ -181,6 +179,7 @@ def crear_cotizacion():
             "productos" : productos
         }
         respuesta = ModeloCotizacion.registrar(dato)
+
         if respuesta['estado']:
             session.pop('carro_temporal', None)
 

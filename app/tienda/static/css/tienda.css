@@ -139,7 +139,13 @@
     transition: 1s;
 }
 .open-sidebar-categoria{
-    width: 80%;
+    width: auto;
+    border: 2px solid #ec801d;
+    font-family: 'arial';
+    font-weight: 500;
+}
+.open-sidebar-ordenar{
+    width: auto;
     border: 2px solid #ec801d;
     font-family: 'arial';
     font-weight: 500;
@@ -179,5 +185,22 @@ padding-right: 10px;
 /* FIN DEL CSS SIDE BAR*/
 
 /* REMOVER EL COLOR AZUL DEL ELEMENTO <a>*/
+ /* TIENDA CARRUSEL */
+.rectangulo{
+    width: 100px;
+    height: 100px;
+    background-color: blue;
+}
+ .contenedor-carrusel-tienda{
+    border:1px solid red;
+    margin: 0px 20px;
+ }
+ .tienda_carrusel_item{
+    background-color: #ec801d;
+    width: 100px;
+    height: 50px;
+ }
+
  
 
+ 

@@ -1,5 +1,6 @@
 {% extends 'layout.html' %}
 
+
 {% block encabezado %}
 <link rel="stylesheet" href="{{url_for('tienda_bp.static', filename= 'css/carro.css')}}">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" rel="stylesheet" />
@@ -16,8 +17,9 @@
     <div class="row m-3">
         <div class="col-md-8">
             <div class="carro-items">
-                
+                {% set total = namespace(value=0) %}
                 {%for item in productos %}
+                {% set total.value = total.value + ( (item['precio_unitario'].replace(',','')|int) * item['cantidad'] ) %}
             <div class="carro-item">
                     <div class="row m-0 p-0">
                         <div class="col-1 m-0 p-0 d-flex flex-column justify-content-center align-items-center" >
@@ -29,7 +31,7 @@
                             <img src="{{url_for('api_bp.imagen_producto' , nombre = item['url_imagen'] ) }}" alt="" class="img-fluid" style="height: 100px;">
                         </div>
                         <div class="col m-0 p-0">
-                            <p class="carro-item-titulo">{{item['nombre_producto']}}</p>
+                            <p class="carro-item-titulo">{{item['nombre_producto']}} - {{total.value}}</p>
                         </div>
                         
 
@@ -48,12 +50,12 @@
             <div>
                 <div class="carro-resumen">
                 <p>Resumen de cotizacion</p>
-                {% set total = sum%}
-                <p>Total: $450.000</p>
+                
+                <p>Total: ${{("{:,}".format(total.value)).replace(',','.')  }}</p>
                 </div>
                 {% if current_user.is_anonymous == False %}
                 <div class="text-center">
-                    <button class="btn btn-secondary" style="background-color:#ec801d ;" onclick="descargar()">Descargar Cotizacion</button>
+                    <button class="btn btn-secondary" style="background-color:#ec801d ;" onclick="descargar()">Realizar Cotizacion</button>
              
                 </div>
                 {%endif%}
