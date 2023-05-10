@@ -8,6 +8,11 @@ def inicio():
     #LLAMADAS DB get_all_categories()
     return render_template("inicio.html"  )
 
+@main_bp.route('/test')
+def test():
+    #LLAMADAS DB get_all_categories()
+    return render_template("layout2.html"  )
+
 @main_bp.route('/contacto')
 #@cache.cached(timeout=50)
 def contacto():
@@ -28,6 +33,3 @@ def terminos():
 def politicas():
     return render_template('politicas.html')
 
-@main_bp.route('/test')
-def test():
-    return 'testing ... '

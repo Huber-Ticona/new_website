@@ -163,9 +163,6 @@ def mis_cotizaciones():
 @auth_bp.route('/cuenta/mis-cotizaciones/ver/<int:cotizacion_id>')
 @login_required
 def ver_cotizacion(cotizacion_id = None):
-    print('cotizacion id : ',cotizacion_id)
-
-    print(f'-- Visualizando cotizaciones de usuario id: { current_user.id } -------')
 
     detalle_cotizacion = ModeloCotizacion.obtener_cotizacion_x_id( cotizacion_id , current_user.id)
     print(detalle_cotizacion)
@@ -173,16 +170,13 @@ def ver_cotizacion(cotizacion_id = None):
         print(detalle_cotizacion['mensaje'])
         abort(detalle_cotizacion['error'])
 
-    
-    #verificar si existe el PDF en el servidor.
+    # Verifica si existe el PDF en el servidor.
     pdf_url = verificar_pdf(cotizacion_id)
     if pdf_url == None:
-        print('------ PDF no encontrado --> Generando PDF y enviando... ------')
+        # Se genera el PDF.
         pdf_url = generar_pdf(detalle_cotizacion)
 
-    # Enviando el PDF al cliente
-    print('enviando url pdf ... ')
-    
+    # Se envia el PDF al cliente
     return send_from_directory( current_app.config['COTIZACION_FOLDER'] , f'cotizacion_{cotizacion_id}.pdf' )
 	
 

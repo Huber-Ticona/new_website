@@ -3,12 +3,14 @@
 {% block encabezado %}
 
 <link rel="stylesheet" href="{{url_for('static', filename= 'css/producto.css')}}">
+<script type="text/javascript"
+  src="https://cdn.rawgit.com/igorlino/elevatezoom-plus/1.1.6/src/jquery.ez-plus.js"></script>
 <title>Producto</title>
 {% endblock %}
 
 {% block contenido %}
 
-<div class="modal fade" id="modal-carro-2" aria-hidden="true"   tabindex="-1">
+<div class="modal fade" id="modal-carro-2" aria-hidden="true" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
 
@@ -35,143 +37,225 @@
       <li class="breadcrumb-item"><a href="javascript:history.back()"><i class="fa fa-arrow-left"></i> Volver</a></li>
     </ol>
   </nav>
-    <div class="row" >
-        <div class="col-lg-7">
-
-            <div class="contenedor-producto-imagen">
-                {% if producto %}
-            
-                <div class="producto-imagen">
-                  {% if producto[3] != None %}
-                    <img id="imagen" class="img-fluid" src="{{url_for('api_bp.imagen_producto' , nombre = producto[3] )}}"  alt="">
-                  {% else %}
-                    <img id="imagen"  class="img-luid" src="{{url_for('api_bp.imagen_producto' , nombre = 'no_disponible.png' )}}"  alt="...">
-                  {% endif %}
-                </div>
-                {%endif%}
-                <div class="contenedor-producto-imagenes">
-                  <div class="d-flex flex-md-column flex-row producto-imagenes">{#-flex-#}
-                    <div class="imagenes">
-                      <img id="img_0" src="{{url_for('api_bp.imagen_producto' , nombre = producto[3] )}}" class="img-fluid" alt="Responsive image">
-                    </div>
-                     </div>
-                </div>
-                {% if producto[5] != '[]' %}
-                
-                  <script>
-                    var lista_imagenes_extra = JSON.parse('{{producto[5]|safe}}')
-                    //console.log('tiene extras' , lista_imagenes_extra)
-                    for(let i = 0; i < lista_imagenes_extra.length ; i ++){
-                      let item = lista_imagenes_extra[i]
-                      let img = '<div class="imagenes"><img id="img_'+ (i+1).toString() +'" src="/imagen-producto/'+ item +'" class="img-fluid" alt="Responsive image"></div>' 
-                      $('.producto-imagenes').append(img)
-                    }
-                  </script>
-               
-                {%endif%}
-
-            </div>
+  <div class="row">
+    <div class="col-lg-7">
+      <!-- Imagen producto-->
+      <div class="contenedor-producto-imagen">
+        {% if producto %}
+        <div class="producto-imagen">
+          <div class="favorito"><i class="far fa-heart" style="font-size: 40px;"></i></div>
+          {% if producto[3] != None %}
+          <img id="imagen" class="img-fluid" src="{{url_for('api_bp.imagen_producto' , nombre = producto[3] )}}" alt="">
+          {% else %}
+          <img id="imagen" class="img-fluid" src="{{url_for('api_bp.imagen_producto' , nombre = 'no_disponible.png' )}}"
+            alt="...">
+          {% endif %}
         </div>
-
-        <div class="col-lg-5">
-            <div class="contenedor-producto-detalle">
-                <div class="header-producto-detalle">
-                  <strong>ARAUCO</strong>
-                  <div class="producto-titulo">{{producto[0]}}</div>
-                  <div><i class="fa-solid fa-check"></i> Despacho a domicilio</div>
-                </div>
-                
-                <div class="producto-precio">${{producto[2].replace(',','.')}}</div>
-                <div>Cantidad</div>
-                <div class="producto-accesos">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                          <button class="btn btn-outline-secondary" type="button" onclick="disminuir()"> - </button>
-                        </div>
-                        <input type="number" id="cantidad" min="1" value="1" aria-label="Example text with button addon" aria-describedby="button-addon1">
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" type="button" onclick="aumentar()"> + </button>
-                        </div>
-                    </div>
-                    <div class="d-inline-flex botones" >
-                        <button class="btn btn-primary" onclick="agregar('{{producto[4]}}')">Agregar al carro</button>
-                        <button class="btn btn-primary" onclick="ver_carro()">ver carro</button>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-</div>
-<p>test auto reload</p>
-    <br>
-    <img id="test_img" src="https://assets.imgix.net/dog.png?w=400" data-zoom="https://assets.imgix.net/dog.png?w=600">
-    <div class="zoom-container" style="width: 300px;height:300px;border:2px solid red;">
-
-    </div>
-    <div class="container">
-      <div class="row">
-      <p>Descripcion</p>
-      <div class="descripcion">
-        <p>hola esta es una descripcion</p>
-      </div>
-      </div>
-    </div>
-
-    <script>
-      const zoomContainer = document.getElementById("zoom-container");
-      new Drift(document.getElementById("test_img"), {
-        inlinePane: zoomContainer,
-        zoomFactor: 2
-      });
-            
-      function aumentar(){
-        cantidad = $('#cantidad').val()
-        $('#cantidad').val(parseInt(cantidad) + 1)
-      }
-      function disminuir(){
-        cantidad = $('#cantidad').val()
-
-        if(parseInt(cantidad) > 1){
-          $('#cantidad').val(parseInt(cantidad) - 1)
-        }
-      }
-      
-      function agregar(id){
-        $('#modal-2-imagen').empty()
-        $('#modal-2-mensaje').empty()
-        cantidad = $('#cantidad').val()
-        nombre_producto = $('.producto-titulo').text()
-        console.log('agregando producto ',id , ' cantidad ', cantidad , 'al carro')
-
-        dato = JSON.stringify({ "producto_id": id , "cantidad": parseInt(cantidad), "nombre_producto": "{{producto[0]}}", "url_imagen": "{{producto[3]}}" ,"precio_unitario":"{{producto[2]}}"})
-
-        $.ajax({
-            url: "{{url_for('tienda_bp.agregar_al_carro')}}",
-            type: 'post',
-            contentType: "application/json; charset=utf-8",
-            data: dato,
-            success: function (resp) {
-                console.log(resp)
-                if (resp.mensaje) {
-                    console.log('ahi respuesta')
-                    console.log(resp.producto)
-                    producto = resp.producto
-                    img = '<img class="item-carro-imagen" src="/imagen-producto/'+producto.url_imagen+'">'
-                    $('#modal-2-imagen').append(img)
-                    $('#modal-2-mensaje').append(resp.mensaje)
-                    $('#modal-carro-2').modal('show')
-                }
+        {%endif%}
+        <div id="galeria" class="d-flex flex-md-column flex-row producto-imagenes">
+          <a class="imagenes" data-image="{{url_for('api_bp.imagen_producto' , nombre = producto[3] )}}">
+            <img class="img-fluid" src="{{url_for('api_bp.imagen_producto' , nombre = producto[3] )}}"
+              alt="Responsive image">
+          </a>
+          {% for imagen in producto[5] %}
+          <a class="imagenes" data-image="/imagen-producto/{{imagen}}">
+            <img src="/imagen-producto/{{imagen}}" class="img-fluid" alt="Responsive image"></a>
+          {% endfor %}
+          {#% if producto[5] != '[]' %}
+          <p>{{producto[5]}}</p>
+          <script>
+            var lista_imagenes_extra = JSON.parse('{{producto[5]|safe}}')
+            for (let i = 0; i < lista_imagenes_extra.length; i++) {
+              let item = lista_imagenes_extra[i]
+              let img = '<a class="imagenes" href="#" data-image="/imagen-producto/' + item + '" data-zoom-image="/imagen-producto/' + item + '"><img id="img_' + (i + 1).toString() + '" src="/imagen-producto/' + item + '" class="img-fluid" alt="Responsive image"></a>'
+              $('#galeria').append(img)
             }
-        });
-      }
-      
-      
-    </script>
+          </script>
+          {%endif%#}
 
-    
-    <script src="{{url_for('static', filename= 'scripts/producto.js')}}"></script> 
+        </div>
+      </div>
+    </div>
+    <!-- Detalle producto-->
+    <div class="col-lg-5">
+      <div class="contenedor-producto-detalle">
+        <div id="producto-zoom">
+
+        </div>
+        <div class="header-producto-detalle">
+          <div class="d-flex  justify-content-between">
+            <strong>ARAUCO</strong> <small>Codigo Producto: XA-TOR-10</small>
+          </div>
+          <div class="producto-titulo">{{producto[0]}}</div>
+          <div><i class="fa-solid fa-check"></i> Despacho a domicilio</div>
+          <div class="rating">
+            <span class="star" data-rating="1">&#9733;</span>
+            <span class="star" data-rating="2">&#9733;</span>
+            <span class="star" data-rating="3">&#9733;</span>
+            <span class="star" data-rating="4">&#9733;</span>
+            <span class="star" data-rating="5">&#9733;</span>
+          </div>
+
+        </div>
+
+        <div class="producto-precio">${{producto[2].replace(',','.')}}</div>
+        <div>Cantidad</div>
+        <div class="producto-accesos">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <button class="btn btn-outline-secondary" type="button" onclick="disminuir()"> - </button>
+            </div>
+            <input type="number" id="cantidad" min="1" value="1" aria-label="Example text with button addon"
+              aria-describedby="button-addon1">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button" onclick="aumentar()"> + </button>
+            </div>
+          </div>
+          <div class="d-inline-flex botones">
+            <button class="btn btn-primary" onclick="agregar('{{producto[4]}}')">Agregar al carro</button>
+            <button class="btn btn-primary" onclick="ver_carro()">ver carro</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-md">
+    <p>original</p>
+
+    <img id="test_img" src="{{url_for('static', filename='docs/banner.jpg')}}"
+      data-zoom-image="{{url_for('static', filename='docs/banner.jpg')}}" class="img-fluid">
+
+  </div>
+  <div class="col-md">
+    <p>zoom</p>
+    <div id="imgDetail" style="width: 300px;height:300px;border:2px solid red;">
+    </div>
+  </div>
+</div>
+
+
+<script>
+  $(document).ready(function () {
+
+    if ($(window).width() > 768) { // Mayor  a 768px (desktop)
+
+      $('#test_img').ezPlus({
+        zoomType: "lens",
+        cursor: "crosshair",
+        zoomWindowFadeIn: 500,
+        zoomWindowFadeOut: 500
+      });
+      // initiate ElevateZoom on the main image
+      $('#imagen').ezPlus({
+        gallery: 'galeria',
+        cursor: 'pointer',
+        //Zoom color de fondo y opacidad.
+        tint: true,
+        tintColour: '#8d918e', tintOpacity: 0.3,
+        //Zoom en div.
+        zoomWindowPosition: 'producto-zoom',
+        zoomWindowHeight: 300,
+        zoomWindowWidth: 300,
+        borderSize: 0,
+        easing: true,
+        //Scroll zoom
+        scrollZoom: true
+      });
+
+      // add a click event listener to trigger the Fancybox gallery on the main image
+      $('#imagen').bind('click', function (e) {
+        var ez = $('#imagen').data('ezPlus');
+        console.log(ez)
+        return false;
+      });
+
+    } else { // Menor o igual 768px (dispositivos móviles)
+      $('#galeria a').on('click', function (e) {
+        var url = $(this).data('image');
+        $('#imagen').attr('src', url)
+      });
+    }
+
+
+
+    function aumentar() {
+      cantidad = $('#cantidad').val()
+      $('#cantidad').val(parseInt(cantidad) + 1)
+    }
+    function disminuir() {
+      cantidad = $('#cantidad').val()
+
+      if (parseInt(cantidad) > 1) {
+        $('#cantidad').val(parseInt(cantidad) - 1)
+      }
+    }
+
+    function agregar(id) {
+      $('#modal-2-imagen').empty()
+      $('#modal-2-mensaje').empty()
+      cantidad = $('#cantidad').val()
+      nombre_producto = $('.producto-titulo').text()
+      console.log('agregando producto ', id, ' cantidad ', cantidad, 'al carro')
+
+      dato = JSON.stringify({
+        "producto_id": id,
+        "cantidad": parseInt(cantidad),
+        "nombre_producto": "{{producto[0]}}",
+        "url_imagen": "{{producto[3]}}",
+        "precio_unitario": "{{producto[2]}}"
+      })
+
+      $.ajax({
+        url: "{{url_for('tienda_bp.agregar_al_carro')}}",
+        type: 'post',
+        contentType: "application/json; charset=utf-8",
+        data: dato,
+        success: function (resp) {
+          console.log(resp)
+          if (resp.mensaje) {
+            console.log('ahi respuesta')
+            console.log(resp.producto)
+            producto = resp.producto
+            img = '<img class="item-carro-imagen" src="/imagen-producto/' + producto.url_imagen + '">'
+            $('#modal-2-imagen').append(img)
+            $('#modal-2-mensaje').append(resp.mensaje)
+            $('#modal-carro-2').modal('show')
+          }
+        }
+      });
+    }
+  })
+  // Obtener todos los elementos de las estrellas
+  const stars = document.querySelectorAll('.star');
+
+  // Agregar evento de clic a cada estrella
+  for (let i = 0; i < stars.length; i++) {
+    stars[i].addEventListener('click', function () {
+      const rating = this.getAttribute('data-rating');
+
+      for (let j = 0; j < rating; j++) {
+        stars[j].classList.add('active');
+      }
+
+      for (let j = rating; j < stars.length; j++) {
+        stars[j].classList.remove('active');
+      }
+
+      alert(`Has valorado el producto con ${rating} estrellas`);
+    });
+  }
+
+
+</script>
+
+
+<script src="{{url_for('static', filename= 'scripts/producto.js')}}"></script>
 
 <!--
 <div class="container">

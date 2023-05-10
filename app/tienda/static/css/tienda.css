@@ -1,5 +1,8 @@
 
 .header-vista-productos{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 .contenedor-vista-productos{
     padding: 10px 10px ;
@@ -198,8 +201,10 @@ padding-right: 10px;
  .tienda_carrusel_item{
     background-color: #ec801d;
     width: 100px;
-    height: 50px;
+    height: 100px;
  }
+
+ 
 
  
 

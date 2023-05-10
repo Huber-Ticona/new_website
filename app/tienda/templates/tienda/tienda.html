@@ -22,159 +22,184 @@
             class="fa-solid fa-times"></i></button>
       </div>
       {% with id_slider = 'slider_filtro_movil' %}
-                {% include 'tienda/tienda_filtro.html' %}
+      {% include 'tienda/tienda_filtro.html' %}
       {% endwith %}
     </div>
     <div class="tienda_sidebar_relleno">
     </div>
   </div>
 
-<div class="tienda_contenido w-100">
-  <!-- MIGAS DE PAN -->
-  <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="#"><i class="fa-solid fa-home-alt"></i></a> </li>
-      {% if dicc['miga_pan']%}
-      
-        {% set aux_url = namespace(value='/store')   %}
-        {% for item in dicc['miga_pan']  %}
-          {% set aux_url.value = aux_url.value + '/' + item  %}
-          <li class="breadcrumb-item"><a href="{{aux_url.value}}">{{item.replace('-',' ')}}</a></li>
+  <div class="tienda_contenido w-100">
+    <!-- MIGAS DE PAN -->
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#"><i class="fa-solid fa-home-alt"></i></a> </li>
+        {% if dicc['miga_pan']%}
+
+        {% set aux_url = namespace(value='/store') %}
+        {% for item in dicc['miga_pan'] %}
+        {% set aux_url.value = aux_url.value + '/' + item %}
+        <li class="breadcrumb-item"><a href="{{aux_url.value}}">{{item.replace('-',' ')}}</a></li>
         {% endfor %}
-      {% endif%}
-      <!--<li class="breadcrumb-item active" aria-current="page">Data</li>-->
-    </ol>
-  </nav>
+        {% endif%}
+        <!--<li class="breadcrumb-item active" aria-current="page">Data</li>-->
+      </ol>
+    </nav>
     <!-- MIGAS DE PAN END -->
     <div>
       <img src="{{url_for('api_bp.imagen_producto' , nombre = 'banner_melamina_vesto.jpg' )}}" class="img-fluid" alt="">
     </div>
     <div class="rectangulo"></div>
-    <div class="contenedor-carrusel-tienda" >
+    <div class="contenedor-carrusel-tienda">
 
 
       <div class="owl-carousel owl-theme  owl-loaded tienda_carrusel">
         <div class="owl-stage-outer">
-            <div class="owl-stage">
+          <div class="owl-stage">
 
-              <div class="owl-item">
-                <div class="tienda_carrusel_item"></div>
-              </div>
-              <div class="owl-item">
-                <div class="tienda_carrusel_item"></div>
-              </div>
-              <div class="owl-item">
-                <div class="tienda_carrusel_item"></div>
-              </div>
-              <div class="owl-item">
-                <div class="tienda_carrusel_item"></div>
-              </div>
-              <div class="owl-item">
-                <div class="tienda_carrusel_item"></div>
-              </div>
-              <div class="owl-item">
-                <div class="tienda_carrusel_item"></div>
-              </div>
-
+            <div class="owl-item">
+              <div class="tienda_carrusel_item"></div>
             </div>
+            <div class="owl-item">
+              <div class="tienda_carrusel_item"></div>
+            </div>
+            <div class="owl-item">
+              <div class="tienda_carrusel_item"></div>
+            </div>
+            <div class="owl-item">
+              <div class="tienda_carrusel_item"></div>
+            </div>
+            <div class="owl-item">
+              <div class="tienda_carrusel_item"></div>
+            </div>
+            <div class="owl-item">
+              <div class="tienda_carrusel_item"></div>
+            </div>
+
           </div>
         </div>
       </div>
-    
-  
-    <div class="text-center mt-2">
-      <button class="btn  d-lg-none open-sidebar-categoria"><img style="color:blue; " src="{{url_for('static', filename='icons/filter.png')}}" alt="" class="img-fluid" width="32"> Filtrar por</button>
-      <button class="btn  d-lg-none open-sidebar-ordenar"><img src="{{url_for('static', filename='icons/sort.png')}}" alt="" class="img-fluid" width="32" > Ordenar por</button>
     </div>
-  
-  <div class="container pt-3 pr-0">
-    <div class="row">
-      <div class="col-lg-3 p-0 d-none d-lg-block d-lx-block" id="categorias_lg" >
-        
-        <!-- LISTA CATEGORIAS VERSION PC -->
-        <div class="pc-categorias">
-          <div class="header-box">
-            FILTROS
-            <button class="btn d-lg-none d-block close-sidebar" style="float: right;"><i
-                class="fa-solid fa-times"></i></button>
-          </div>
-          {% with id_slider = 'slider_filtro_escritorio' %}
-                {% include 'tienda/tienda_filtro.html' %}
-          {% endwith %}
-        
-        
-        
-      </div>
 
-      </div>
-      <div class="col-lg-9" id="">
-        <!-- VISUALIZACION DE PRODUCTOS -->
-        {% if dicc['productos'] %}
-        
-        <div class="header-vista-productos">
-          <p style="width: fit-content ;border-bottom:1px solid black ;"><strong>{{dicc['productos']|length }}</strong> PRODUCTOS</p>
-          
+
+    <div class="text-center mt-2">
+      <button class="btn  d-lg-none open-sidebar-categoria"><img style="color:blue; "
+          src="{{url_for('static', filename='icons/filter.png')}}" alt="" class="img-fluid" width="32"> Filtrar
+        por</button>
+      <button class="btn  d-lg-none open-sidebar-ordenar"><img src="{{url_for('static', filename='icons/sort.png')}}"
+          alt="" class="img-fluid" width="32"> Ordenar por</button>
+    </div>
+
+    <div class="container pt-3 pr-0">
+      <div class="row">
+        <div class="col-lg-3 p-0 d-none d-lg-block d-lx-block" id="categorias_lg">
+
+          <!-- LISTA CATEGORIAS VERSION PC -->
+          <div class="pc-categorias">
+            <div class="header-box">
+              FILTROS
+              <button class="btn d-lg-none d-block close-sidebar" style="float: right;"><i
+                  class="fa-solid fa-times"></i></button>
+            </div>
+            {% with id_slider = 'slider_filtro_escritorio' %}
+            {% include 'tienda/tienda_filtro.html' %}
+            {% endwith %}
+
+
+
+          </div>
+
         </div>
-        
+        <div class="col-lg-9" id="">
+          <!-- VISUALIZACION DE PRODUCTOS -->
+          {% if dicc['productos'] %}
 
-        <div class="contenedor-vista-productos" id="cont">
-          
-          {% for item in dicc['productos'] %}
-
-          <div id="card-contenido">
-            {#<div class="descuento">Oferta</div>
-            <div class="descuento" style="margin-top: 20px;">STOCK</div>#}
-            <div id="card-imagen">
-            {% if item[3] != None %}
-            <a href="/store/producto/{{item[1]}}"><img src="{{url_for('api_bp.imagen_producto' , nombre = item[3] )}}"  class="img-fluid"  alt="{{item[1]}}"></a>
-            {% else %}
-            <img src="{{url_for('api_bp.imagen_producto' , nombre = 'no_disponible.png' )}}" class="img-fluid"   alt="">
-            {% endif %}
-            </div>
-
-            <div class="dropdown-divider"></div>
-            <div class="card-body p-0 m-0" id="card-cuerpo">
-              <div id="card-titulo"><a href="/store/producto/{{item[1]}}">{{item[1]}}</a></div>
-              
-              
-              <div class="text-center">
-                <p id="card-precio">${{item[2]}} {#{item[2].replace(',','.') }#}</p>
-                <button class="btn agregar">Añadir</button>
-              </div>
-              
-            </div>
-            
-          </div>
-          {% endfor %}
-          {% else %}
           <div class="header-vista-productos">
-            <p><strong>{{dicc['productos']|length }}</strong> PRODUCTOS</p>
+            <p style="width: fit-content ;border-bottom:1px solid black ;"><strong>{{dicc['productos']|length
+                }}</strong> PRODUCTOS</p>
+            <div class="dropdown">
+              <a class="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Ordenar por <svg class="bi bi-chevron-down" width="16" height="16" viewBox="0 0 16 16"
+                  fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd"
+                    d="M8 11.707l-5.146-5.147a.5.5 0 01.708-.708L8 10.293l4.439-4.439a.5.5 0 01.707.708L8.707 11.707a.5.5 0 01-.707 0z"
+                    clip-rule="evenodd" />
+                </svg>
+              </a>
+
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="#">Menor a mayor precio</a>
+                <a class="dropdown-item" href="#">Mayor a menor precio</a>
+                <a class="dropdown-item" href="#">etc</a>
+              </div>
+            </div>
+
+
           </div>
+
 
           <div class="contenedor-vista-productos" id="cont">
+
+            {% for item in dicc['productos'] %}
+
+            <div id="card-contenido">
+              {#<div class="descuento">Oferta</div>
+              <div class="descuento" style="margin-top: 20px;">STOCK</div>#}
+              <div id="card-imagen">
+                {% if item[3] != None %}
+                <a href="/store/producto/{{item[1]}}"><img
+                    src="{{url_for('api_bp.imagen_producto' , nombre = item[3] )}}" class="img-fluid"
+                    alt="{{item[1]}}"></a>
+                {% else %}
+                <img src="{{url_for('api_bp.imagen_producto' , nombre = 'no_disponible.png' )}}" class="img-fluid"
+                  alt="">
+                {% endif %}
+              </div>
+
+              <div class="dropdown-divider"></div>
+              <div class="card-body p-0 m-0" id="card-cuerpo">
+                <div id="card-titulo"><a href="/store/producto/{{item[1]}}">{{item[1]}}</a></div>
+
+
+                <div class="text-center">
+                  <p id="card-precio">${{item[2]}} {#{item[2].replace(',','.') }#}</p>
+                  <button class="btn agregar">Añadir</button>
+                </div>
+
+              </div>
+
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class="header-vista-productos">
+              <p><strong>{{dicc['productos']|length }}</strong> PRODUCTOS</p>
+            </div>
+
+            <div class="contenedor-vista-productos" id="cont">
+            </div>
+            {% endif %}
+
           </div>
-          {% endif %}
+          <div class="d-flex justify-content-center">
+            <nav aria-label="Page navigation example">
+              <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+              </ul>
+            </nav>
+          </div>
 
         </div>
-        <div class="d-flex justify-content-center">
-          <nav aria-label="Page navigation example">
-          <ul class="pagination">
-            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-          </ul>
-        </nav>
-        </div>
-        
+
+
       </div>
-
-
     </div>
-  </div>
 
-</div>
+  </div>
 </div>
 
 <script src="{{url_for('static', filename= 'scripts/tienda.js')}}"></script>

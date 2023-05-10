@@ -29,6 +29,7 @@ def create_app():
     app.register_blueprint(api_bp, url_prefix='/')
     app.register_blueprint(auth_bp, url_prefix='/')
     app.register_blueprint(tienda_bp, url_prefix='/store')
+
     # Social Flask Dance
     facebook_blueprint = make_facebook_blueprint(scope="email" , redirect_to= '/login-facebook' )
     app.register_blueprint(facebook_blueprint)
@@ -52,7 +53,8 @@ def create_app():
     def get_all_rutas():
         rutas = ModeloCategoria.obt_rutas()
         return rutas
-    #PROCESADOR DE CONTEXTO
+    
+    #PROCESADOR DE CONTEXTO: Permite que las variables se puedan ver en todas las rutas.
     @app.context_processor
     def injectar_categorias():
         categorias = get_all_categories()
