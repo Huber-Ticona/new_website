@@ -3,6 +3,9 @@
     height: 60vh;
     border : 1px solid blue;
 }
+.precio-original {
+    text-decoration: line-through;
+}
 /* CSS IMAGENES PRINCIPAL DEL PRODUCTO */
 .producto-imagen{
     order: 1;
@@ -20,8 +23,11 @@
     position: absolute;
     right: 0;
     bottom: 0;
-
 }
+.producto-imagen .favorito:hover{
+    background-color: red;
+}
+
 #imagen{
     transition: transform .5s ease;
     height: 100%;
@@ -29,7 +35,6 @@
 @media(max-width:768px) {
     .contenedor-producto-imagen{
         flex-direction: column;
-        height: calc(60vh );
     }
     .producto-imagen{
         order: 0;

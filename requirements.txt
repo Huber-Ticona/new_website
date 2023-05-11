@@ -32,6 +32,7 @@ Pillow==9.4.0
 pycparser==2.21
 PyMySQL==1.0.2
 pyparsing==3.0.9
+python-dotenv==1.0.0
 redis==4.3.5
 reportlab==3.6.12
 requests==2.28.1
