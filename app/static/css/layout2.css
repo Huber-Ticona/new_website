@@ -19,7 +19,8 @@ body, html {
 .dashboard{
   border: 1px solid blue;
   padding: 5px 5px;
-  max-width: 100px;
+  width: 175px;
+  max-width: 300px;
   background-image: linear-gradient(to bottom, #FBFCFC, #DEE1E2);
   display: flex;
   flex-direction: column;
@@ -28,15 +29,29 @@ body, html {
   border: 1px solid purple;
   margin-top: 10px;
 }
+.dashboard .nav-item:hover{
+  background-color: hsl(36, 95%, 51%) ;
+}
 .dashboard .logo-sitio{
   height: 100px;
+  display: flex;
   border: 1px solid green;
+  align-items: center;
+  justify-content: center;
 }
+.dashboard .logo-sitio img{
+  border: 1px solid red;
+}
+
 .main-content{
   border: 1px solid aqua;
   margin: 5px 5px;
   display: block;
   width: 100%;
+}
+.content-banner{
+  text-align: center;
+  background-color:red ;
 }
 
 @media (max-width: 768px) {

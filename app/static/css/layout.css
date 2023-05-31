@@ -6,6 +6,11 @@ body, html {
   font-weight: 300;
   font-family: 'Montserrat',sans-serif;
 }
+a { color: inherit; } 
+a:hover, a:focus , a:active {
+  text-decoration: none;
+  color: red; 
+}
 
 #nav_inicio{
 background-color: hsl(36, 95%, 51%);
@@ -47,25 +52,15 @@ text-transform: uppercase;
 /* CSS FOOTER */
 
 /* REMOVER COLOR AZUL DE TODOS LOS LINKS*/
-a { color: inherit; } 
-a:hover, a:focus , a:active {
-  text-decoration: none;
-  color: inherit; 
-}
-
 footer {
   background: hsl(36, 95%, 51%);
-  
 }
-footer h5{
-  color:  white;
+footer h5,p,a{
+  color:  black;
 }
-footer  p{
-  color:  white;
-}
-footer a{
-  color:  white;
-
+footer a:hover, a:focus , a:active {
+  text-decoration: none;
+  color: white; 
 }
 #red-social{
   background-color: white;
@@ -74,7 +69,6 @@ footer a{
   background-color: black;
 }
 /* CSS FOOTER END */
-
 .boton-carro{
   width: 45px;
   height: 45px;

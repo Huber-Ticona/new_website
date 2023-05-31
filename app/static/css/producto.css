@@ -90,8 +90,13 @@
 .contenedor-producto-detalle{
     padding: 10px 10px;
 }
+.contenedor-producto-detalle #producto-zoom{
+    border: 1PX solid #ec801d;
+    position: absolute;
+   
+}
 .header-producto-detalle{
-    height: 15vh;
+    height: max-content;
 }
 .producto-titulo{
 
@@ -109,9 +114,20 @@
     color: rgb(113, 113, 113);
     font-family: 'lato' , sans-serif;
 }
+.producto-descuento{
+    background-color: hsl(36, 95%, 51%);
+    border-radius: 10px;
+    margin: 20px 0px;
+    font-size: 15px;
+    line-height: 22px;
+    font-weight: 400;
+    color: white;
+    font-family: 'lato' , sans-serif;
+}
 
 .rating {
     font-size: 0; /* para eliminar espacios entre las estrellas */
+    border: 1px solid orange;
   }
   
   
@@ -126,6 +142,7 @@
   
   .star.active, .star:hover {
     color: #ff9800;
+    
   }
   
   

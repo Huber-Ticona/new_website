@@ -49,32 +49,20 @@
     <div>
       <img src="{{url_for('api_bp.imagen_producto' , nombre = 'banner_melamina_vesto.jpg' )}}" class="img-fluid" alt="">
     </div>
-    <div class="rectangulo"></div>
+
     <div class="contenedor-carrusel-tienda">
-
-
       <div class="owl-carousel owl-theme  owl-loaded tienda_carrusel">
         <div class="owl-stage-outer">
           <div class="owl-stage">
+            {%for i in range(8) %}
+            <div class="owl-item">
+              <div class="" style="border-radius:50%;border: 1px solid red;width: 80px;">
+                <img src="{{url_for('static', filename='docs/logo_enco.png')}}" alt="" class="img-fluid">
+              </div>
+            </div>
+            {%endfor%}
 
-            <div class="owl-item">
-              <div class="tienda_carrusel_item"></div>
-            </div>
-            <div class="owl-item">
-              <div class="tienda_carrusel_item"></div>
-            </div>
-            <div class="owl-item">
-              <div class="tienda_carrusel_item"></div>
-            </div>
-            <div class="owl-item">
-              <div class="tienda_carrusel_item"></div>
-            </div>
-            <div class="owl-item">
-              <div class="tienda_carrusel_item"></div>
-            </div>
-            <div class="owl-item">
-              <div class="tienda_carrusel_item"></div>
-            </div>
+
 
           </div>
         </div>
@@ -129,8 +117,8 @@
               </a>
 
               <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item" href="#">Menor a mayor precio</a>
-                <a class="dropdown-item" href="#">Mayor a menor precio</a>
+                <a class="dropdown-item" href="?orden=precio_asc">Menor a mayor precio</a>
+                <a class="dropdown-item" href="?orden=precio_desc">Mayor a menor precio</a>
                 <a class="dropdown-item" href="#">etc</a>
               </div>
             </div>
@@ -141,16 +129,15 @@
 
           <div class="contenedor-vista-productos" id="cont">
 
-            {% for item in dicc['productos'] %}
+            {% for producto in dicc['productos'] %}
 
             <div id="card-contenido">
               {#<div class="descuento">Oferta</div>
               <div class="descuento" style="margin-top: 20px;">STOCK</div>#}
               <div id="card-imagen">
-                {% if item[3] != None %}
-                <a href="/store/producto/{{item[1]}}"><img
-                    src="{{url_for('api_bp.imagen_producto' , nombre = item[3] )}}" class="img-fluid"
-                    alt="{{item[1]}}"></a>
+                {% if producto and producto.imagenes %}
+                <a href="/store/producto/{{producto.nombre}}"><img src="/imagen-producto/{{ producto.imagenes[0] }}"
+                    class="img-fluid" alt=""></a>
                 {% else %}
                 <img src="{{url_for('api_bp.imagen_producto' , nombre = 'no_disponible.png' )}}" class="img-fluid"
                   alt="">
@@ -159,13 +146,23 @@
 
               <div class="dropdown-divider"></div>
               <div class="card-body p-0 m-0" id="card-cuerpo">
-                <div id="card-titulo"><a href="/store/producto/{{item[1]}}">{{item[1]}}</a></div>
+                <div><strong>{{producto.marca}}</strong></div>
+                <div id="card-titulo"><a href="/store/producto/{{producto.nombre}}">{{producto.nombre}}</a></div>
 
 
-                <div class="text-center">
-                  <p id="card-precio">${{item[2]}} {#{item[2].replace(',','.') }#}</p>
-                  <button class="btn agregar">Añadir</button>
+                <div class="d-flex justify-space-between">
+                  {%if producto and producto.descuento > 0 %}
+                  <p id="card-precio">${{"{:,}".format(producto.precio).replace(',','.')}} {#{item[2].replace(',','.')
+                    }#}</p>
+                  <span
+                    style="background-color: #cc1414;border-radius:10px;color:white;font-size:15px">{{producto.descuento}}%</span>
+                  {%else%}
+                  <p id="card-precio">${{"{:,}".format(producto.precio).replace(',','.')}} {#{item[2].replace(',','.')
+                    }#}</p>
+                  {%endif%}
+
                 </div>
+                <button class="btn agregar">Añadir</button>
 
               </div>
 

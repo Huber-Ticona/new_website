@@ -1,12 +1,14 @@
 import json
 from ..extensiones import obtener_conexion
+from sqlalchemy import func
+from ..modelos.models import Producto
 
 
 class ModeloProducto():
 
     @classmethod
     def obtener_producto_x_nombre(self, nombre_producto):
-        miConexion = obtener_conexion()
+        '''miConexion = obtener_conexion()
         try:
             with miConexion.cursor() as cursor:
 
@@ -26,11 +28,14 @@ class ModeloProducto():
             raise Exception(ex)
 
         finally:
-            miConexion.close()
+            miConexion.close()'''
+        producto = Producto.query.filter_by(nombre=nombre_producto).first()
+        print('producto -> ', producto)
+        return producto
 
     @classmethod
-    def obtener_productos_x_categoria(self, categoria_id):
-        miConexion = obtener_conexion()
+    def obtener_productos_x_categoria(self, categoria_id, orden):
+        '''miConexion = obtener_conexion()
         try:
             with miConexion.cursor() as cursor:
                 # print('Tipo categoria_id: ', type(categoria_id))
@@ -45,6 +50,29 @@ class ModeloProducto():
                 # print(consulta)
 
                 return consulta
+
+        except Exception as ex:
+            raise Exception(ex)
+
+        finally:
+            miConexion.close()'''
+        print('Buscando productos | Categoria_id: ', categoria_id)
+        query = Producto.query \
+            .filter(func.json_contains(Producto.detalle, str(categoria_id), "$.categorias") == 1)
+
+        result = query.all()
+        print(result)
+        print('PRODUCTOS ', result)
+        return result
+
+    @classmethod
+    def todos_los_productos(self):
+        miConexion = obtener_conexion()
+        try:
+            with miConexion.cursor() as cursor:
+                print('Buscando todos los productos')
+                productos = Producto.query.all()
+                return productos
 
         except Exception as ex:
             raise Exception(ex)

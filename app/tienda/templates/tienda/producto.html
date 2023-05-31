@@ -44,8 +44,9 @@
         {% if producto %}
         <div class="producto-imagen">
           <div class="favorito"><i class="far fa-heart" style="font-size: 40px;"></i></div>
-          {% if producto[3] != None %}
-          <img id="imagen" class="img-fluid" src="{{url_for('api_bp.imagen_producto' , nombre = producto[3] )}}" alt="">
+          {% if producto.imagenes %}
+          <img id="imagen" class="img-fluid"
+            src="{{url_for('api_bp.imagen_producto' , nombre = producto.imagenes[0] )}}" alt="">
           {% else %}
           <img id="imagen" class="img-fluid" src="{{url_for('api_bp.imagen_producto' , nombre = 'no_disponible.png' )}}"
             alt="...">
@@ -53,25 +54,11 @@
         </div>
         {%endif%}
         <div id="galeria" class="d-flex flex-md-column flex-row producto-imagenes">
-          <a class="imagenes" data-image="{{url_for('api_bp.imagen_producto' , nombre = producto[3] )}}">
-            <img class="img-fluid" src="{{url_for('api_bp.imagen_producto' , nombre = producto[3] )}}"
-              alt="Responsive image">
-          </a>
-          {% for imagen in producto[5] %}
+
+          {% for imagen in producto.imagenes %}
           <a class="imagenes" data-image="/imagen-producto/{{imagen}}">
             <img src="/imagen-producto/{{imagen}}" class="img-fluid" alt="Responsive image"></a>
           {% endfor %}
-          {#% if producto[5] != '[]' %}
-          <p>{{producto[5]}}</p>
-          <script>
-            var lista_imagenes_extra = JSON.parse('{{producto[5]|safe}}')
-            for (let i = 0; i < lista_imagenes_extra.length; i++) {
-              let item = lista_imagenes_extra[i]
-              let img = '<a class="imagenes" href="#" data-image="/imagen-producto/' + item + '" data-zoom-image="/imagen-producto/' + item + '"><img id="img_' + (i + 1).toString() + '" src="/imagen-producto/' + item + '" class="img-fluid" alt="Responsive image"></a>'
-              $('#galeria').append(img)
-            }
-          </script>
-          {%endif%#}
 
         </div>
       </div>
@@ -84,10 +71,19 @@
         </div>
         <div class="header-producto-detalle">
           <div class="d-flex  justify-content-between">
-            <strong>ARAUCO</strong> <small>Codigo Producto: XA-TOR-10</small>
+            {% if producto and producto.marca %}
+            <strong> {{producto.marca.upper()}}</strong>
+            {% endif %}
+
+            {%if producto and producto.codigo %}
+            <small>Codigo Producto: {{producto.codigo}} </small>
+            {%endif%}
           </div>
-          <div class="producto-titulo">{{producto[0]}}</div>
+
+          <div class="producto-titulo">{{producto.nombre.upper()}}</div>
+
           <div><i class="fa-solid fa-check"></i> Despacho a domicilio</div>
+
           <div class="rating">
             <span class="star" data-rating="1">&#9733;</span>
             <span class="star" data-rating="2">&#9733;</span>
@@ -97,10 +93,13 @@
           </div>
 
         </div>
-
-        <div class="producto-precio">${{producto[2].replace(',','.')}} <span class="precio-original">
-            9000</span> <span style="background-color: aqua;">40%</span>
+        {% if producto and producto.descuento > 0 %}
+        <div class="d-flex justify-content-between">
+          <span class="producto-precio">
+            ${{"{:,}".format(producto.precio).replace(',','.')}}</span>
+          <span class="producto-descuento">{{producto.descuento}}%</span>
         </div>
+        {%endif%}
         <div>Cantidad</div>
         <div class="producto-accesos">
           <div class="input-group mb-3">
@@ -114,7 +113,8 @@
             </div>
           </div>
           <div class="d-inline-flex botones">
-            <button class="btn btn-primary" onclick="agregar('{{producto[4]}}')">Agregar</button>
+            <button class="btn btn-primary" id="btn-agregar"
+              data-producto_id="{{producto.producto_id}}">Agregar</button>
             <button class="btn btn-primary" onclick="ver_carro()">ver carro</button>
           </div>
         </div>
@@ -124,16 +124,49 @@
 
   </div>
 </div>
+<div class="container" style="margin-top: 50px;">
+  <div class="row">
+    <div class="col">
+      <p>Ficha tecnica</p>
+      <table class="table table-striped">
+
+        <tbody>
+          {% if producto and producto.ficha_tecnica %}
+          {% for key ,value in producto.ficha_tecnica.items() %}
+          <tr>
+            <td>{{key}}</td>
+            <td>{{value}}</td>
+          </tr>
+          {%endfor%}
+          {%endif%}
+        </tbody>
+
+      </table>
+    </div>
+    <div class="col">
+      <p>Descripción del producto</p>
+      {% if producto.detalle.descripcion %}
+      <p>{{producto.detalle.descripcion}}</p>
+      {%endif%}
+    </div>
+  </div>
+</div>
+
+<div class="container text-center mt-3">
+  <img id="test_img" src="{{url_for('static', filename='docs/banner.jpg')}}" class="img-fluid" alt="" width="600">
+</div>
 
 
 
 
 
 <script>
+
   $(document).ready(function () {
 
-    if ($(window).width() > 768) { // Mayor  a 768px (desktop)
+    if ($(window).width() > 991) { // Mayor  a 992PX (LG desktop)
       // initiate ElevateZoom on the main image
+      console.log('LG zoom activado: ', $(window).width())
       $('#imagen').ezPlus({
         gallery: 'galeria',
         cursor: 'pointer',
@@ -142,8 +175,8 @@
         tintColour: '#8d918e', tintOpacity: 0.3,
         //Zoom en div.
         zoomWindowPosition: 'producto-zoom',
-        zoomWindowHeight: 300,
-        zoomWindowWidth: 300,
+        zoomWindowHeight: 430,
+        zoomWindowWidth: 430,
         borderSize: 0,
         easing: true,
         //Scroll zoom
@@ -164,54 +197,63 @@
       });
     }
 
+    $('#test_img').ezPlus({
+      //Zoom color de fondo y opacidad.
+      zoomType: 'lens'
 
+    });
 
-    function aumentar() {
-      cantidad = $('#cantidad').val()
-      $('#cantidad').val(parseInt(cantidad) + 1)
+  })
+  function aumentar() {
+    cantidad = $('#cantidad').val()
+    $('#cantidad').val(parseInt(cantidad) + 1)
+  }
+
+  function disminuir() {
+    cantidad = $('#cantidad').val()
+
+    if (parseInt(cantidad) > 1) {
+      $('#cantidad').val(parseInt(cantidad) - 1)
     }
-    function disminuir() {
-      cantidad = $('#cantidad').val()
+  }
 
-      if (parseInt(cantidad) > 1) {
-        $('#cantidad').val(parseInt(cantidad) - 1)
-      }
-    }
 
-    function agregar(id) {
-      $('#modal-2-imagen').empty()
-      $('#modal-2-mensaje').empty()
-      cantidad = $('#cantidad').val()
-      nombre_producto = $('.producto-titulo').text()
-      console.log('agregando producto ', id, ' cantidad ', cantidad, 'al carro')
+  $('#btn-agregar').on('click', function () {
+    let id = $(this).data('producto_id')
+    console.log('agregando', id)
+    $('#modal-2-imagen').empty()
+    $('#modal-2-mensaje').empty()
+    cantidad = $('#cantidad').val()
+    nombre_producto = $('.producto-titulo').text()
+    console.log('agregando producto ', id, ' cantidad ', cantidad, 'al carro')
 
-      dato = JSON.stringify({
-        "producto_id": id,
-        "cantidad": parseInt(cantidad),
-        "nombre_producto": "{{producto[0]}}",
-        "url_imagen": "{{producto[3]}}",
-        "precio_unitario": "{{producto[2]}}"
-      })
+    dato = JSON.stringify({
+      "producto_id": id,
+      "cantidad": parseInt(cantidad),
+      "nombre_producto": "{{producto.nombre}}",
+      "url_imagen": "{{producto.imagenes[0]}}",
+      "precio_unitario": "{{producto.precio}}"
+    })
 
-      $.ajax({
-        url: "{{url_for('tienda_bp.agregar_al_carro')}}",
-        type: 'post',
-        contentType: "application/json; charset=utf-8",
-        data: dato,
-        success: function (resp) {
-          console.log(resp)
-          if (resp.mensaje) {
-            console.log('ahi respuesta')
-            console.log(resp.producto)
-            producto = resp.producto
-            img = '<img class="item-carro-imagen" src="/imagen-producto/' + producto.url_imagen + '">'
-            $('#modal-2-imagen').append(img)
-            $('#modal-2-mensaje').append(resp.mensaje)
-            $('#modal-carro-2').modal('show')
-          }
+    $.ajax({
+      url: "{{url_for('cart_bp.agregar_al_carro')}}",
+      type: 'post',
+      contentType: "application/json; charset=utf-8",
+      data: dato,
+      success: function (resp) {
+        console.log(resp)
+        if (resp.mensaje) {
+          console.log('ahi respuesta')
+          console.log(resp.producto)
+          producto = resp.producto
+          img = '<img class="item-carro-imagen" src="/imagen-producto/' + producto.url_imagen + '">'
+          $('#modal-2-imagen').append(img)
+          $('#modal-2-mensaje').append(resp.mensaje)
+          $('#modal-carro-2').modal('show')
         }
-      });
-    }
+      }
+    });
+
   })
   // Obtener todos los elementos de las estrellas
   const stars = document.querySelectorAll('.star');
