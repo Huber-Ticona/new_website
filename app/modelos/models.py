@@ -1,5 +1,6 @@
 from ..extensiones import db
 from datetime import datetime
+from sqlalchemy.orm import relationship
 
 
 class Categoria(db.Model):
@@ -7,14 +8,20 @@ class Categoria(db.Model):
     categoria_id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(255), nullable=False)
     nivel = db.Column(db.Integer, nullable=False)
+    detalle = db.Column(db.JSON)
     padre_id = db.Column(db.Integer, db.ForeignKey('categoria.categoria_id'))
+
+
+class Marca(db.Model):
+    __tablename__ = 'marca'
+    marca_id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(255))
+    detalle = db.Column(db.JSON)
 
 
 class Producto(db.Model):
     __tablename__ = 'producto'
     producto_id = db.Column(db.Integer, primary_key=True)
-
-    marca = db.Column(db.String(255), nullable=True)
 
     codigo = db.Column(db.String(255), nullable=False)
     nombre = db.Column(db.String(255), nullable=False)
@@ -24,6 +31,9 @@ class Producto(db.Model):
     descuento = db.Column(db.Integer, nullable=True)
     ficha_tecnica = db.Column(db.JSON)
     detalle = db.Column(db.JSON)
+    marca_id = db.Column(db.Integer, db.ForeignKey(
+        "marca.marca_id", ondelete='CASCADE'))
+    marca = relationship(Marca, cascade="all, delete", single_parent=True)
 
 
 class Usuario(db.Model):
@@ -35,13 +45,14 @@ class Usuario(db.Model):
     correo = db.Column(db.String(255), nullable=True)
     telefono = db.Column(db.String(255))
     contrasena = db.Column(db.String(255), nullable=True)
+    detalle = db.Column(db.JSON)
 
 
 class Cotizacion(db.Model):
     __tablename__ = "cotizacion"
     cotizacion_id = db.Column(db.Integer, primary_key=True)
     fecha_creacion = db.Column(db.DateTime, default=datetime.utcnow)
-    monto_total = db.Column(db.Float)
+    monto_total = db.Column(db.Integer)
     usuario_id = db.Column(db.Integer, db.ForeignKey("usuario.usuario_id"))
 
 

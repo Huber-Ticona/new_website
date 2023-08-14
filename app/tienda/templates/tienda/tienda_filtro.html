@@ -1,42 +1,81 @@
-<ul class="list-unstyled">
-    <li>
-      <button class="btn d-block shadow-none w-100"  data-toggle="collapse" data-target="#lista-categorias-pc"><span class="titulo-filtro">Categorias</span><i
-        class="fa-solid fa-caret-down"></i></button>
+<form action="{{ request.path }}" method="GET">
+  <ul class="list-unstyled">
+    <li class="border border-primary rounded">
+      <button class="btn d-block shadow-none w-100" data-toggle="collapse" data-target="#lista-categorias-pc">
+        <span class="titulo-filtro">{{dicc['miga_pan'][-1].replace('-', ' ').upper()}}</span>
+      </button>
       <div class="collapse show" id="lista-categorias-pc">
         <ul class="list-unstyled">
-        {% if dicc['subcategorias'] %}
-        {% for item in dicc['subcategorias'] %}
+          {% if dicc['subcategorias'] %}
+          {% for item in dicc['subcategorias'] %}
 
           {#% if item[0] == dicc['inferior'] %}
-          <li class="item_lista"><strong><a href="/categoria/{{dicc['superior']}}/{{item[0]}}">{{item[0]}}</strong></a><span class="badge">{{item[1]}}</span></li>
+          <li class="item_lista"><strong><a
+                href="/categoria/{{dicc['superior']}}/{{item[0]}}">{{item[0]}}</strong></a><span
+              class="badge">{{item[1]}}</span></li>
           {% else %}
-          <li class="item_lista"><a href="/categoria/{{dicc['superior']}}/{{item[0]}}">{{item[0]}}</a><span class="badge">{{item[1]}}</span></li>
+          <li class="item_lista"><a href="/categoria/{{dicc['superior']}}/{{item[0]}}">{{item[0]}}</a><span
+              class="badge">{{item[1]}}</span></li>
           {%endif%#}
-          <li class="item_lista"><a href="/store/{% for x in dicc['miga_pan']%}/{{x.replace(' ','-')}}{% endfor %}/{{item[1].replace(' ','-')}}">{{item[1]}}</a><span class="badge">100</span></li>
-        {% endfor%}
-        {% endif %}
-      </ul>
+          <li class="item_lista"><a
+              href="/store/{% for x in dicc['miga_pan']%}/{{x.replace(' ','-')}}{% endfor %}/{{item[1].replace(' ','-')}}">{{item[1]}}</a><span
+              class="badge"></span></li>
+          {% endfor%}
+          {% endif %}
+        </ul>
       </div>
     </li>
+
     <li class="">
-      <button class="btn d-block shadow-none w-100" data-toggle="collapse" data-target="#lista-marcas-pc" >
+      <button class="btn d-block shadow-none w-100" data-toggle="collapse" data-target="#lista-marcas-pc">
         <span class="titulo-filtro">Marcas</span><i class="fa-solid fa-caret-down"></i></button>
       <div class="collapse show" id="lista-marcas-pc">
         <ul class="list-unstyled">
-        <li class="item_lista"><a href="">ARAUCO</a></li>
-        <li class="item_lista"><a href="">MASSISA</a></li>
+          {% if dicc['marcas'] %}
+          {% for marca in dicc['marcas'] %}
+          <li class="d-flex flex-row">
+            <input class="" type="checkbox" name="marca" value="{{marca.marca_id}}" id="defaultCheck1">
+            <label for="defaultCheck1">{{marca.nombre}}</label>
+          </li>
+          {% endfor%}
+          {%endif%}
         </ul>
       </div>
     </li>
 
     <li>
-      <button class="btn d-block shadow-none w-100" data-toggle="collapse" data-target="#lista-precios-pc" >
+      <button class="btn d-block shadow-none w-100" data-toggle="collapse" data-target="#lista-precios-pc">
         <span class="titulo-filtro">Rango de Precios</span><i class="fa-solid fa-caret-down"></i></button>
 
-      <div class="collapse show" id="lista-precios-pc">
-        <div id="{{id_slider}}"></div>
+      <div class="collapse show my-3 " id="lista-precios-pc">
+
+        <div id="input-slider-range-{{slider_size}}" data-range-value-min="0" data-range-value-max="99999"></div>
+        <div class="row ">
+          <div class="col-6">
+            <span class="range-slider-value value-low" data-range-value-low="50"
+              id="input-slider-range-{{slider_size}}-value-low"></span>
+          </div>
+          <div class="col-6 text-right">
+            <span class="range-slider-value value-high" data-range-value-high="50000"
+              id="input-slider-range-{{slider_size}}-value-high"></span>
+          </div>
+        </div>
+
       </div>
 
+
     </li>
-    
+    <li>
+      <!-- Campos de entrada ocultos para el rango de precios -->
+      <input type="hidden" name="precio_min" value="" id="input-slider-range-{{slider_size}}-min">
+      <input type="hidden" name="precio_max" value="" id="input-slider-range-{{slider_size}}-max">
+
+      <!-- Campo de entrada oculto para el ordenamiento -->
+      <input type="hidden" name="orden" value="{{ request.args.get('orden') }}">
+    </li>
+
+    <!-- Agrega más checkboxes si es necesario -->
+    <li><button class="btn bg-none border rounded-1 mt-3" type="submit">Aplicar filtros</button></li>
+
   </ul>
+</form>

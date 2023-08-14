@@ -1,44 +1,45 @@
 from ..extensiones import obtener_conexion
+from ..modelos.models import Categoria
+
 
 class ModeloCategoria():
 
-
-    @classmethod # OBSOLETA
-    def obtener_categoria_id(self,nombre_categoria):
+    @classmethod  # OBSOLETA
+    def obtener_categoria_id(self, nombre_categoria):
         miConexion = obtener_conexion()
         try:
             with miConexion.cursor() as cursor:
-        
+
                 sql = "SELECT * from categoria WHERE JSON_EXTRACT(detalle, '$.nombre_categoria') = %s"
-                cursor.execute( sql , nombre_categoria )
+                cursor.execute(sql, nombre_categoria)
                 consulta = cursor.fetchone()
                 print(f'Categoria: {nombre_categoria} ')
                 print('Categoria_ID: ', consulta)
                 if consulta != None:
-                    return consulta[0] # solo categoria_id
+                    return consulta[0]  # solo categoria_id
                 else:
-                    return consulta  #retorna None
+                    return consulta  # retorna None
 
         except Exception as ex:
             raise Exception(ex)
 
         finally:
             miConexion.close()
-    
+
     @classmethod  # USADA EN LA NUEVA VERSION DE TIENDA
-    def obtener_categoria_x_nombre_y_padre(self,nombre,padre_id):
+    def obtener_categoria_x_nombre_y_padre(self, nombre, padre_id):
         miConexion = obtener_conexion()
         try:
             with miConexion.cursor() as cursor:
-        
+
                 sql = """
                 SELECT categoria_id, nombre, nivel ,padre_id from categoria 
                 WHERE nombre = %s and padre_id = %s """
 
-                cursor.execute( sql , ( nombre, padre_id ) )
+                cursor.execute(sql, (nombre, padre_id))
                 consulta = cursor.fetchone()
-                
-                #print('Categoria: ', consulta)
+
+                # print('Categoria: ', consulta)
                 return consulta
 
         except Exception as ex:
@@ -48,18 +49,18 @@ class ModeloCategoria():
             miConexion.close()
 
     @classmethod  # USADA EN LA NUEVA VERSION DE TIENDA
-    def obtener_categorias_hijas_x_padre(self,padre_id):
+    def obtener_categorias_hijas_x_padre(self, padre_id):
         miConexion = obtener_conexion()
         try:
             with miConexion.cursor() as cursor:
-        
+
                 sql = """
                 SELECT categoria_id, nombre, nivel ,padre_id from categoria 
                 WHERE padre_id = %s  """
 
-                cursor.execute( sql , ( padre_id ) )
+                cursor.execute(sql, (padre_id))
                 consulta = cursor.fetchall()
-                
+
                 print('Subcategorias: ', consulta)
                 return consulta
 
@@ -69,7 +70,7 @@ class ModeloCategoria():
         finally:
             miConexion.close()
 
-    @classmethod # USADA EN LA NUEVA VERSION DE TIENDA, Optimizada by AI
+    @classmethod  # USADA EN LA NUEVA VERSION DE TIENDA, Optimizada by AI
     def rollup_categoria(self):
         miConexion = obtener_conexion()
         try:
@@ -86,16 +87,16 @@ class ModeloCategoria():
                 GROUP BY padre, padre_id, nivel
                 ORDER BY nivel
                 '''
-                cursor.execute( sql )
+                cursor.execute(sql)
                 consulta = list(cursor.fetchall())
-                #print(consulta)
-                #print(type(consulta))
-                id = [ item[1] for item in consulta ]
-                categoria_padre = [ item[0] for item in consulta ]
-                sub_categoria = [ item[3] for item in consulta ]
-                nivel = [ item[2] for item in consulta ]
+                # print(consulta)
+                # print(type(consulta))
+                id = [item[1] for item in consulta]
+                categoria_padre = [item[0] for item in consulta]
+                sub_categoria = [item[3] for item in consulta]
+                nivel = [item[2] for item in consulta]
 
-                consulta = [ id, categoria_padre, sub_categoria , nivel ]
+                consulta = [id, categoria_padre, sub_categoria, nivel]
                 print(consulta)
                 return consulta
 
@@ -105,7 +106,7 @@ class ModeloCategoria():
         finally:
             miConexion.close()
 
-    @classmethod 
+    @classmethod
     def obt_rutas(self):
         miConexion = obtener_conexion()
         try:
@@ -125,12 +126,12 @@ class ModeloCategoria():
                 FROM rutas r;
                 '''
 
-                cursor.execute( sql )
+                cursor.execute(sql)
                 consulta = list(cursor.fetchall())
-                
-                id = [ item[0] for item in consulta ]
-                ruta = [ item[1] for item in consulta ]
-                consulta = [ id, ruta ]
+
+                id = [item[0] for item in consulta]
+                ruta = [item[1] for item in consulta]
+                consulta = [id, ruta]
                 print(consulta)
                 return consulta
 
@@ -139,3 +140,26 @@ class ModeloCategoria():
 
         finally:
             miConexion.close()
+
+    @classmethod
+    def obtener_hijos_subhijos(self, categoria_id):
+        # Obtener la categoría padre nivel 1
+        padre = Categoria.query.get(categoria_id)
+
+        if not padre:
+            return []
+
+        # Obtener los hijos de nivel 2
+        hijos_nivel2 = Categoria.query.filter_by(
+            padre_id=padre.categoria_id, nivel=2).all()
+        hijos = [i.nombre for i in hijos_nivel2]
+
+        # Obtener los subhijos de nivel 3
+        subhijos_nivel3 = []
+        for hijo_nivel2 in hijos_nivel2:
+            subhijos = Categoria.query.filter_by(
+                padre_id=hijo_nivel2.categoria_id, nivel=3).all()
+            subhijos_nivel3.extend(subhijos)
+        nietos = [i.nombre for i in subhijos_nivel3]
+
+        return hijos, nietos

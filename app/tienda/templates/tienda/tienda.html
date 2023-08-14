@@ -21,7 +21,7 @@
         <button class="btn d-lg-none d-block close-sidebar-categoria" style="float: right;"><i
             class="fa-solid fa-times"></i></button>
       </div>
-      {% with id_slider = 'slider_filtro_movil' %}
+      {% with slider_size = 'md' %}
       {% include 'tienda/tienda_filtro.html' %}
       {% endwith %}
     </div>
@@ -50,24 +50,7 @@
       <img src="{{url_for('api_bp.imagen_producto' , nombre = 'banner_melamina_vesto.jpg' )}}" class="img-fluid" alt="">
     </div>
 
-    <div class="contenedor-carrusel-tienda">
-      <div class="owl-carousel owl-theme  owl-loaded tienda_carrusel">
-        <div class="owl-stage-outer">
-          <div class="owl-stage">
-            {%for i in range(8) %}
-            <div class="owl-item">
-              <div class="" style="border-radius:50%;border: 1px solid red;width: 80px;">
-                <img src="{{url_for('static', filename='docs/logo_enco.png')}}" alt="" class="img-fluid">
-              </div>
-            </div>
-            {%endfor%}
-
-
-
-          </div>
-        </div>
-      </div>
-    </div>
+    {#% include "components/carrusel.html" %#}
 
 
     <div class="text-center mt-2">
@@ -78,18 +61,17 @@
           alt="" class="img-fluid" width="32"> Ordenar por</button>
     </div>
 
-    <div class="container pt-3 pr-0">
+    <div class="container pt-3">
       <div class="row">
         <div class="col-lg-3 p-0 d-none d-lg-block d-lx-block" id="categorias_lg">
 
           <!-- LISTA CATEGORIAS VERSION PC -->
           <div class="pc-categorias">
             <div class="header-box">
-              FILTROS
-              <button class="btn d-lg-none d-block close-sidebar" style="float: right;"><i
-                  class="fa-solid fa-times"></i></button>
+
+
             </div>
-            {% with id_slider = 'slider_filtro_escritorio' %}
+            {% with slider_size = 'lg' %}
             {% include 'tienda/tienda_filtro.html' %}
             {% endwith %}
 
@@ -104,7 +86,7 @@
 
           <div class="header-vista-productos">
             <p style="width: fit-content ;border-bottom:1px solid black ;"><strong>{{dicc['productos']|length
-                }}</strong> PRODUCTOS</p>
+                }}</strong> PRODUCTOS {{dicc['miga_pan']}}</p>
             <div class="dropdown">
               <a class="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -146,7 +128,7 @@
 
               <div class="dropdown-divider"></div>
               <div class="card-body p-0 m-0" id="card-cuerpo">
-                <div><strong>{{producto.marca}}</strong></div>
+                <div><strong>{{producto.marca.nombre}}</strong></div>
                 <div id="card-titulo"><a href="/store/producto/{{producto.nombre}}">{{producto.nombre}}</a></div>
 
 

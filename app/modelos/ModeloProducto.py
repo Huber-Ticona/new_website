@@ -1,7 +1,7 @@
 import json
-from ..extensiones import obtener_conexion
-from sqlalchemy import func
-from ..modelos.models import Producto
+from ..extensiones import obtener_conexion, db
+from sqlalchemy import func, text
+from ..modelos.models import Producto, Categoria, Marca
 
 
 class ModeloProducto():
@@ -34,36 +34,43 @@ class ModeloProducto():
         return producto
 
     @classmethod
-    def obtener_productos_x_categoria(self, categoria_id, orden):
-        '''miConexion = obtener_conexion()
-        try:
-            with miConexion.cursor() as cursor:
-                # print('Tipo categoria_id: ', type(categoria_id))
-                sql = """
-                select producto_id, nombre , precio , url_imagen , imagen_extra , detalle from producto 
-                where JSON_CONTAINS(detalle, '%s' ,'$.categorias') = 1 
-                order by precio asc """
-                cursor.execute(sql, categoria_id)
-                consulta = cursor.fetchall()
-                # consulta = list(cursor.fetchall())
-                # consulta = [ list(item) for item in consulta ]
-                # print(consulta)
+    def obtener_productos_x_categoria(self, categoria_id, orden, marcas, precio_min, precio_max):
 
-                return consulta
-
-        except Exception as ex:
-            raise Exception(ex)
-
-        finally:
-            miConexion.close()'''
         print('Buscando productos | Categoria_id: ', categoria_id)
-        query = Producto.query \
-            .filter(func.json_contains(Producto.detalle, str(categoria_id), "$.categorias") == 1)
+        query = Producto.query.filter(func.json_contains(
+            Producto.detalle, str(categoria_id), "$.categorias") == 1)
+        if marcas:
+            query = query.filter(Producto.marca_id.in_(marcas))
+
+        if precio_min is not None:
+            query = query.filter(Producto.precio >= int(precio_min))
+
+        if precio_max is not None:
+            query = query.filter(Producto.precio <= int(precio_max))
+
+        if orden == 'precio_asc':
+            print('asc')
+            query = query.order_by(Producto.precio.asc())
+        if orden == 'precio_desc':
+            print('desc')
+            query = query.order_by(Producto.precio.desc())
 
         result = query.all()
-        print(result)
         print('PRODUCTOS ', result)
         return result
+
+    @classmethod
+    def obtener_distintas_marcas_x_categoria(self, categoria_id):
+        print(
+            f'--- Obteniendo lista de marcas para categoria: {categoria_id} ------- ')
+        marcas = db.session.query(Marca).join(
+            Producto, Producto.marca_id == Marca.marca_id
+        ).filter(
+            text("json_contains(Producto.detalle, :categoria, '$.categorias') = 1")
+        ).params(categoria=str(categoria_id)).distinct().all()
+        print(marcas)
+        return marcas
+        print(f'--- Obteniendo lista de marcas END ------- ')
 
     @classmethod
     def todos_los_productos(self):

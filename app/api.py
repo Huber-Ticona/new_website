@@ -29,5 +29,5 @@ def imagen_producto_carpeta(carpeta=None, nombre=None):
 
 @api_bp.errorhandler(404)
 def page_not_found(e):
-    print('ERROR 404')
+    print('ERROR 404 on api_bp')
     return render_template('404.html')

@@ -1,0 +1,28 @@
+a { color: inherit; } 
+a:hover, a:focus , a:active {
+  text-decoration: none;
+  color: inherit; 
+}
+.full-content{
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+}
+.sidebar{
+    border: 1px solid blue;
+    width: 200px;
+    padding: 0 5px;
+}
+@media (max-width: 991px) {
+    .sidebar {
+      margin-left: -200px;
+      display: none;
+    }
+  }
+.dashboard{
+    width: 100%;
+    border: 1px solid yellow;
+}
+footer{
+  background-color: orange;
+}

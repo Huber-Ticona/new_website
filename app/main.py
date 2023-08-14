@@ -23,6 +23,20 @@ def contacto():
     return render_template("contacto.html")
 
 
+@main_bp.route('/home2')
+def test2():
+    link = 'inicio'
+    # LLAMADAS DB get_all_categories()
+    return render_template("layout/layout.html", link=link)
+
+
+@main_bp.route('/contacto2')
+# @cache.cached(timeout=50)
+def contacto2():
+    link = 'contacto'
+    return render_template("pages/contact.html", link=link)
+
+
 @main_bp.route('/servicios')
 def servicios():
     if 'usuario' in session:

@@ -1,0 +1,48 @@
+<div class="main-sidebar">
+  <div class="head-sidebar">
+    <a class="" href="#">
+      <img src="{{ url_for('static', filename= 'docs/enco_logov2.png') }}" alt="..." width="150" />
+    </a>
+  </div>
+  <div class="body-sidebar">
+    <div class="sidebar-list">
+
+      <a href="/home2">
+        <div class="sidebar-row {% if 'inicio' in link %} active {% endif %}">
+          <div id="icon"><i class="fas fa-user"></i></div>
+          <div id="title">Inicio</div>
+        </div>
+      </a>
+      <div class="sidebar-row">
+        <div id="icon"><i class="fas fa-shopping-cart"></i></div>
+        <div id="title"><a href="#">Productos</a></div>
+      </div>
+      <div class="sidebar-row">
+        <div id="icon"><i class="fas fa-shopping-cart"></i></div>
+        <div id="title"><a href="#">Servicios</a></div>
+      </div>
+      <a href="/contacto2">
+        <div class="sidebar-row {% if 'contacto' in link %} active {% endif %}">
+          <div id="icon"><i class="fas fa-folder"></i></div>
+          <div id="title">Contacto</div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <div class="footer-sidebar">
+    <div class="dropdown-divider"></div>
+    <div class="sidebar-list">
+      <div class="sidebar-row {% if 'contacto' in link %} active {% endif %}">
+        <div id="icon"><i class="fas fa-folder"></i></div>
+        <div id="title">Config</div>
+      </div>
+      <div class="sidebar-row {% if 'contacto' in link %} active {% endif %}">
+        <div id="icon"><i class="fas fa-folder"></i></div>
+        <div id="title">Exit</div>
+      </div>
+    </div>
+  </div>
+
+</div>

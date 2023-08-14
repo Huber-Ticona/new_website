@@ -227,60 +227,7 @@
 
   <!-- FOOTER 1-->
   <div class="d-flex flex-column">
-    <!-- FOOTER -->
-    <footer class="w-100 py-4 flex-shrink-0">
-      <div class="container py-4">
-        <div class="row gy-4 gx-5">
-          <div class="col-lg-2 col-md-6">
-            <div class="my-3">
-              <img src="{{ url_for('static', filename= 'docs/enco_logo_blanco.png') }}" alt="..." class="img-fluid" />
-            </div>
-            <p class="small">Empresa N° 1 en Maderas</p>
-            <p class="small mb-0">
-              &copy; Copyrights. Todos los derechos reservados. {#<a class="text-primary" href="#">Dev-Huber</a>#}
-            </p>
-          </div>
-          <div class="col-lg-3 col-md-6">
-            <h5 class="mb-3 my-3">Nuestra Empresa</h5>
-            <ul class="list-unstyled text-muted">
-              <li><a href="#">Sobre nosotros</a></li>
-              <li><a href="/contacto">Contacto</a></li>
-              <li><a href="#">Servicios</a></li>
-            </ul>
-          </div>
-          <div class="col-lg-2 col-md-6">
-            <h5 class="mb-3 my-3">Recursos</h5>
-            <ul class="list-unstyled text-muted">
-              <li><a href="#">Eventos</a></li>
-            </ul>
-          </div>
-          <div class="col-lg-3 col-md-6">
-            <h5 class="mb-3 my-3">Aspectos legales</h5>
-            <ul class="list-unstyled text-muted">
-              <li>
-                <a href="{{url_for('main_bp.terminos')}}">Terminos y condiciones</a>
-              </li>
-              <li><a href="#">Politicas de privacidad</a></li>
-              <li><a href="#">Politicas de cookies</a></li>
-              <li><a href="#">Preguntas frecuentes</a></li>
-            </ul>
-          </div>
-          <div class="col-lg-2 col-md-6">
-            <h5 class="mb-3">Redes Sociales</h5>
-            <div class="contenedor-redes-sociales">
-              <img src="{{url_for('static',filename='icons/youtube.png')}}" style="border-radius: 10px"
-                class="img-fluid" id="red-social" alt="Responsive image" width="32" />
-              <img src="{{url_for('static',filename='icons/instagram.png')}}" style="border-radius: 10px"
-                class="img-fluid" id="red-social" alt="Responsive image" width="32" />
-              <a href="https://www.facebook.com/EncoMaderas"><img
-                  src="{{url_for('static',filename='icons/facebook.png')}}" style="border-radius: 10px"
-                  class="img-fluid" id="red-social" alt="Responsive image" width="32" /> </a><i
-                class="fa-brands fa-lg fa-youtube" style="color: #ffffff; width: 32; height: 32"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
+    {% include "components/footer.html" %}
   </div>
 
   <!-- BOOTSTRAP AND JPOPPER-->

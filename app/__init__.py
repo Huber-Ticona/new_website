@@ -1,22 +1,21 @@
-from flask import Flask, url_for
-from .extensiones import cache, login_manager, mail, db
-
-# Social Flask Dance
-from flask_dance.contrib.facebook import make_facebook_blueprint
+from flask import Flask
+from .config import ConfigDevelop, ConfigProduction
+from dotenv import load_dotenv
 
 
 def create_app():
-    app = Flask(__name__, instance_relative_config=True)
 
-    # CARGA INSTANCIA CONFIGURACION
+    load_dotenv()  # Carga las variables de entorno desde el archivo .env
+    app = Flask(__name__)
+
+    # CARGA CONFIGURACION
     if app.config['ENV'] == 'development':
-        app.config.from_object('instance.config.ConfigDevelop')
+        app.config.from_object(ConfigDevelop)
     else:
-        app.config.from_object('instance.config.ConfigProduction')
+        app.config.from_object(ConfigProduction)
 
-    print('UPLOAD url: ', app.config['UPLOAD_FOLDER'])
-    print('docs url: ', app.config['DOCS_FOLDER'])
     # INICIALIZAMOS LAS EXTENSIONES
+    from .extensiones import cache, login_manager, mail, db
     cache.init_app(app)
     login_manager.init_app(app)
     mail.init_app(app)
@@ -35,9 +34,11 @@ def create_app():
     app.register_blueprint(cart_bp, url_prefix='')
 
     # Social Flask Dance
+    from flask_dance.contrib.facebook import make_facebook_blueprint
     facebook_blueprint = make_facebook_blueprint(
         scope="email", redirect_to='/login-facebook')
     app.register_blueprint(facebook_blueprint)
+
     from .modelos.ModeloUsuario import ModeloUsuario
     from .modelos.ModeloCategoria import ModeloCategoria
 
@@ -49,12 +50,12 @@ def create_app():
     def load_user(id):
         return ModeloUsuario().get_by_id(id)
 
-    @cache.cached(timeout=360, key_prefix='FUNCION_OBT_ROLLUP_CATEGORIAS')
+    @cache.cached(timeout=600, key_prefix='FUNCION_OBT_ROLLUP_CATEGORIAS')
     def get_all_categories():
         categorias = ModeloCategoria.rollup_categoria()
         return categorias
 
-    @cache.cached(timeout=360, key_prefix='FUNCION_OBT_RUTAS_CATEGORIAS')
+    @cache.cached(timeout=600, key_prefix='FUNCION_OBT_RUTAS_CATEGORIAS')
     def get_all_rutas():
         rutas = ModeloCategoria.obt_rutas()
         return rutas
@@ -65,6 +66,6 @@ def create_app():
         categorias = get_all_categories()
         rutas = get_all_rutas()
         google_analitics_id = app.config['GOOGLE_ANALYTICS_ID']
-        return dict(categorias=categorias, rutas=rutas, )
+        return dict(categorias=categorias, rutas=rutas, google_analitics_id=google_analitics_id)
 
     return app
